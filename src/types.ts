@@ -1,0 +1,1 @@
+export type Page = "home" | "xp" | "skills" | "projects" | "blog"
