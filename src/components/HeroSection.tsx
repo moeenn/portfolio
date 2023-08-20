@@ -2,7 +2,7 @@ import type { Component } from "solid-js"
 import { Icon } from "solid-heroicons"
 import { link } from "solid-heroicons/outline";
 
-export const AboutScreen: Component = () => {
+export const HeroSection: Component = () => {
   return (
     <div class="py-20">
       <div class="lg:grid lg:grid-cols-2 lg:gap-4">

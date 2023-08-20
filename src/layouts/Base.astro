@@ -1,0 +1,25 @@
+---
+import { Navbar } from "../components/Navbar";
+const {title} = Astro.props
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-nbg text-nfg">
+    <div class="container mx-auto px-4 h-screen">
+      <section>
+        <Navbar />
+      </section>
+
+      <main>
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
