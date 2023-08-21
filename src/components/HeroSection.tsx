@@ -8,7 +8,7 @@ export const HeroSection: Component = () => {
       <div class="lg:grid lg:grid-cols-2 lg:gap-4">
         <div class="flex py-4 flex-col space-y-8">
           <h1 class="text-5xl lg:text-7xl my-auto font-serif font-bold font-color7">I am Muhammad Moeen</h1>
-          <p class="flex-1">I am a software engineer with interests in high-performance systems programming and machine learning.</p>
+          <p class="flex-1">I am a software engineer with focus on web development and interests in high-performance systems programming and machine learning.</p>
           <div class="flex space-x-4">
             <a class="px-4 py-2 bg-color0 text-nfg text-sm cursor-pointer border-l-2 border-color2 inline-flex space-x-3" href="/resume.pdf" target="_blank">
               <span class="my-auto">CV</span>

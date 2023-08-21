@@ -1,8 +1,8 @@
 import type { Component } from "solid-js"
 
 const navItems = [
-  { id: "#xp", text: "Experience" },
   { id: "#skills", text: "Skills" },
+  { id: "#xp", text: "Experience" },
   { id: "#projects", text: "Projects" },
 ]
 
