@@ -11,20 +11,11 @@ const languages = [
   { lang: "Java", perc: 30 },
 ]
 
-// const skills = [
-//   { text: "Back-end Developmenet", perc: 80 },
-//   { text: "Real-time communications", perc: 70 },
-//   { text: "Automated Testing", perc: 80 },
-//   { text: "Requirements Analysis", perc: 80 },
-//   { text: "Time estimation", perc: 70 },
-//   { text: "Client communication", perc: 70 },
-// ]
-
 const technologies = [
+  { text: "NodeJS", perc: 80 },
   { text: "Linux / Shell", perc: 70 },
   { text: "Docker / Compose", perc: 60 },
-  { text: "Gin / Fiber", perc: 60 },
-  { text: "React JS", perc: 50 },
+  { text: "React", perc: 50 },
   { text: "AWS - EBS / EC2 / SES / S3 / Redshift", perc: 50 },
   { text: "Numpy / Pandas / Matplotlib", perc: 40 },
 ]
@@ -42,7 +33,7 @@ export const SkillsSection: Component = () => {
                 <span class="my-auto">{lang.lang}</span>
                 <span class="text-xs my-auto opacity-50">{lang.perc}%</span>
               </div>
-              <div><Progressbar percentage={lang.perc} /></div>
+              <div><Progressbar percentage={lang.perc} color="color4" /></div>
             </div>
           ))}
         </div>
@@ -54,7 +45,7 @@ export const SkillsSection: Component = () => {
                 <span class="my-auto">{tech.text}</span>
                 <span class="text-xs my-auto opacity-50">{tech.perc}%</span>
               </div>
-              <div><Progressbar percentage={tech.perc} /></div>
+              <div><Progressbar percentage={tech.perc} color="color6" /></div>
             </div>
           ))}
         </div>
