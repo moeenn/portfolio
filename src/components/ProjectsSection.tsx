@@ -50,6 +50,7 @@ const projects = [
 ]
 
 export const ProjectsSection: Component = () => {
+
   return (
     <div class="py-14" id="projects">
       <SectionHeading text="Projects" />

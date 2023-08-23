@@ -1,9 +1,9 @@
 import type { Component } from "solid-js"
 
 const navItems = [
-  { id: "#skills", text: "Skills" },
-  { id: "#xp", text: "Experience" },
+  { id: "#tech", text: "Technologies" },
   { id: "#projects", text: "Projects" },
+  { id: "#xp", text: "Experience" },
 ]
 
 export const Navbar: Component = () => {

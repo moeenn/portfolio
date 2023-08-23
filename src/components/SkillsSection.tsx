@@ -22,7 +22,7 @@ const technologies = [
 
 export const SkillsSection: Component = () => {
   return (
-    <div class="py-14" id="skills">
+    <div class="py-14" id="tech">
       <SectionHeading text="Languages & Technologies" />
 
       <div class="lg:grid lg:grid-cols-2 lg:gap-12">
