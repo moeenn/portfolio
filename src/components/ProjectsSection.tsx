@@ -1,6 +1,6 @@
 import type { Component } from "solid-js"
 import { Icon } from "solid-heroicons"
-import { truck, academicCap, banknotes, rocketLaunch, documentChartBar, homeModern } from "solid-heroicons/outline";
+import { truck, academicCap, banknotes, rocketLaunch, documentChartBar, homeModern, mapPin, buildingLibrary } from "solid-heroicons/outline";
 import { SectionHeading } from "./SectionHeading"
 import { ProjectCard } from "./ProjectCard"
 
@@ -10,7 +10,7 @@ const projects = [
     desc: "Management and scheduling of construction site resources, personnel management and live-tracking of incoming delivery vehicles.",
     icon: truck,
     color: "color1",
-    tech: ["NextJS", "VueJS", "Tailwind", "Node", "Typescript", "Fastify", "Prisma", "AJV", "WS"],
+    tech: ["NextJS", "Tailwind", "Node", "Typescript", "Fastify", "Prisma", "AJV"],
   },
   {
     heading: "Lab on web",
@@ -27,24 +27,38 @@ const projects = [
     tech: ["NextJS", "ANTD", "Node", "Typescript", "Express", "Mongoose", "Joi", "S3 / SES"],
   },
   {
+    heading: "Delivery Logistics System",
+    desc: "System for live-tracking, routing and management of construction materials delivery vehicles.",
+    icon: mapPin,
+    color: "color4",
+    tech: ["VueJS", "Tailwind", "Pinia", "Node", "Typescript", "Fastify", "Mongoose", "Zod", "WS"],
+  },
+  {
+    heading: "Bank InfoDash",
+    desc: "Management information aggregation dashboard for banking operations",
+    icon: buildingLibrary,
+    color: "color5",
+    tech: ["Go", "Chi", "GolangX-Websockets", "Node", "Typescript", "Fastify", "Prisma", "AJV", "WS"],
+  },
+  {
     heading: "Octane Club",
     desc: "Platform for buying and selling of high-end luxury cars, targeted at dealerships.",
     icon: rocketLaunch,
-    color: "color4",
+    color: "color6",
     tech: ["VueJS", "Tailwind", "Laravel", "Blade", "MySQL"],
   },
   {
     heading: "Doxy",
     desc: "Generate legal documents from dynamic templates and obtain e-signatures from other users.",
     icon: documentChartBar,
-    color: "color5",
+    color: "color1",
     tech: ["VueJS", "Vuetify", "Laravel", "Blade", "MySQL"],
   },
   {
     heading: "Aptzy",
     desc: "Apartment search and renting, with features for third-party amenities providers.",
     icon: homeModern,
-    color: "color6",
+    color: "color2",
     tech: ["VueJS", "Bootstrap", "Laravel", "Blade", "MySQL"],
   },
 ]

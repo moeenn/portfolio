@@ -4,6 +4,7 @@ const navItems = [
   { id: "#tech", text: "Technologies" },
   { id: "#projects", text: "Projects" },
   { id: "#xp", text: "Experience" },
+  { id: "#contact", text: "Contact Me" },
 ]
 
 export const Navbar: Component = () => {
