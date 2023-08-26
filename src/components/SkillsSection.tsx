@@ -8,7 +8,7 @@ const languages = [
   { lang: "Go", perc: 70 },
   { lang: "C++", perc: 40 },
   { lang: "PHP", perc: 40 },
-  { lang: "Java", perc: 30 },
+  { lang: "Rust", perc: 20 },
 ]
 
 const technologies = [
@@ -16,14 +16,14 @@ const technologies = [
   { text: "Linux / Shell", perc: 70 },
   { text: "Docker / Compose", perc: 60 },
   { text: "React", perc: 50 },
-  { text: "AWS - EBS / EC2 / SES / S3 / Redshift", perc: 50 },
-  { text: "Numpy / Pandas / Matplotlib", perc: 40 },
+  { text: "EBS / EC2 / SES / S3 / Redshift", perc: 40 },
+  { text: "Numpy / Pandas / Matplotlib", perc: 30 },
 ]
 
 export const SkillsSection: Component = () => {
   return (
-    <div class="py-14" id="tech">
-      <SectionHeading text="Languages & Technologies" />
+    <div class="py-14" id="expertise">
+      <SectionHeading text="Expertise" />
 
       <div class="lg:grid lg:grid-cols-2 lg:gap-12">
         <div>

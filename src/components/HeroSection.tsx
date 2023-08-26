@@ -23,9 +23,8 @@ export const HeroSection: Component = () => {
           </div>
         </div>
 
-        <div>
-          <div class="hidden lg:block bg-color0 w-full h-full">
-
+        <div class="bg-white rounded">
+          <div class="hidden lg:block w-full h-full bg-[url('/picture.png')] bg-center bg-contain bg-no-repeat">
           </div>
         </div>
       </div>
