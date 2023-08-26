@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { Container } from "../components/Container";
 import { SectionBreak } from "../components/SectionBreak";
 import { HeroSection } from "../components/HeroSection";
 import { SkillsSection } from "../components/SkillsSection";
@@ -9,13 +10,15 @@ import { ContactSection } from "../components/ContactSection";
 ---
 
 <Base title="MM Portfolio">
-  <HeroSection />
-  <SectionBreak />
-  <SkillsSection />
-  <SectionBreak />
-  <ProjectsSection />
-  <SectionBreak />
-  <ExperienceSection />
-  <SectionBreak />
-  <ContactSection />
+  <Container>
+    <HeroSection />
+    <SectionBreak />
+    <SkillsSection />
+    <SectionBreak />
+    <ProjectsSection />
+    <SectionBreak />
+    <ExperienceSection />
+    <SectionBreak />
+    <ContactSection />
+  </Container>
 </Base>

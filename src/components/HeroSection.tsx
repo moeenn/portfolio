@@ -11,13 +11,13 @@ export const HeroSection: Component = () => {
           <p class="flex-1">I am a software engineer with focus on web development and interests in high-performance systems programming and machine learning.</p>
           <div class="flex space-x-4">
             <a class="px-4 py-2 bg-color0 text-nfg text-sm cursor-pointer border-l-2 border-color2 inline-flex space-x-3" href="/resume.pdf" target="_blank">
+              <Icon path={link} class="h-4 w-4" />
               <span class="my-auto">CV</span>
-              <Icon path={link} class="h-4 w-4" />
             </a>
-            
+
             <a class="px-4 py-2 bg-color0 text-nfg text-sm cursor-pointer border-l-2 border-color2 inline-flex space-x-3" href="https://github.com/moeenn" target="_blank">
-              <span class="my-auto">GitHub</span>
               <Icon path={link} class="h-4 w-4" />
+              <span class="my-auto">GitHub</span>
             </a>
           </div>
         </div>

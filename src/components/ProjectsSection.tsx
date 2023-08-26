@@ -38,7 +38,7 @@ const projects = [
     desc: "Management information aggregation dashboard for banking operations",
     icon: buildingLibrary,
     color: "color5",
-    tech: ["Go", "Chi", "GolangX-Websockets", "Node", "Typescript", "Fastify", "Prisma", "AJV", "WS"],
+    tech: ["Go", "Chi", "GolangX-Websockets", "Node", "Typescript", "Fastify", "Prisma", "AJV"],
   },
   {
     heading: "Octane Club",
