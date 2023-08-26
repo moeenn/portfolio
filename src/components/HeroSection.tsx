@@ -4,7 +4,7 @@ import { link } from "solid-heroicons/outline";
 
 export const HeroSection: Component = () => {
   return (
-    <div class="py-20">
+    <div class="py-16 md:py-20">
       <div class="lg:grid lg:grid-cols-2 lg:gap-4">
         <div class="flex py-4 flex-col space-y-8">
           <h1 class="text-5xl lg:text-7xl my-auto font-serif font-bold text-white">I am Muhammad Moeen</h1>

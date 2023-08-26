@@ -23,7 +23,7 @@ export const ContactSection: Component = () => {
 
             <div class="flex-1 flex space-x-3 hover:text-color1 py-2">
               <Icon path={codeBracket} class="h-5 w-5 text-color1 my-auto" />
-              <a class="my-auto" href="https://github.com/moeenn" target="_blank">GitHub</a>
+              <a class="my-auto" href="https://github.com/moeenn?tab=repositories" target="_blank">GitHub</a>
             </div>
           </div>
         </div>
