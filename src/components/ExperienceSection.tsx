@@ -17,7 +17,7 @@ const timelineItems: TimelineItem[] = [
   {
     time: "July 2016 - March 2019",
     heading: "KPMG Taseer Hadi & Co. Chartered Accountants - Articleship",
-    desc: "Business process workflows analysis and identification of security and operational issues. Suggestion of steps to mitigate identified problems."
+    desc: "Business process workflows analysis and identification of security and operational issues in IT systems. Suggestion of steps to mitigate identified problems."
   },
   {
     time: "September 2013 - March 2016",
