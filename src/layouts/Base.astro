@@ -1,9 +1,11 @@
 ---
 import { Navbar } from "../components/Navbar";
+import { Footer } from "../components/Footer";
+import { ScrolltopButton } from "../components/ScrolltopButton";
 const { title } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -16,5 +18,7 @@ const { title } = Astro.props;
     <main>
       <slot />
     </main>
+    <Footer client:visible />
+    <ScrolltopButton client:load />
   </body>
 </html>
