@@ -2,7 +2,6 @@ import type { Component } from "solid-js"
 
 type Props = {
   percentage: number
-  color: string
 }
 
 export const Progressbar: Component<Props> = (props) => {

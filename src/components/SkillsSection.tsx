@@ -33,7 +33,7 @@ export const SkillsSection: Component = () => {
                 <span class="my-auto">{lang.lang}</span>
                 <span class="text-xs my-auto opacity-50">{lang.perc}%</span>
               </div>
-              <div><Progressbar percentage={lang.perc} color="color4" /></div>
+              <div><Progressbar percentage={lang.perc} /></div>
             </div>
           ))}
         </div>
@@ -45,7 +45,7 @@ export const SkillsSection: Component = () => {
                 <span class="my-auto">{tech.text}</span>
                 <span class="text-xs my-auto opacity-50">{tech.perc}%</span>
               </div>
-              <div><Progressbar percentage={tech.perc} color="color6" /></div>
+              <div><Progressbar percentage={tech.perc} /></div>
             </div>
           ))}
         </div>

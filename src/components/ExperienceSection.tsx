@@ -21,7 +21,7 @@ const timelineItems: TimelineItem[] = [
   },
   {
     time: "September 2013 - March 2016",
-    heading: "Institute of Chartered Accountants of Pakistan — CA (Intermediate)",
+    heading: "Professionals Academy Of Commerce — CA (Intermediate)",
     desc: "Acquisition of degress for Chartered Accountancy."
   }  
 ]
