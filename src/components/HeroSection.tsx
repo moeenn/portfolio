@@ -9,7 +9,7 @@ export const HeroSection: Component = () => {
         <div class="flex py-4 flex-col space-y-8">
           <p class="text-color2">Hello, my name is</p>
           <h1 class="text-5xl lg:text-7xl my-auto font-serif font-bold text-white">Muhammad Moeen.</h1>
-          <p class="flex-1">I am a software engineer with focus on web development and interests in high-performance systems programming and machine learning.</p>
+          <p class="flex-1">I am a software engineer with focus on web development and interests in low-level systems programming and machine learning.</p>
           <div class="flex space-x-4">
             <a class="px-4 py-2 bg-color0 text-nfg text-sm cursor-pointer border-l-2 border-color2 inline-flex space-x-3" href="/resume.pdf" target="_blank">
               <Icon path={link} class="h-4 w-4" />

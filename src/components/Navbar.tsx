@@ -5,9 +5,9 @@ import { Icon } from "solid-heroicons"
 import { bars_2 } from "solid-heroicons/outline";
 
 const navItems = [
+  { id: "#xp", text: "Experience" },
   { id: "#expertise", text: "Expertise" },
   { id: "#projects", text: "Projects" },
-  { id: "#xp", text: "Experience" },
   { id: "#contact", text: "Contact Me" },
 ]
 

@@ -4,7 +4,7 @@ import { SectionHeading } from "./SectionHeading"
 
 const languages = [
   { lang: "JS / TS", perc: 90 },
-  { lang: "Python", perc: 70 },
+  { lang: "Python", perc: 80 },
   { lang: "Go", perc: 70 },
   { lang: "C++", perc: 40 },
   { lang: "PHP", perc: 40 },
@@ -14,8 +14,8 @@ const languages = [
 const technologies = [
   { text: "NodeJS", perc: 80 },
   { text: "Linux / Shell", perc: 70 },
+  { text: "React / Vue", perc: 60 },
   { text: "Docker / Compose", perc: 60 },
-  { text: "React", perc: 50 },
   { text: "EBS / EC2 / SES / S3 / Redshift", perc: 40 },
   { text: "Numpy / Pandas / Matplotlib", perc: 30 },
 ]

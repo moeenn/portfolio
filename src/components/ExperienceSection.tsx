@@ -5,7 +5,12 @@ import type { TimelineItem } from "./Timeline"
 
 const timelineItems: TimelineItem[] = [
   {
-    time: "August 2020 - Present",
+    time: "November 2023 - Present",
+    heading: "Stack360",
+    desc: "Front-end and Back-end web development, requirements gathering, time estimation, team lead."
+  },
+  {
+    time: "August 2020 - October 2023",
     heading: "OSO Software Outsourcing",
     desc: "Front-end and Back-end web development, requirements gathering, time estimation, team lead."
   },
