@@ -60,16 +60,17 @@ const projects = [
 ]
 ---
 
-<SectionHeading text="Projects" />
+<div class="py-14" id="projects">
+  <SectionHeading text="Projects" />
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-  {projects.map(project => (
-    <ProjectCard
-      heading={project.heading}
-      desc={project.desc}
-      icon={project.icon}
-      technologies={project.tech}
-    />
-  ))}
-</div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {projects.map(project => (
+      <ProjectCard
+        heading={project.heading}
+        desc={project.desc}
+        icon={project.icon}
+        technologies={project.tech}
+      />
+    ))}
+  </div>
 </div>
