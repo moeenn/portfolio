@@ -13,13 +13,13 @@ type Props = {
 export const Timeline: Component<Props> = (props) => {
   return (
     <div class="ml-2">
-      <ol class="relative border-l border-dashed border-color1">
+      <ol class="relative border-l border-dashed border-slate-800">
         {props.items.map(item => (
           <li class="mb-10 ml-6">
-            <div class="absolute w-3 h-3 bg-color1 rounded-full mt-1.5 -left-1.5"></div>
-            <time class="mb-1 text-sm font-normal leading-none opacity-60">{item.time}</time>
-            <h3 class="text-lg font-semibold">{item.heading}</h3>
-            <p class="mb-4 text-sm font-normal opacity-80">{item.desc}</p>
+            <div class="absolute w-2 h-2 bg-slate-800 rounded-full mt-2 -left-1"></div>
+            <time class="mb-1 text-xs font-normal leading-none text-slate-600">{item.time}</time>
+            <h3 class="text-lg font-semibold pb-1">{item.heading}</h3>
+            <p class="mb-4 text-sm font-normal text-slate-800">{item.desc}</p>
           </li>
         ))}
       </ol>

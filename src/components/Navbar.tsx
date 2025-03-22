@@ -19,11 +19,11 @@ export const Navbar: Component = () => {
       <nav>
         <div class="py-6 flex justify-between">
           <a class="my-auto cursor-pointer" href="#">
-            <span class="font-mono text-nbg bg-color2 px-3 py-1">M.M</span>
+            <span class="font-mono text-nbg bg-nfg px-3 py-1 rounded-sm">M.M</span>
           </a>
 
           <div class="block md:hidden">
-            <div classList={{ "hover:bg-color0 p-2 cursor-pointer": true, "bg-color0": visible() }} onClick={() => setVisible(!visible())}>
+            <div classList={{ "hover:bg-slate-200 p-2 cursor-pointer": true, "bg-slate-200": visible() }} onClick={() => setVisible(!visible())}>
               <Icon path={bars_2} class="text-nfg h-6 w-6" />
             </div>
           </div>
@@ -32,17 +32,17 @@ export const Navbar: Component = () => {
             {navItems.map(item => (
               <a
                 href={item.id}
-                class="px-3 py-2 rounded text-nfg hover:text-color2 text-sm my-auto hover:bg-color0">{item.text}</a>
+                class="px-3 py-2 text-nfg hover:text-slate-900 text-sm my-auto hover:bg-slate-200 transition-colors">{item.text}</a>
             ))}
           </div>
         </div>
 
         <Show when={visible()}>
-          <div class="flex flex-col md:hidden bg-color0 rounded py-2">
+          <div class="flex flex-col md:hidden bg-slate-100 py-2">
             {navItems.map(item => (
               <a
                 href={item.id}
-                class="px-3 py-2 text-nfg hover:text-color0 hover:bg-color2 text-sm my-auto">{item.text}</a>
+                class="px-3 py-2 text-nfg hover:text-slate-900 hover:bg-slate-300 text-sm my-auto transition-colors">{item.text}</a>
             ))}
           </div>
         </Show>

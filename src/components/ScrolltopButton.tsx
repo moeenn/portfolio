@@ -20,7 +20,7 @@ export const ScrolltopButton: Component = () => {
   return (
     <div classList={{ "opacity-0": !visible(), "opacity-100": visible(), "transition-all duration-300": true }}>
       <button onClick={toTop} title="Go To Top"
-        class="fixed z-90 bottom-8 right-8 border-0 w-10 h-10 rounded-full drop-shadow-md bg-color2 text-nbg text-3xl font-bold">
+        class="fixed z-90 bottom-8 right-8 border-0 w-10 h-10 rounded-full drop-shadow-md bg-slate-900 text-nbg text-3xl font-bold">
         <Icon path={chevronUp} class="h-4 w-4 m-auto" />
       </button>
     </div>

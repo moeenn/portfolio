@@ -5,6 +5,11 @@ import type { TimelineItem } from "./Timeline"
 
 const timelineItems: TimelineItem[] = [
   {
+    time: "September 2024 - Present",
+    heading: "The Moonshot Factory",
+    desc: "Lorem ipsum",
+  },
+  {
     time: "November 2023 - Present",
     heading: "Stack360",
     desc: "Front-end and Back-end web development, requirements gathering, time estimation, team lead."
