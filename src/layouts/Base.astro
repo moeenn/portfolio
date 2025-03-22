@@ -1,7 +1,7 @@
 ---
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { ScrolltopButton } from "@/components/ScrolltopButton";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import ScrolltopButton from "../components/ScrolltopButton.astro";
 const { title } = Astro.props;
 ---
 
@@ -14,11 +14,11 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body class="bg-nbg text-nfg selection:bg-slate-200">
-    <Navbar client:load />
+    <Navbar />
     <main>
       <slot />
     </main>
-    <Footer client:visible />
-    <ScrolltopButton client:load />
+    <Footer />
+    <ScrolltopButton />
   </body>
 </html>

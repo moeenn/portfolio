@@ -1,26 +1,30 @@
-import type { Component } from "solid-js"
-import { Icon } from "solid-heroicons"
-import { truck, academicCap, banknotes, rocketLaunch, documentChartBar, homeModern, mapPin, buildingLibrary } from "solid-heroicons/outline";
-import { SectionHeading } from "./SectionHeading"
-import { ProjectCard } from "./ProjectCard"
+---
+import SectionHeading from "../SectionHeading.astro"
+import ProjectCard from "../ProjectCard.astro"
+import TruckIcon from "../icons/TruckIcon.astro"
+import AcademicCapIcon from "../icons/AcademicCapIcon.astro"
+import BankNotesIcon from "../icons/BankNotesIcon.astro"
+import RocketLaunchIcon from "../icons/RocketLaunchIcon.astro"
+import DocumentCharBarIcon from "../icons/DocumentChartBarIcon.astro"
+import HomeModernIcon from "../icons/HomeModernIcon.astro"
 
 const projects = [
   {
     heading: "Delivery Management System",
     desc: "Management and scheduling of construction site resources, personnel management and live-tracking of incoming delivery vehicles.",
-    icon: truck,
+    icon: TruckIcon,
     tech: ["NextJS", "Tailwind", "Node", "Typescript", "Fastify", "Prisma", "AJV"],
   },
   {
     heading: "Lab on web",
     desc: "Learning Management System (LMS) targeted at science students. Includes physics simulations and student progress and performance tracking.",
-    icon: academicCap,
+    icon: AcademicCapIcon,
     tech: ["NextJS", "ANTD", "Node", "Typescript", "Koa", "Mongoose", "ValidatorJS", "S3 / SES"],
   },
   {
     heading: "Loannerd",
     desc: "Easy application of automotive loan, loan application processing, document management, tracking, and approval though affiliate banks.",
-    icon: banknotes,
+    icon: BankNotesIcon,
     tech: ["NextJS", "ANTD", "Node", "Typescript", "Express", "Mongoose", "Joi", "S3 / SES"],
   },
   // {
@@ -38,39 +42,34 @@ const projects = [
   {
     heading: "Octane Club",
     desc: "Platform for buying and selling of high-end luxury cars, targeted at dealerships.",
-    icon: rocketLaunch,
+    icon: RocketLaunchIcon,
     tech: ["VueJS", "Tailwind", "Laravel", "Blade", "MySQL"],
   },
   {
     heading: "Doxy",
     desc: "Generate legal documents from dynamic templates and obtain e-signatures from other users.",
-    icon: documentChartBar,
+    icon: DocumentCharBarIcon,
     tech: ["VueJS", "Vuetify", "Laravel", "Blade", "MySQL"],
   },
   {
     heading: "Aptzy",
     desc: "Apartment search and renting, with features for third-party amenities providers.",
-    icon: homeModern,
+    icon: HomeModernIcon,
     tech: ["VueJS", "Bootstrap", "Laravel", "Blade", "MySQL"],
   },
 ]
+---
 
-export const ProjectsSection: Component = () => {
+<SectionHeading text="Projects" />
 
-  return (
-    <div class="py-14" id="projects">
-      <SectionHeading text="Projects" />
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {projects.map(project => (
-          <ProjectCard
-            heading={project.heading}
-            desc={project.desc}
-            icon={<Icon path={project.icon} classList={{ "h-6 w-6 mb-auto": true, ["text-" + project.color]: true }} />}
-            technologies={project.tech}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  {projects.map(project => (
+    <ProjectCard
+      heading={project.heading}
+      desc={project.desc}
+      icon={project.icon}
+      technologies={project.tech}
+    />
+  ))}
+</div>
+</div>

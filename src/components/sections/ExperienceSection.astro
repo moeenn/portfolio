@@ -1,9 +1,8 @@
-import type { Component } from "solid-js"
-import { SectionHeading } from "./SectionHeading"
-import { Timeline } from "./Timeline"
-import type { TimelineItem } from "./Timeline"
+---
+import SectionHeading from "../SectionHeading.astro"
+import Timeline from "../Timeline.astro"
 
-const timelineItems: TimelineItem[] = [
+const timelineItems = [
   {
     time: "September 2024 - Present",
     heading: "The Moonshot Factory",
@@ -35,12 +34,9 @@ const timelineItems: TimelineItem[] = [
     desc: "Acquisition of degress for Chartered Accountancy."
   }  
 ]
+---
 
-export const ExperienceSection: Component = () => {
-  return (
-    <div class="py-14" id="xp">
-      <SectionHeading text="Experience & Education" />
-      <Timeline items={timelineItems} />
-    </div>
-  )
-}
+<div class="py-14" id="xp">
+  <SectionHeading text="Experience & Education" />
+  <Timeline items={timelineItems} />
+</div>

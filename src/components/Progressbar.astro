@@ -1,0 +1,11 @@
+---
+type Props = {
+  percentage: number
+}
+
+const props = Astro.props
+---
+
+<div class="w-full h-1 my-auto bg-slate-200">
+  <div class="h-1 bg-slate-900" style={{ width: `${props.percentage}%` }}></div>
+</div>

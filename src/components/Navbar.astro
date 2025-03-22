@@ -1,0 +1,47 @@
+---
+import Container from "./Container.astro"
+import Bar2Icon from "./icons/Bar2Icon.astro"
+
+const navItems = [
+  { id: "#xp", text: "Experience" },
+  { id: "#expertise", text: "Expertise" },
+  { id: "#projects", text: "Projects" },
+  { id: "#contact", text: "Contact Me" },
+]
+---
+
+<Container>
+  <nav>
+    <div class="py-6 flex justify-between">
+      <a class="my-auto cursor-pointer" href="#">
+        <span class="font-mono text-nbg bg-nfg px-3 py-1 rounded-sm">M.M</span>
+      </a>
+
+      <div class="block md:hidden">
+        <div data-navbutton class="hover:bg-slate-200 p-2 cursor-pointer">
+          <Bar2Icon />
+        </div>
+      </div>
+
+      <div class="hidden md:flex md:space-x-2">
+        {navItems.map(item => (
+          <a
+            href={item.id}
+            class="px-3 py-2 text-nfg hover:text-slate-900 text-sm my-auto hover:bg-slate-200 transition-colors">{item.text}</a>
+        ))}
+      </div>
+    </div>
+
+    <div data-mobilemenu class="hidden">
+      <div class="flex flex-col md:hidden bg-slate-100 py-2">
+        {navItems.map(item => (
+          <a
+            href={item.id}
+            class="px-3 py-2 text-nfg hover:text-slate-900 hover:bg-slate-300 text-sm my-auto transition-colors">{item.text}</a>
+        ))}
+      </div>
+    </div>
+  </nav>
+
+  <script src="/scripts/navbar.js" defer></script>
+</Container>
