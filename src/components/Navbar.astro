@@ -12,9 +12,9 @@ const navItems = [
 
 <Container>
   <nav>
-    <div class="py-6 flex justify-between">
+    <div class="pt-8 pb-4 flex justify-between">
       <a class="my-auto cursor-pointer" href="#">
-        <span class="font-mono text-nbg bg-nfg px-3 py-1 rounded-sm">M.M</span>
+        <span class="font-mono pb-1 pt-2 font-bold text-nbg bg-nfg px-3 py-1 rounded">M.M</span>
       </a>
 
       <div class="block md:hidden">
@@ -27,7 +27,7 @@ const navItems = [
         {navItems.map(item => (
           <a
             href={item.id}
-            class="px-3 py-2 text-nfg hover:text-slate-900 text-sm my-auto hover:bg-slate-200 transition-colors">{item.text}</a>
+            class="px-3 py-2 text-nfg hover:text-slate-900 text-sm my-auto hover:bg-slate-200 rounded transition-colors">{item.text}</a>
         ))}
       </div>
     </div>
@@ -37,7 +37,7 @@ const navItems = [
         {navItems.map(item => (
           <a
             href={item.id}
-            class="px-3 py-2 text-nfg hover:text-slate-900 hover:bg-slate-300 text-sm my-auto transition-colors">{item.text}</a>
+            class="px-3 py-2 text-nfg hover:text-slate-900 hover:bg-slate-300 text-sm my-auto rounded transition-colors">{item.text}</a>
         ))}
       </div>
     </div>

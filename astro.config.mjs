@@ -10,4 +10,7 @@ export default defineConfig({
   build: {
     assets: "assets",
   },
+  server: {
+    port: 3000,
+  }
 });
