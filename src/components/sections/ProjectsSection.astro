@@ -14,36 +14,42 @@ const projects = [
     desc: "Management and scheduling of construction site resources, personnel management and live-tracking of incoming delivery vehicles.",
     icon: TruckIcon,
     tech: ["NodeJS", "NextJS", "Fastify", "PostgreSQL", "Prisma", "Typescript", "Tailwind"],
+    link: "/project/dms",
   },
   {
     heading: "Lab on web",
     desc: "Learning Management System (LMS) targeted at science students. Includes physics simulations and student progress and performance tracking.",
     icon: AcademicCapIcon,
     tech: ["NodeJS", "NextJS", "Koa", "MongoDB", "AWS S3", "AWS SES", "Typescript"],
+    link: "/project/lab-on-web",
   },
   {
     heading: "Loannerd",
     desc: "Easy application of automotive loan, loan application processing, document management, tracking, and approval though affiliate banks.",
     icon: BankNotesIcon,
     tech: ["NodeJS", "Express", "NextJS", "MongoDB", "AWS S3", "AWS SES", "Typescript"],
+    link: "/project/loannerd",
   },
   {
     heading: "Octane Club",
     desc: "Platform for buying and selling of high-end luxury cars, targeted at dealerships.",
     icon: RocketLaunchIcon,
     tech: ["Laravel", "MySQL", "VueJS", "Tailwind"],
+    link: "/project/octane-club",
   },
   {
     heading: "Doxy",
     desc: "Generate legal documents from dynamic templates and obtain e-signatures from other users.",
     icon: DocumentCharBarIcon,
     tech: ["Laravel", "MySQL", "VueJS", "Vuetify"],
+    link: "/project/doxy",
   },
   {
     heading: "Aptzy",
     desc: "Apartment search and renting, with features for third-party amenities providers.",
     icon: HomeModernIcon,
     tech: ["Laravel", "MySQL", "VueJS", "Bootstrap"],
+    link: "/project/aptzy",
   },
 ]
 ---
@@ -58,6 +64,7 @@ const projects = [
         desc={project.desc}
         icon={project.icon}
         technologies={project.tech}
+        link={project.link}
       />
     ))}
   </div>
