@@ -1,71 +1,131 @@
 ---
-import SectionHeading from "../SectionHeading.astro"
-import ProjectCard from "../ProjectCard.astro"
-import TruckIcon from "../icons/TruckIcon.astro"
-import AcademicCapIcon from "../icons/AcademicCapIcon.astro"
-import BankNotesIcon from "../icons/BankNotesIcon.astro"
-import RocketLaunchIcon from "../icons/RocketLaunchIcon.astro"
-import DocumentCharBarIcon from "../icons/DocumentChartBarIcon.astro"
-import HomeModernIcon from "../icons/HomeModernIcon.astro"
+import SectionHeading from "../SectionHeading.astro";
+import ProjectCard from "../ProjectCard.astro";
+import TruckIcon from "../icons/TruckIcon.astro";
+import AcademicCapIcon from "../icons/AcademicCapIcon.astro";
+import BankNotesIcon from "../icons/BankNotesIcon.astro";
+import RocketLaunchIcon from "../icons/RocketLaunchIcon.astro";
+import DocumentCharBarIcon from "../icons/DocumentChartBarIcon.astro";
+import HomeModernIcon from "../icons/HomeModernIcon.astro";
+import CloudIcon from "../icons/CloudIcon.astro";
+import BuildingIcon from "../icons/BuildingIcon.astro";
+import BriefcaseIcon from "../icons/BriefcaseIcon.astro";
 
 const projects = [
+  {
+    heading: "Report Genius",
+    desc: "A unified information platform for providing intelligence related to short-term rental properties in various markets.",
+    icon: BuildingIcon,
+    tech: [
+      "Golang",
+      "Echo",
+      "SSE",
+      "PostgreSQL",
+      "Hostaway SDK",
+      "React",
+      "Typescript",
+      "Tailwind",
+      "Hostinger VPS",
+    ],
+  },
+  {
+    heading: "Function Integrator",
+    desc: "A unified system for businesses to keep stack of their IT assets and infrastructure to assist in executive decision-making.",
+    icon: CloudIcon,
+    tech: [
+      "Golang",
+      "Chi",
+      "GraphQL",
+      "PostgreSQL",
+      "Neo4j",
+      "Auth0",
+      "AWS SDK",
+      "GCP SDK",
+      "Azure SDK",
+    ],
+  },
+  {
+    heading: "Meritorious Consultants",
+    desc: "Business website for a consulting firm which provides accounting and bookeeping services.",
+    icon: BriefcaseIcon,
+    tech: ["NodeJS", "Typescript", "HonoJS", "Tailwind", "Sqlite3"],
+  },
   {
     heading: "Delivery Management System",
     desc: "Management and scheduling of construction site resources, personnel management and live-tracking of incoming delivery vehicles.",
     icon: TruckIcon,
-    tech: ["NodeJS", "NextJS", "Fastify", "PostgreSQL", "Prisma", "Typescript", "Tailwind"],
-    link: "/project/dms",
+    tech: [
+      "NodeJS",
+      "NextJS",
+      "Fastify",
+      "PostgreSQL",
+      "Prisma",
+      "Typescript",
+      "Tailwind",
+    ],
   },
   {
     heading: "Lab on web",
     desc: "Learning Management System (LMS) targeted at science students. Includes physics simulations and student progress and performance tracking.",
     icon: AcademicCapIcon,
-    tech: ["NodeJS", "NextJS", "Koa", "MongoDB", "AWS S3", "AWS SES", "Typescript"],
-    link: "/project/lab-on-web",
+    tech: [
+      "NodeJS",
+      "NextJS",
+      "Koa",
+      "MongoDB",
+      "AWS S3",
+      "AWS SES",
+      "Typescript",
+    ],
   },
   {
     heading: "Loannerd",
     desc: "Easy application of automotive loan, loan application processing, document management, tracking, and approval though affiliate banks.",
     icon: BankNotesIcon,
-    tech: ["NodeJS", "Express", "NextJS", "MongoDB", "AWS S3", "AWS SES", "Typescript"],
-    link: "/project/loannerd",
+    tech: [
+      "NodeJS",
+      "Express",
+      "NextJS",
+      "MongoDB",
+      "AWS S3",
+      "AWS SES",
+      "Typescript",
+    ],
   },
   {
     heading: "Octane Club",
     desc: "Platform for buying and selling of high-end luxury cars, targeted at dealerships.",
     icon: RocketLaunchIcon,
     tech: ["Laravel", "MySQL", "VueJS", "Tailwind"],
-    link: "/project/octane-club",
   },
   {
     heading: "Doxy",
     desc: "Generate legal documents from dynamic templates and obtain e-signatures from other users.",
     icon: DocumentCharBarIcon,
     tech: ["Laravel", "MySQL", "VueJS", "Vuetify"],
-    link: "/project/doxy",
   },
   {
     heading: "Aptzy",
     desc: "Apartment search and renting, with features for third-party amenities providers.",
     icon: HomeModernIcon,
     tech: ["Laravel", "MySQL", "VueJS", "Bootstrap"],
-    link: "/project/aptzy",
   },
-]
+];
 ---
 
 <div class="py-14" id="projects">
   <SectionHeading text="Projects" />
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    {projects.map(project => (
-      <ProjectCard
-        heading={project.heading}
-        desc={project.desc}
-        icon={project.icon}
-        technologies={project.tech}
-        link={project.link}
-      />
-    ))}
+    {
+      projects.map((project) => (
+        <ProjectCard
+          heading={project.heading}
+          desc={project.desc}
+          icon={project.icon}
+          technologies={project.tech}
+        />
+      ))
+    }
   </div>
 </div>

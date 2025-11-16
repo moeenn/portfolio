@@ -1,20 +1,23 @@
 ---
-import Container from "./Container.astro"
-import Bar2Icon from "./icons/Bar2Icon.astro"
+import Container from "./Container.astro";
+import Bar2Icon from "./icons/Bar2Icon.astro";
 
 const navItems = [
   { id: "/#projects", text: "Projects" },
-  { id: "/#expertise", text: "Expertise" },
+  { id: "/#career", text: "Career" },
   { id: "/#xp", text: "Experience" },
   { id: "/#contact", text: "Contact Me" },
-]
+];
 ---
 
 <Container>
   <nav>
     <div class="pt-8 pb-4 flex justify-between">
       <a class="my-auto cursor-pointer" href="/#">
-        <span class="font-mono pb-1 pt-2 font-bold text-nbg bg-nfg px-3 py-1 rounded">M.M</span>
+        <span
+          class="font-mono pb-1 pt-2 font-bold text-nbg bg-nfg px-3 py-1 rounded"
+          >M.M</span
+        >
       </a>
 
       <div class="block md:hidden">
@@ -24,21 +27,31 @@ const navItems = [
       </div>
 
       <div class="hidden md:flex md:space-x-2">
-        {navItems.map(item => (
-          <a
-            href={item.id}
-            class="px-3 py-2 text-nfg hover:text-slate-900 text-sm my-auto hover:bg-slate-200 rounded transition-colors">{item.text}</a>
-        ))}
+        {
+          navItems.map((item) => (
+            <a
+              href={item.id}
+              class="px-3 py-2 text-nfg hover:text-slate-900 text-sm my-auto hover:bg-slate-200 rounded transition-colors"
+            >
+              {item.text}
+            </a>
+          ))
+        }
       </div>
     </div>
 
     <div data-mobilemenu class="hidden">
       <div class="flex flex-col md:hidden bg-slate-100 py-2">
-        {navItems.map(item => (
-          <a
-            href={item.id}
-            class="px-3 py-2 text-nfg hover:text-slate-900 hover:bg-slate-300 text-sm my-auto rounded transition-colors">{item.text}</a>
-        ))}
+        {
+          navItems.map((item) => (
+            <a
+              href={item.id}
+              class="px-3 py-2 text-nfg hover:text-slate-900 hover:bg-slate-300 text-sm my-auto rounded transition-colors"
+            >
+              {item.text}
+            </a>
+          ))
+        }
       </div>
     </div>
   </nav>

@@ -1,30 +1,56 @@
 ---
-import LinkIcon from "../icons/LinkIcon.astro"
+import LinkIcon from "../icons/LinkIcon.astro";
 ---
 
 <div class="py-12 md:py-20">
   <div class="lg:grid lg:grid-cols-2 lg:gap-4">
     <div class="flex py-4 flex-col space-y-8">
       <p class="text-slate-800">Hello, my name is</p>
-      <h1 class="text-5xl lg:text-7xl my-auto font-serif font-bold text-slate-900">Muhammad Moeen.</h1>
-      <p class="flex-1">Experienced software engineer with <em class="font-bold">8+ years</em> in the IT industry and 5 years of hands-on development expertise. I build high-performance, reliable, business-critical web applications using Golang, Python, and JavaScript.</p>
+      <h1
+        class="text-5xl lg:text-7xl my-auto font-serif font-bold text-slate-900"
+      >
+        Muhammad Moeen.
+      </h1>
+      <p class="flex-1">
+        Senior software engineer with <em class="font-bold">5+ years</em> of development
+        experience. I build high-performance, cloud-native web applications and microservices
+        using Golang, NodeJS and React.
+      </p>
       <div class="flex space-x-4">
-        <a class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-nfg text-sm cursor-pointer border-l-2 border-slate-900 inline-flex rounded space-x-2 transition-colors" href="/resume.pdf" target="_blank">
+        <a
+          class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-nfg text-sm cursor-pointer border-l-2 border-slate-900 inline-flex rounded space-x-2 transition-colors"
+          href="/resume.pdf"
+          target="_blank"
+        >
           <LinkIcon />
           <span class="my-auto">Resume</span>
         </a>
 
-        <a class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-nfg text-sm cursor-pointer border-l-2 border-slate-900 inline-flex rounded space-x-2 transition-colors" href="https://github.com/moeenn" target="_blank">
+        <a
+          class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-nfg text-sm cursor-pointer border-l-2 border-slate-900 inline-flex rounded space-x-2 transition-colors"
+          href="https://github.com/moeenn"
+          target="_blank"
+        >
           <LinkIcon />
           <span class="my-auto">GitHub</span>
+        </a>
+
+        <a
+          class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-nfg text-sm cursor-pointer border-l-2 border-slate-900 inline-flex rounded space-x-2 transition-colors"
+          href="https://www.linkedin.com/in/moeenn"
+          target="_blank"
+        >
+          <LinkIcon />
+          <span class="my-auto">LinkedIn</span>
         </a>
       </div>
     </div>
 
     <div class="bg-white flex">
-      <div class="hidden lg:block h-80 w-80 rounded-full bg-[url('/picture.jpeg')] bg-center bg-cover bg-no-repeat border-2 border-dotted border-slate-300 my-auto ml-auto mr-6">
+      <div
+        class="hidden lg:block h-80 w-80 rounded-full bg-[url('/picture.jpeg')] bg-center bg-cover bg-no-repeat border-2 border-dotted border-slate-300 my-auto ml-auto mr-6"
+      >
       </div>
     </div>
   </div>
 </div>
-

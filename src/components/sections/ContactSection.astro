@@ -1,28 +1,38 @@
 ---
-import PhoneIcon from "../icons/PhoneIcon.astro"
-import AtSymbolIcon from "../icons/AtSymbolIcon.astro"
-import CodeBracketsIcon from "../icons/CodeBracketIcon.astro"
+import PhoneIcon from "../icons/PhoneIcon.astro";
+import AtSymbolIcon from "../icons/AtSymbolIcon.astro";
+import ChatIcon from "../icons/ChatIcon.astro";
 ---
 
 <div class="py-14" id="contact">
   <div class="flex">
     <div class="flex flex-col lg:flex-row lg:mx-auto">
-      <h4 class="text-4xl lg:text-6xl text-slate-900 lg:p-4 rounded mb-4 lg:mb-0 lg:text-right lg:mr-2">Let's start a <br class="hidden lg:block" />project together</h4>
+      <h4
+        class="text-4xl lg:text-6xl text-slate-900 lg:p-4 rounded mb-4 lg:mb-0 lg:text-right lg:mr-2"
+      >
+        Let's start a <br class="hidden lg:block" />project together
+      </h4>
 
-      <div class="flex flex-col my-auto lg:border-l lg:border-dashed lg:border-slate-900 lg:pl-6">
+      <div
+        class="flex flex-col my-auto lg:border-l lg:border-dashed lg:border-slate-900 lg:pl-6"
+      >
         <div class="flex-1 flex space-x-3 hover:text-slate-900 py-2">
           <PhoneIcon />
           <a href="tel:+92 336-4220030" class="my-auto">+92 336-4220030</a>
         </div>
 
         <div class="flex-1 flex space-x-3 hover:text-slate-900 py-2">
-          <AtSymbolIcon />
-          <a class="my-auto" href="mailto:moeen.v8@gmail.com">moeen.v8@gmail.com</a>
+          <ChatIcon />
+          <a class="my-auto" href=" https://wa.me/923364220030" target="_blank">
+            +92 336-4220030 (WhatsApp)
+          </a>
         </div>
 
         <div class="flex-1 flex space-x-3 hover:text-slate-900 py-2">
-          <CodeBracketsIcon />
-          <a class="my-auto" href="https://github.com/moeenn?tab=repositories" target="_blank">GitHub</a>
+          <AtSymbolIcon />
+          <a class="my-auto" href="mailto:moeen.v8@gmail.com">
+            moeen.v8@gmail.com
+          </a>
         </div>
       </div>
     </div>
