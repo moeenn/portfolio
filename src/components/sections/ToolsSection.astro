@@ -1,0 +1,102 @@
+---
+import SectionHeading from "../SectionHeading.astro";
+import Aws from "../../assets/img/tools/aws.svg";
+import Bash from "../../assets/img/tools/bash.svg";
+import CSS from "../../assets/img/tools/css.svg";
+import Docker from "../../assets/img/tools/docker.svg";
+import GCP from "../../assets/img/tools/gcp.svg";
+import Git from "../../assets/img/tools/git.svg";
+import Github from "../../assets/img/tools/github.svg";
+import Golang from "../../assets/img/tools/golang.svg";
+import Graphql from "../../assets/img/tools/graphql.svg";
+import Html from "../../assets/img/tools/html.svg";
+import Java from "../../assets/img/tools/java.svg";
+import Js from "../../assets/img/tools/js.svg";
+import Laravel from "../../assets/img/tools/laravel.svg";
+import Linux from "../../assets/img/tools/linux.svg";
+import Mongodb from "../../assets/img/tools/mongodb.svg";
+import Mysql from "../../assets/img/tools/mysql.svg";
+import Nextjs from "../../assets/img/tools/nextjs.svg";
+import Nodejs from "../../assets/img/tools/nodejs.svg";
+import Php from "../../assets/img/tools/php.svg";
+import Postgresql from "../../assets/img/tools/postgresql.svg";
+import Python from "../../assets/img/tools/python.svg";
+import React from "../../assets/img/tools/react.svg";
+import Tailwind from "../../assets/img/tools/tailwind.svg";
+import Typescript from "../../assets/img/tools/typescript.svg";
+import Vue from "../../assets/img/tools/vue.svg";
+
+const tools = [
+    {
+        title: "Focus in",
+        tools: [
+            { text: "Golang", image: Golang },
+            { text: "Javascript", image: Js },
+            { text: "Typescript", image: Typescript },
+            { text: "NodeJS", image: Nodejs },
+            { text: "React", image: React },
+            { text: "Docker", image: Docker },
+            { text: "PostgreSQL", image: Postgresql },
+        ],
+    },
+    {
+        title: "Good knowledge",
+        tools: [
+            { text: "Python", image: Python },
+            { text: "GraphQL", image: Graphql },
+            { text: "Java", image: Java },
+            { text: "MongoDB", image: Mongodb },
+            { text: "MySQL", image: Mysql },
+            { text: "Linux", image: Linux },
+            { text: "HTML", image: Html },
+            { text: "CSS", image: CSS },
+            { text: "Bash", image: Bash },
+            { text: "Git", image: Git },
+            { text: "Github", image: Github },
+            { text: "PHP", image: Php },
+            { text: "Laravel", image: Laravel },
+            { text: "NextJS", image: Nextjs },
+            { text: "Vue", image: Vue },
+            { text: "TailwindCSS", image: Tailwind },
+        ],
+    },
+    {
+        title: "Clouds",
+        tools: [
+            { text: "AWS", image: Aws },
+            { text: "GCP", image: GCP },
+        ],
+    },
+];
+---
+
+<div class="py-14" id="tools">
+    <SectionHeading text="Skills & Tools" />
+
+    <div>
+        {
+            tools.map((category) => (
+                <div class="mb-16 mt-4">
+                    <span class="text-slate-800 text-xs bg-slate-300 rounded-full px-3 py-1 font-medium">
+                        {category.title}
+                    </span>
+                    <div class="grid grid-cols-5 gap-10 mt-4">
+                        {category.tools.map((t) => (
+                            <div
+                                class="flex space-x-3 rounded hover:bg-slate-100 transition-colors p-2"
+                                title={t.text}
+                            >
+                                <img
+                                    src={t.image.src}
+                                    alt="tools"
+                                    class="h-10 opacity-60 hover:opacity-100 duration-300"
+                                />
+                                <p class="text-slate-900 my-auto">{t.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</div>
