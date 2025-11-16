@@ -1,48 +1,56 @@
 ---
-import Progressbar from "../Progressbar.astro"
-import SectionHeading from "../SectionHeading.astro"
+import Progressbar from "../Progressbar.astro";
+import SectionHeading from "../SectionHeading.astro";
 
 const languages = [
   { lang: "Javascript / Typescript", perc: 80 },
   { lang: "Go", perc: 80 },
   { lang: "Python", perc: 70 },
   { lang: "SQL", perc: 60 },
-]
+];
 
 const technologies = [
   { text: "NodeJS", perc: 80 },
   { text: "React", perc: 70 },
   { text: "Docker", perc: 60 },
   { text: "Linux / Shell", perc: 60 },
-]
+];
 ---
 
-<div class="py-14" id="expertise">
-  <SectionHeading text="Expertise" />
+<div class="py-14" id="tools">
+  <SectionHeading text="Skills & Tools" />
 
   <div class="lg:grid lg:grid-cols-2 lg:gap-12">
     <div>
-      {languages.map(lang => (
-        <div class="flex flex-col space-y-1 py-4">
-          <div class="flex justify-between">
-            <span class="my-auto">{lang.lang}</span>
-            <span class="text-xs my-auto text-slate-900">{lang.perc}%</span>
+      {
+        languages.map((lang) => (
+          <div class="flex flex-col space-y-1 py-4">
+            <div class="flex justify-between">
+              <span class="my-auto">{lang.lang}</span>
+              <span class="text-xs my-auto text-slate-900">{lang.perc}%</span>
+            </div>
+            <div>
+              <Progressbar percentage={lang.perc} />
+            </div>
           </div>
-          <div><Progressbar percentage={lang.perc} /></div>
-        </div>
-      ))}
+        ))
+      }
     </div>
 
     <div>
-      {technologies.map(tech => (
-        <div class="flex flex-col space-y-1 py-4">
-          <div class="flex justify-between">
-            <span class="my-auto">{tech.text}</span>
-            <span class="text-xs my-auto text-slate-900">{tech.perc}%</span>
+      {
+        technologies.map((tech) => (
+          <div class="flex flex-col space-y-1 py-4">
+            <div class="flex justify-between">
+              <span class="my-auto">{tech.text}</span>
+              <span class="text-xs my-auto text-slate-900">{tech.perc}%</span>
+            </div>
+            <div>
+              <Progressbar percentage={tech.perc} />
+            </div>
           </div>
-          <div><Progressbar percentage={tech.perc} /></div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </div>
