@@ -1,7 +1,8 @@
 ---
 type Props = {
   icon: (props: Record<string, any>) => any;
-  heading: string;
+  id: string;
+  title: string;
   desc: string;
   technologies: string[];
 };
@@ -9,12 +10,13 @@ type Props = {
 const props = Astro.props;
 ---
 
-<div
+<a
+  href={"/projects/" + props.id}
   class="bg-slate-100 hover:bg-slate-200 transition-colors p-6 border-l-2 border-dotted border-slate-900 rounded"
 >
   <div class="flex space-x-3">
     <props.icon />
-    <h4 class="flex-1 text-xl mb-2">{props.heading}</h4>
+    <h4 class="flex-1 text-xl mb-2">{props.title}</h4>
   </div>
   <p class="text-sm leading-relaxed mb-5">{props.desc}</p>
 
@@ -27,4 +29,4 @@ const props = Astro.props;
       ))
     }
   </div>
-</div>
+</a>

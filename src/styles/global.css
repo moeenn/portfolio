@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+    --color-nbg: #FEFEFE;
+    --color-nfg: #070707;
+}
+
+:is(button, a) {
+    @apply cursor-pointer;
+}

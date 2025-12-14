@@ -1,10 +1,16 @@
 ---
-import ChevronUpIcon from "./icons/ChevronUpIcon.astro"
+import ChevronUpIcon from "./icons/ChevronUpIcon.astro";
 ---
 
-<div data-scrollbuttoncontainer class="transition-all duration-300 opacity-0">
-  <button data-scrollbutton title="Go To Top"
-    class="fixed z-90 bottom-8 right-8 border-0 w-10 h-10 rounded-full drop-shadow-md bg-slate-900 text-nbg text-3xl font-bold">
+<div
+  data-scrollbuttoncontainer
+  class="transition-all duration-300 opacity-0 cursor-pointer"
+>
+  <button
+    data-scrollbutton
+    title="Go To Top"
+    class="fixed z-90 bottom-8 right-8 border-0 w-10 h-10 rounded-full drop-shadow-md bg-slate-900 text-nbg text-3xl font-bold"
+  >
     <ChevronUpIcon />
   </button>
 </div>
