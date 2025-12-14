@@ -4,27 +4,27 @@ import Aws from "../../assets/img/tools/aws.svg";
 import Bash from "../../assets/img/tools/bash.svg";
 import CSS from "../../assets/img/tools/css.svg";
 import Docker from "../../assets/img/tools/docker.svg";
+import Express from "../../assets/img/tools/express.svg";
 import GCP from "../../assets/img/tools/gcp.svg";
 import Git from "../../assets/img/tools/git.svg";
 import Github from "../../assets/img/tools/github.svg";
 import Golang from "../../assets/img/tools/golang.svg";
 import Graphql from "../../assets/img/tools/graphql.svg";
 import Html from "../../assets/img/tools/html.svg";
-import Java from "../../assets/img/tools/java.svg";
+import Jira from "../../assets/img/tools/jira.svg";
 import Js from "../../assets/img/tools/js.svg";
-import Laravel from "../../assets/img/tools/laravel.svg";
 import Linux from "../../assets/img/tools/linux.svg";
 import Mongodb from "../../assets/img/tools/mongodb.svg";
 import Mysql from "../../assets/img/tools/mysql.svg";
+import Neo4j from "../../assets/img/tools/neo4j.svg";
 import Nextjs from "../../assets/img/tools/nextjs.svg";
 import Nodejs from "../../assets/img/tools/nodejs.svg";
-import Php from "../../assets/img/tools/php.svg";
 import Postgresql from "../../assets/img/tools/postgresql.svg";
 import Python from "../../assets/img/tools/python.svg";
+import Rabbitmq from "../../assets/img/tools/rabbitmq.svg";
 import React from "../../assets/img/tools/react.svg";
 import Tailwind from "../../assets/img/tools/tailwind.svg";
 import Typescript from "../../assets/img/tools/typescript.svg";
-import Vue from "../../assets/img/tools/vue.svg";
 
 const tools = [
     {
@@ -35,6 +35,7 @@ const tools = [
             { text: "Typescript", image: Typescript },
             { text: "NodeJS", image: Nodejs },
             { text: "React", image: React },
+            { text: "TailwindCSS", image: Tailwind },
             { text: "Docker", image: Docker },
             { text: "PostgreSQL", image: Postgresql },
         ],
@@ -43,21 +44,20 @@ const tools = [
         title: "Good knowledge",
         tools: [
             { text: "Python", image: Python },
+            { text: "Express", image: Express },
+            { text: "NextJS", image: Nextjs },
             { text: "GraphQL", image: Graphql },
-            { text: "Java", image: Java },
             { text: "MongoDB", image: Mongodb },
             { text: "MySQL", image: Mysql },
+            { text: "Neo4j", image: Neo4j },
+            { text: "RabbitMQ", image: Rabbitmq },
             { text: "Linux", image: Linux },
+            { text: "Bash", image: Bash },
             { text: "HTML", image: Html },
             { text: "CSS", image: CSS },
-            { text: "Bash", image: Bash },
             { text: "Git", image: Git },
             { text: "Github", image: Github },
-            { text: "PHP", image: Php },
-            { text: "Laravel", image: Laravel },
-            { text: "NextJS", image: Nextjs },
-            { text: "Vue", image: Vue },
-            { text: "TailwindCSS", image: Tailwind },
+            { text: "Jira", image: Jira },
         ],
     },
     {
@@ -80,7 +80,7 @@ const tools = [
                     <span class="text-slate-800 text-xs bg-slate-300 rounded-full px-3 py-1 font-medium">
                         {category.title}
                     </span>
-                    <div class="grid grid-cols-5 gap-10 mt-4">
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 mt-4">
                         {category.tools.map((t) => (
                             <div
                                 class="flex space-x-3 rounded hover:bg-slate-100 transition-colors p-2"

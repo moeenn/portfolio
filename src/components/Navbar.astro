@@ -1,6 +1,8 @@
 ---
 import Container from "./Container.astro";
 import Bar2Icon from "./icons/Bar2Icon.astro";
+import GithubIcon from "./icons/GithubIcon.astro";
+import LinkedinIcon from "./icons/LinkedinIcon.astro";
 
 const navItems = [
   { id: "/#career", text: "Career" },
@@ -21,7 +23,10 @@ const navItems = [
       </a>
 
       <div class="block md:hidden">
-        <div data-navbutton class="hover:bg-slate-200 p-2 cursor-pointer">
+        <div
+          data-navbutton
+          class="hover:bg-slate-200 rounded p-2 cursor-pointer"
+        >
           <Bar2Icon />
         </div>
       </div>
@@ -37,11 +42,35 @@ const navItems = [
             </a>
           ))
         }
+
+        <div class="flex px-2">
+          <span class="my-auto text-slate-300">|</span>
+        </div>
+
+        <div class="flex space-x-2">
+          <a
+            href="https://github.com/moeenn"
+            target="_blank"
+            class="my-auto hover:bg-slate-200 transition-colors rounded-full h-10 w-10 inline-flex"
+            title="Github"
+          >
+            <GithubIcon />
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/moeenn"
+            target="_blank"
+            class="my-auto hover:bg-slate-200 transition-colors rounded-full h-10 w-10 inline-flex"
+            title="LinkedIn"
+          >
+            <LinkedinIcon />
+          </a>
+        </div>
       </div>
     </div>
 
     <div data-mobilemenu class="hidden">
-      <div class="flex flex-col md:hidden bg-slate-100 py-2">
+      <div class="flex flex-col md:hidden bg-slate-100 py-2 rounded">
         {
           navItems.map((item) => (
             <a
@@ -52,6 +81,32 @@ const navItems = [
             </a>
           ))
         }
+      </div>
+
+      <div class="flex space-x-6 py-4 bg-slate-200 rounded-b">
+        <a
+          href="https://github.com/moeenn"
+          target="_blank"
+          class="my-auto flex-1 inline-flex"
+          title="Github"
+        >
+          <span class="mx-auto inline-flex space-x-2">
+            <GithubIcon />
+            <span class="my-auto text-sm">Github</span>
+          </span>
+        </a>
+
+        <a
+          href="https://www.linkedin.com/in/moeenn"
+          target="_blank"
+          class="my-auto flex-1 inline-flex"
+          title="LinkedIn"
+        >
+          <span class="mx-auto inline-flex space-x-2">
+            <LinkedinIcon />
+            <span class="my-auto text-sm">LinkedIn</span>
+          </span>
+        </a>
       </div>
     </div>
   </nav>
