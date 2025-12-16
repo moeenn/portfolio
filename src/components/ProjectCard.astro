@@ -10,7 +10,7 @@ const props = Astro.props;
 
 <a
   href={"/projects/" + props.project.id}
-  class="bg-slate-100 transition-colors p-6 border-l-2 border-slate-900 rounded-r"
+  class="bg-slate-100 hover:-translate-y-2 transition-all hover:drop-shadow p-6 border-l-2 border-slate-900 rounded-r"
 >
   <div class="flex space-x-3">
     <props.project.icon className="h-6 w-6 mb-auto" />

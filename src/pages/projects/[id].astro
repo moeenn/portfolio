@@ -5,6 +5,8 @@ import { projectIds, projects } from "../../content";
 import Container from "../../components/Container.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import SectionBreak from "../../components/SectionBreak.astro";
+import ZoomIcon from "../../components/icons/ZoomIcon.astro";
+import Lighthouse from "../../components/Lighthouse.astro";
 
 export const getStaticPaths = (() => {
     return projectIds.map((id) => ({
@@ -18,18 +20,41 @@ const project = projects.find((p) => p.id === projectId)!;
 
 <BaseLayout title="Muhammad Moeen - Project">
     <Container>
-        <div class="flex space-x-4 my-6">
+        <div class="flex space-x-4 mt-6">
             <project.icon className="size-8 my-auto" />
             <h1 class="text-3xl text-slate-900">
                 {project.title}
             </h1>
         </div>
 
+        <div
+            class="mt-6 cursor-pointer relative group shadow-md border border-slate-200 rounded-lg"
+            data-lightbox-target
+            data-project-id={projectId}
+            data-num-images={project.imageCount}
+        >
+            <div
+                id="banner"
+                class="group-hover:brightness-95 transition duration-300"
+            >
+                <img
+                    src={"/images/projects/" + projectId + "/1.webp"}
+                    class="w-full h-96 rounded-lg object-cover object-top"
+                />
+            </div>
+
+            <div
+                id="zoom"
+                class="hidden group-hover:flex z-10 absolute top-0 left-0 w-full h-full rounded-lg flex"
+            >
+                <ZoomIcon className="size-6 m-auto" />
+            </div>
+        </div>
+
         <div class="py-14">
             <SectionHeading text="Description" />
-            <p class="leading-relaxed">{project.desc}</p>
-
-            <div class="pt-6">
+            <p class="leading-relaxed pb-4">{project.desc}</p>
+            <div>
                 <ul class="list-disc pl-6">
                     {
                         project.features.map((feature) => (
@@ -48,7 +73,7 @@ const project = projects.find((p) => p.id === projectId)!;
                 {
                     project.tech.map((t) => (
                         <div
-                            class="flex space-x-3 rounded hover:bg-slate-100 transition-colors p-2"
+                            class="flex space-x-3 rounded hover:bg-slate-100 hover:scale-110 transition-all p-2"
                             title={t.name}
                         >
                             <img
@@ -62,5 +87,7 @@ const project = projects.find((p) => p.id === projectId)!;
                 }
             </div>
         </div>
+
+        <Lighthouse />
     </Container>
 </BaseLayout>

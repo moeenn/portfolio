@@ -1,0 +1,68 @@
+---
+import CloseIcon from "../components/icons/CloseIcon.astro";
+import ChevronLeftIcon from "../components/icons/ChevronLeftIcon.astro";
+import ChevronRightIcon from "../components/icons/ChevronRightIcon.astro";
+---
+
+<div
+    data-lightbox
+    hidden={true}
+    class="top-0 left-0 fixed z-20 bg-slate-900/70 h-screen w-screen py-4 px-2"
+>
+    <div class="rounded h-full w-full flex">
+        <div class="flex flex-col">
+            <button
+                data-lightbox-prev
+                class="inline-flex p-4 bg-black/10 hover:bg-black/20 rounded cursor-pointer my-auto"
+                title="Previous"
+            >
+                <ChevronLeftIcon className="size-8 m-auto text-white" />
+            </button>
+        </div>
+
+        <div class="flex-1 m-auto rounded h-full">
+            <p
+                data-lightbox-loader
+                class="text-sm text-white text-center font-bold"
+            >
+                Loading...
+            </p>
+            <img
+                data-lightbox-image
+                class="rounded w-full h-full object-contain"
+                src=""
+            />
+        </div>
+
+        <div class="flex flex-col">
+            <button
+                data-lightbox-next
+                title="Next"
+                class="inline-flex p-4 bg-black/10 hover:bg-black/20 rounded cursor-pointer my-auto"
+            >
+                <ChevronRightIcon className="size-8 m-auto text-white" />
+            </button>
+        </div>
+
+        <div class="fixed top-0 right-0 z-30">
+            <button
+                data-lightbox-close
+                title="Close"
+                class="p-4 bg-black/10 hover:bg-black/20 rounded"
+            >
+                <CloseIcon className="size-8 m-auto text-white" />
+            </button>
+        </div>
+
+        <div class="fixed z-20 bottom-6 w-full inline-flex">
+            <div
+                data-lightbox-counter
+                class="mx-auto bg-black/30 rounded-full text-white px-4 py-1 text-xs font-bold"
+            >
+                1 / 10
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/lightbox.js" defer></script>
+</div>
