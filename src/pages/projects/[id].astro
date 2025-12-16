@@ -1,8 +1,10 @@
 ---
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { projectIds, projects } from "../../content/projects";
+import { projectIds, projects } from "../../content";
 import Container from "../../components/Container.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import SectionBreak from "../../components/SectionBreak.astro";
 
 export const getStaticPaths = (() => {
     return projectIds.map((id) => ({
@@ -16,11 +18,49 @@ const project = projects.find((p) => p.id === projectId)!;
 
 <BaseLayout title="Muhammad Moeen - Project">
     <Container>
-        <div class="flex space-x-4">
-            <project.icon />
-            <h1 class="text-2xl lg:text-5xl font-bold text-slate-900">
+        <div class="flex space-x-4 my-6">
+            <project.icon className="size-8 my-auto" />
+            <h1 class="text-3xl text-slate-900">
                 {project.title}
             </h1>
+        </div>
+
+        <div class="py-14">
+            <SectionHeading text="Description" />
+            <p class="leading-relaxed">{project.desc}</p>
+
+            <div class="pt-6">
+                <ul class="list-disc pl-6">
+                    {
+                        project.features.map((feature) => (
+                            <li class="pb-2">{feature}</li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <SectionBreak />
+
+        <div class="py-14">
+            <SectionHeading text="Technologies" />
+            <div class="grid grid-cols-4 gap-4">
+                {
+                    project.tech.map((t) => (
+                        <div
+                            class="flex space-x-3 rounded hover:bg-slate-100 transition-colors p-2"
+                            title={t.name}
+                        >
+                            <img
+                                src={t.icon.src}
+                                alt="tools"
+                                class="h-10 opacity-60 hover:opacity-100 duration-300"
+                            />
+                            <p class="text-slate-900 my-auto">{t.name}</p>
+                        </div>
+                    ))
+                }
+            </div>
         </div>
     </Container>
 </BaseLayout>

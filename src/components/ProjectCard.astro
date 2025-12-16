@@ -1,30 +1,28 @@
 ---
+import { type Project } from "../content";
+
 type Props = {
-  icon: (props: Record<string, any>) => any;
-  id: string;
-  title: string;
-  desc: string;
-  technologies: string[];
+  project: Project;
 };
 
 const props = Astro.props;
 ---
 
 <a
-  href={"/projects/" + props.id}
-  class="bg-slate-100 transition-colors p-6 border-l-2 border-slate-900 rounded"
+  href={"/projects/" + props.project.id}
+  class="bg-slate-100 transition-colors p-6 border-l-2 border-slate-900 rounded-r"
 >
   <div class="flex space-x-3">
-    <props.icon className="h-6 w-6 mb-auto" />
-    <h4 class="flex-1 text-xl mb-2">{props.title}</h4>
+    <props.project.icon className="h-6 w-6 mb-auto" />
+    <h4 class="flex-1 text-xl mb-2">{props.project.title}</h4>
   </div>
-  <p class="text-sm leading-relaxed mb-5">{props.desc}</p>
+  <p class="text-sm leading-relaxed mb-5">{props.project.desc}</p>
 
   <div class="flex flex-wrap">
     {
-      props.technologies.map((tech) => (
+      props.project.tech.map((tech) => (
         <span class="text-xs px-2 py-1 bg-slate-200 rounded mr-2 mb-2">
-          {tech}
+          {tech.name}
         </span>
       ))
     }

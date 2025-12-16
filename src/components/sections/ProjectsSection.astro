@@ -1,23 +1,13 @@
 ---
 import SectionHeading from "../SectionHeading.astro";
 import ProjectCard from "../ProjectCard.astro";
-import { projects } from "../../content/projects";
+import { projects } from "../../content";
 ---
 
 <div class="py-14" id="projects">
   <SectionHeading text="Projects" />
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    {
-      projects.map((project) => (
-        <ProjectCard
-          id={project.id}
-          title={project.title}
-          desc={project.desc}
-          icon={project.icon}
-          technologies={project.tech}
-        />
-      ))
-    }
+    {projects.map((project) => <ProjectCard project={project} />)}
   </div>
 </div>
