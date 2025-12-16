@@ -54,7 +54,7 @@ export const projects: Project[] = [
     {
         id: "meritorious",
         title: "Meritorious Consultants",
-        desc: "Business website for a consulting firm which provides accounting and bookeeping services.",
+        desc: "Business website with blogging features for a consulting firm which provides accounting and bookeeping services.",
         icon: BriefcaseIcon,
         tech: ["NodeJS", "Typescript", "HonoJS", "TailwindCSS", "Sqlite3"],
     },

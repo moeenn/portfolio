@@ -1,7 +1,12 @@
-<svg
-    class="size-5 m-auto"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 256 256"
+---
+type Props = {
+    className: string;
+};
+
+const classNames = Astro.props.className;
+---
+
+<svg class={classNames} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
     ><rect width="256" height="256" fill="none"></rect><rect
         x="32"
         y="32"
