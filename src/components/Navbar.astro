@@ -5,111 +5,105 @@ import GithubIcon from "./icons/GithubIcon.astro";
 import LinkedinIcon from "./icons/LinkedinIcon.astro";
 
 const navItems = [
-  { id: "/#career", text: "Career" },
-  { id: "/#projects", text: "Projects" },
-  { id: "/#tools", text: "Skills & Tools" },
-  { id: "/#contact", text: "Contact Me" },
+	{ id: "/#career", text: "Career" },
+	{ id: "/#projects", text: "Projects" },
+	{ id: "/#tools", text: "Skills & Tools" },
+	{ id: "/#contact", text: "Contact Me" },
 ];
 ---
 
 <Container>
-  <nav>
-    <div class="pt-8 pb-4 flex justify-between">
-      <a class="my-auto cursor-pointer" href="/#">
-        <span
-          class="font-mono pb-1 pt-2 font-bold text-white bg-slate-900 px-3 py-1 rounded"
-          >M.M</span
-        >
-      </a>
+	<nav>
+		<div class="pt-8 pb-4 flex justify-between">
+			<a class="my-auto cursor-pointer" href="/#">
+				<span
+					class="font-mono pb-1 pt-2 font-bold text-white bg-gray-900 px-3 py-1 rounded"
+					>M.M</span
+				>
+			</a>
 
-      <div class="block md:hidden">
-        <div
-          data-navbutton
-          class="hover:bg-slate-200 rounded p-2 cursor-pointer"
-        >
-          <Bar2Icon className="text-slate-700 h-6 w-6" />
-        </div>
-      </div>
+			<div class="block md:hidden">
+				<div class="flex space-x-2">
+					<a
+						href="https://github.com/moeenn"
+						target="_blank"
+						class="my-auto hover:bg-gray-200 transition-colors rounded-full h-10 w-10 inline-flex"
+						title="Github"
+					>
+						<GithubIcon className="size-6 m-auto" />
+					</a>
 
-      <div class="hidden md:flex md:space-x-2">
-        {
-          navItems.map((item) => (
-            <a
-              href={item.id}
-              class="px-3 py-2 text-slate-700 hover:text-slate-900 text-sm my-auto hover:bg-slate-200 rounded transition-colors"
-            >
-              {item.text}
-            </a>
-          ))
-        }
+					<a
+						href="https://www.linkedin.com/in/moeenn"
+						target="_blank"
+						class="my-auto hover:bg-gray-200 transition-colors rounded-full h-10 w-10 inline-flex"
+						title="LinkedIn"
+					>
+						<LinkedinIcon className="size-6 m-auto" />
+					</a>
 
-        <div class="flex px-2">
-          <span class="my-auto text-slate-300">|</span>
-        </div>
+					<div
+						data-navbutton
+						class="hover:bg-gray-200 rounded p-2 cursor-pointer"
+					>
+						<Bar2Icon className="text-gray-700 h-6 w-6" />
+					</div>
+				</div>
+			</div>
 
-        <div class="flex space-x-2">
-          <a
-            href="https://github.com/moeenn"
-            target="_blank"
-            class="my-auto hover:bg-slate-200 transition-colors rounded-full h-10 w-10 inline-flex"
-            title="Github"
-          >
-            <GithubIcon className="size-6 m-auto" />
-          </a>
+			<div class="hidden md:flex md:space-x-2">
+				{
+					navItems.map((item) => (
+						<a
+							href={item.id}
+							class="px-3 py-2 text-black text-sm my-auto hover:bg-gray-200 rounded transition-colors"
+						>
+							{item.text}
+						</a>
+					))
+				}
 
-          <a
-            href="https://www.linkedin.com/in/moeenn"
-            target="_blank"
-            class="my-auto hover:bg-slate-200 transition-colors rounded-full h-10 w-10 inline-flex"
-            title="LinkedIn"
-          >
-            <LinkedinIcon className="size-6 m-auto" />
-          </a>
-        </div>
-      </div>
-    </div>
+				<div class="flex px-2">
+					<span class="my-auto text-gray-300">|</span>
+				</div>
 
-    <div data-mobilemenu class="hidden">
-      <div class="flex flex-col md:hidden bg-slate-100 py-2 rounded">
-        {
-          navItems.map((item) => (
-            <a
-              href={item.id}
-              class="px-3 py-2 text-black leading-none hover:bg-slate-300 text-sm my-auto transition-colors mb-0"
-            >
-              {item.text}
-            </a>
-          ))
-        }
-      </div>
+				<div class="flex space-x-2">
+					<a
+						href="https://github.com/moeenn"
+						target="_blank"
+						class="my-auto hover:bg-gray-200 transition-colors rounded-full h-10 w-10 inline-flex"
+						title="Github"
+					>
+						<GithubIcon className="size-6 m-auto" />
+					</a>
 
-      <div class="flex space-x-6 bg-slate-200 rounded-b">
-        <a
-          href="https://github.com/moeenn"
-          target="_blank"
-          class="my-auto flex-1 inline-flex hover:bg-slate-300 transition-colors py-4 rounded-bl"
-          title="Github"
-        >
-          <span class="mx-auto inline-flex space-x-2">
-            <GithubIcon className="size-6" />
-            <span class="my-auto text-sm">Github</span>
-          </span>
-        </a>
+					<a
+						href="https://www.linkedin.com/in/moeenn"
+						target="_blank"
+						class="my-auto hover:bg-gray-200 transition-colors rounded-full h-10 w-10 inline-flex"
+						title="LinkedIn"
+					>
+						<LinkedinIcon className="size-6 m-auto" />
+					</a>
+				</div>
+			</div>
+		</div>
 
-        <a
-          href="https://www.linkedin.com/in/moeenn"
-          target="_blank"
-          class="my-auto flex-1 inline-flex hover:bg-slate-300 transition-colors py-4 rounded-br"
-          title="LinkedIn"
-        >
-          <span class="mx-auto inline-flex space-x-2">
-            <LinkedinIcon className="size-6" />
-            <span class="my-auto text-sm">LinkedIn</span>
-          </span>
-        </a>
-      </div>
-    </div>
-  </nav>
+		<div data-mobilemenu class="hidden">
+			<div class="flex flex-col md:hidden bg-gray-100 rounded">
+				{
+					navItems.map((item) => (
+						<a
+							href={item.id}
+							class="px-3 py-4 text-black leading-none hover:bg-gray-300 text-sm my-auto transition-colors mb-0 rounded"
+						>
+							{item.text}
+						</a>
+					))
+				}
+			</div>
+		</div>
+	</nav>
 
-  <script src="/scripts/navbar.js" defer></script>
+	<script src="/scripts/navbar.js" defer></script>
 </Container>

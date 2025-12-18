@@ -4,25 +4,43 @@ import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import ScrolltopButton from "../components/ScrolltopButton.astro";
 import GTag from "../components/GTag.astro";
-const { title } = Astro.props;
+import Meta from "../components/Meta.astro";
+
+type Props = {
+	title: string;
+	meta: {
+		description?: string;
+		image?: string;
+		url?: string;
+	};
+};
+
+const props = Astro.props;
+const title = "M. Moeen - " + props.title;
 ---
 
 <html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/jpg" href="/favicon.webp" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <script is:inline src="/public/scripts/gTagManager.js"></script>
-    <title>{title}</title>
-  </head>
-  <body class="bg-slate-50 text-slate-800 selection:bg-slate-200">
-    <GTag />
-    <Navbar />
-    <main>
-      <slot />
-    </main>
-    <Footer />
-    <ScrolltopButton />
-  </body>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/jpg" href="/favicon.webp" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<script is:inline src="/public/scripts/gTagManager.js"></script>
+		<Meta
+			title={title}
+			description={props.meta.description}
+			image={props.meta.image}
+			url={props.meta.url}
+		/>
+		<title>{title}</title>
+	</head>
+	<body class="text-black selection:bg-gray-200">
+		<GTag />
+		<Navbar />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+		<ScrolltopButton />
+	</body>
 </html>

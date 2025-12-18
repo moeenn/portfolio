@@ -1,0 +1,36 @@
+---
+type Props = {
+	title: string;
+	description?: string;
+	image?: string;
+	url?: string;
+};
+
+const props = Astro.props;
+
+const website = {
+	description: "M. Moeen's personal portfolio website.",
+	url: "https://moeenn.github.io",
+	logo: "/logo.webp",
+};
+
+const description = props.description ?? website.description;
+const url = props.url ? website.url + props.url : website.url;
+const image = props.image
+	? website.url + props.image
+	: website.url + website.logo;
+---
+
+<meta name="title" content={props.title} />
+<meta name="description" content={description} />
+<meta property="og:title" content={props.title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:url" content={url} />
+<meta property="og:site_name" content={props.title} />
+
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={url} />
+<meta property="twitter:title" content={props.title} />
+<meta property="twitter:image" content={image} />
+<meta property="twitter:description" content={description} />

@@ -3,16 +3,16 @@ import ChevronUpIcon from "./icons/ChevronUpIcon.astro";
 ---
 
 <div
-  data-scrollbuttoncontainer
-  class="transition-all duration-300 opacity-0 cursor-pointer"
+	data-scrollbuttoncontainer
+	class="transition-all duration-300 opacity-0 cursor-pointer"
 >
-  <button
-    data-scrollbutton
-    title="Go To Top"
-    class="fixed z-90 bottom-8 right-8 border-0 w-10 h-10 rounded-full drop-shadow-md bg-slate-900 text-white text-3xl font-bold"
-  >
-    <ChevronUpIcon className="h-4 w-4 m-auto" />
-  </button>
+	<button
+		data-scrollbutton
+		title="Go To Top"
+		class="fixed z-90 bottom-8 right-8 border-0 w-12 h-12 rounded-full drop-shadow-md bg-black text-white text-3xl font-bold"
+	>
+		<ChevronUpIcon className="h-4 w-4 m-auto" />
+	</button>
 </div>
 
 <script src="/scripts/scrolltop.js" defer></script>

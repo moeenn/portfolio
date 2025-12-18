@@ -10,71 +10,77 @@ import LightBox from "../../components/LightBox.astro";
 import Technology from "../../components/Technology.astro";
 
 export const getStaticPaths = (() => {
-    return projectIds.map((id) => ({
-        params: { id },
-    }));
+	return projectIds.map((id) => ({
+		params: { id },
+	}));
 }) satisfies GetStaticPaths;
 
 const projectId = Astro.params.id;
 const project = projects.find((p) => p.id === projectId)!;
 ---
 
-<BaseLayout title="Muhammad Moeen - Project">
-    <Container>
-        <div class="flex space-x-4 mt-6">
-            <project.icon className="size-8 my-auto" />
-            <h1 class="text-3xl text-slate-900">
-                {project.title}
-            </h1>
-        </div>
+<BaseLayout
+	title={"Project - " + project.title}
+	meta={{
+		url: "/project/" + project.id,
+		description: project.desc,
+	}}
+>
+	<Container>
+		<div class="flex space-x-4 mt-6">
+			<project.icon className="size-8 my-auto" />
+			<h1 class="text-3xl text-gray-900">
+				{project.title}
+			</h1>
+		</div>
 
-        <div
-            class="mt-6 cursor-pointer relative group shadow-md border border-slate-200 rounded-lg"
-            data-lightbox-target
-            data-project-id={projectId}
-            data-num-images={project.imageCount}
-        >
-            <div
-                id="banner"
-                class="group-hover:brightness-95 transition duration-300"
-            >
-                <img
-                    src={"/images/projects/" + projectId + "/1.webp"}
-                    class="w-full h-96 rounded-lg object-cover object-top"
-                />
-            </div>
+		<div
+			class="mt-6 cursor-pointer relative group shadow-md border border-gray-200 rounded-lg"
+			data-lightbox-target
+			data-project-id={projectId}
+			data-num-images={project.imageCount}
+		>
+			<div
+				id="banner"
+				class="group-hover:brightness-95 transition duration-300"
+			>
+				<img
+					src={"/images/projects/" + projectId + "/1.webp"}
+					class="w-full h-96 rounded-lg object-cover object-top"
+				/>
+			</div>
 
-            <div
-                id="zoom"
-                class="hidden group-hover:flex z-10 absolute top-0 left-0 w-full h-full rounded-lg flex"
-            >
-                <ZoomIcon className="size-6 m-auto" />
-            </div>
-        </div>
+			<div
+				id="zoom"
+				class="hidden group-hover:flex z-10 absolute top-0 left-0 w-full h-full rounded-lg flex"
+			>
+				<ZoomIcon className="size-6 m-auto" />
+			</div>
+		</div>
 
-        <div class="py-14">
-            <SectionHeading text="Description" />
-            <p class="leading-relaxed pb-4">{project.desc}</p>
-            <div>
-                <ul class="list-disc pl-6">
-                    {
-                        project.features.map((feature) => (
-                            <li class="pb-2">{feature}</li>
-                        ))
-                    }
-                </ul>
-            </div>
-        </div>
+		<div class="py-14">
+			<SectionHeading text="Description" />
+			<p class="leading-relaxed pb-4">{project.desc}</p>
+			<div>
+				<ul class="list-disc pl-6">
+					{
+						project.features.map((feature) => (
+							<li class="pb-2">{feature}</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
 
-        <SectionBreak />
+		<SectionBreak />
 
-        <div class="py-14">
-            <SectionHeading text="Technologies" />
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {project.tech.map((t) => <Technology tech={t} />)}
-            </div>
-        </div>
+		<div class="py-14">
+			<SectionHeading text="Technologies" />
+			<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+				{project.tech.map((t) => <Technology tech={t} />)}
+			</div>
+		</div>
 
-        <LightBox />
-    </Container>
+		<LightBox />
+	</Container>
 </BaseLayout>
