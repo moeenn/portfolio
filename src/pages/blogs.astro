@@ -27,9 +27,20 @@ const sorted = (items: Set<string>) => [...items.keys()].sort();
 				<div class="xl:pl-6 xl:h-full xl:order-last">
 					<div class="xl:sticky xl:top-4">
 						<div>
-							<p class="text-xs font-medium text-gray-600 pb-2">
-								Categories
-							</p>
+							<div class="pb-2 flex justify-between">
+								<p class="text-xs font-medium text-gray-600">
+									Categories
+								</p>
+
+								<button
+									hidden
+									data-clear-categories
+									title="Clear selected categories"
+									class="cursor-pointer text-xs text-red-700 hover:underline"
+									>Clear
+								</button>
+							</div>
+
 							<div class="flex flex-wrap gap-2">
 								{
 									sorted(categories)
@@ -47,9 +58,19 @@ const sorted = (items: Set<string>) => [...items.keys()].sort();
 						</div>
 
 						<div class="mt-10 mb-12">
-							<p class="text-xs font-medium text-gray-600 pb-2">
-								Tags
-							</p>
+							<div class="pb-2 flex justify-between">
+								<p class="text-xs font-medium text-gray-600">
+									Tags
+								</p>
+
+								<button
+									hidden
+									data-clear-tags
+									title="Clear selected tags"
+									class="cursor-pointer text-xs text-red-700 hover:underline"
+									>Clear
+								</button>
+							</div>
 							<div class="flex flex-wrap gap-2">
 								{
 									sorted(tags).map((t) => (
@@ -73,5 +94,7 @@ const sorted = (items: Set<string>) => [...items.keys()].sort();
 				</div>
 			</div>
 		</section>
+
+		<script is:inline src="/public/scripts/blogFilter.js"></script>
 	</Container>
 </BaseLayout>

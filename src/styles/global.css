@@ -4,3 +4,7 @@
 :is(button, a) {
 	@apply cursor-pointer;
 }
+
+.pill-selected {
+	@apply bg-black text-white;
+}

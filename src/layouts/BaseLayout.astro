@@ -34,10 +34,10 @@ const title = "M. Moeen - " + props.title;
 		/>
 		<title>{title}</title>
 	</head>
-	<body class="text-black">
+	<body class="text-black h-screen flex flex-col">
 		<GTag />
 		<Navbar />
-		<main>
+		<main class="flex-1">
 			<slot />
 		</main>
 		<Footer />
