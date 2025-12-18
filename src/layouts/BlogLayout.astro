@@ -1,0 +1,30 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Container from "../components/Container.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+
+type Props = {
+	frontmatter: {
+		title: string;
+		url: string;
+		desc: string;
+	};
+};
+
+const props = Astro.props.frontmatter;
+---
+
+<BaseLayout
+	title={props.title}
+	meta={{ url: props.url, description: props.desc }}
+>
+	<Container>
+		<div class="py-12">
+			<SectionHeading text={props.title} />
+
+			<div class="prose-xl">
+				<slot />
+			</div>
+		</div>
+	</Container>
+</BaseLayout>

@@ -1,5 +1,6 @@
 @import "tailwindcss";
+@plugin '@tailwindcss/typography';
 
 :is(button, a) {
-    @apply cursor-pointer;
+	@apply cursor-pointer;
 }
