@@ -5,6 +5,10 @@ import SectionHeading from "../components/SectionHeading.astro";
 import BlogPostCard from "../components/BlogPostCard.astro";
 import { getCollection } from "astro:content";
 const blogposts = await getCollection("blog");
+
+const categories = new Set(blogposts.map((p) => p.data.category));
+const tags = new Set(blogposts.flatMap((p) => p.data.tags));
+const sorted = (items: Set<string>) => [...items.keys()].sort();
 ---
 
 <BaseLayout
@@ -19,8 +23,52 @@ const blogposts = await getCollection("blog");
 		<section class="pt-8 pb-14">
 			<SectionHeading text="Blogs" />
 
-			<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-				{blogposts.map((p) => <BlogPostCard post={p} />)}
+			<div class="grid grid-cols-4">
+				<div class="col-span-3 grid grid-cols-2 gap-6">
+					{blogposts.map((p) => <BlogPostCard post={p} />)}
+				</div>
+
+				<div class="pl-6 h-full">
+					<div class="sticky top-4">
+						<div>
+							<p class="text-xs font-medium text-gray-600 pb-2">
+								Categories
+							</p>
+							<div class="flex flex-wrap gap-2">
+								{
+									sorted(categories)
+										.sort()
+										.map((c) => (
+											<span
+												data-category={c}
+												class="cursor-pointer text-xs text-gray-800 bg-gray-200 hover:bg-gray-300 hover:text-black transition-colors px-3 py-1 rounded"
+											>
+												{c}
+											</span>
+										))
+								}
+							</div>
+						</div>
+
+						<div class="mt-10">
+							<p class="text-xs font-medium text-gray-600 pb-2">
+								Tags
+							</p>
+							<div class="flex flex-wrap gap-2">
+								{
+									sorted(tags).map((t) => (
+										<span
+											data-tag={t}
+											class="cursor-pointer text-xs text-gray-800 bg-gray-200 hover:bg-gray-300 hover:text-black transition-colors px-3 py-1 rounded"
+										>
+											{t}
+										</span>
+									))
+								}
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
 	</Container>
