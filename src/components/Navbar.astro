@@ -56,12 +56,19 @@ const navItems = [
 					navItems.map((item) => (
 						<a
 							href={item.id}
-							class="px-3 py-2 text-black text-sm my-auto hover:bg-gray-200 rounded transition-colors"
+							class="px-3 py-2 text-black text-sm my-auto border-b-2 border-transparent hover:border-black hover:bg-gray-200 rounded-t transition-colors"
 						>
 							{item.text}
 						</a>
 					))
 				}
+
+				<a
+					href="/blogs"
+					class="px-3 py-2 font-bold text-black text-sm my-auto hover:bg-gray-200 border-b-2 border-transparent hover:border-black rounded-t transition-colors"
+				>
+					Blogs
+				</a>
 
 				<div class="flex px-2">
 					<span class="my-auto text-gray-300">|</span>
@@ -101,6 +108,13 @@ const navItems = [
 						</a>
 					))
 				}
+
+				<a
+					href="/blogs"
+					class="px-3 py-4 text-black leading-none hover:bg-gray-300 text-sm my-auto transition-colors mb-0 rounded"
+				>
+					Blogs
+				</a>
 			</div>
 		</div>
 	</nav>
