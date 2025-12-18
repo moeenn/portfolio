@@ -23,13 +23,9 @@ const sorted = (items: Set<string>) => [...items.keys()].sort();
 		<section class="pt-8 pb-14">
 			<SectionHeading text="Blogs" />
 
-			<div class="grid grid-cols-4">
-				<div class="col-span-3 grid grid-cols-2 gap-6">
-					{blogposts.map((p) => <BlogPostCard post={p} />)}
-				</div>
-
-				<div class="pl-6 h-full">
-					<div class="sticky top-4">
+			<div class="grid grid-cols-1 xl:grid-cols-4">
+				<div class="xl:pl-6 xl:h-full xl:order-last">
+					<div class="xl:sticky xl:top-4">
 						<div>
 							<p class="text-xs font-medium text-gray-600 pb-2">
 								Categories
@@ -50,7 +46,7 @@ const sorted = (items: Set<string>) => [...items.keys()].sort();
 							</div>
 						</div>
 
-						<div class="mt-10">
+						<div class="mt-10 mb-12">
 							<p class="text-xs font-medium text-gray-600 pb-2">
 								Tags
 							</p>
@@ -68,6 +64,12 @@ const sorted = (items: Set<string>) => [...items.keys()].sort();
 							</div>
 						</div>
 					</div>
+				</div>
+
+				<div
+					class="col-span-1 xl:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6 xl:order-first"
+				>
+					{blogposts.map((p) => <BlogPostCard post={p} />)}
 				</div>
 			</div>
 		</section>
