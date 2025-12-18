@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/Container.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+	id: string;
+	post: CollectionEntry<"blog">;
+};
+const props = Astro.props;
+
+export const getStaticPaths = (async () => {
+	const posts = await getCollection("blog");
+	return posts.map((p) => ({
+		params: { id: p.id },
+		props: { post: p },
+	}));
+}) satisfies GetStaticPaths;
+
+const { Content } = await render(props.post);
+---
+
+<BaseLayout
+	title={props.post.data.title}
+	meta={{ url: "/blogs/" + props.id, description: props.post.data.desc }}
+>
+	<Container>
+		<div class="pt-8 pb-14">
+			<SectionHeading text={props.post.data.title} />
+
+			<div class="prose-xl">
+				<Content />
+			</div>
+		</div>
+	</Container>
+</BaseLayout>

@@ -1,8 +1,8 @@
 ---
-layout: ../../layouts/BlogLayout.astro
 title: "NPM Workspaces"
 desc: "NPM workspaces is a mechanism for sharing code between different Javascript projects. This article walks through workspaces setup and configuration."
-url: "/blogs/npm-workspaces"
+category: "Javascript"
+tags: ["NPM", "Node"]
 ---
 
 `workspaces` is a features provided by `npm` to create `monorepos` and share code between different projects.

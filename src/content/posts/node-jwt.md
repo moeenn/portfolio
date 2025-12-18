@@ -1,8 +1,8 @@
 ---
-layout: ../../layouts/BlogLayout.astro
 title: "JWT in Node"
 desc: "JWTs are a great alternative to sessions and cookies. This article walks through usage of JWTs in NodeJS."
-url: "/blogs/node-jwt"
+category: "Javascript"
+tags: ["Node", "JWT", "JSDoc"]
 ---
 
 ```bash

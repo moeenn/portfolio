@@ -1,8 +1,8 @@
 ---
-layout: ../../layouts/BlogLayout.astro
 title: "Clustering and PM2 in Node"
 desc: Given the single-threaded nature of Node, clustering is extremely important to ensure resiliance and proper utilization of hardware. This articles walks through some examples.
-url: "/blogs/pm2-clustering"
+category: "Javascript"
+tags: ["Node"]
 ---
 
 `pm2` can be imstalled using the following command.

@@ -1,8 +1,8 @@
 ---
-layout: ../../layouts/BlogLayout.astro
 title: "JSDoc for type-hints"
 desc: "Plain Javascript projects without any sort of type-checking can be hell. Here is how to take of advantages of Typescript in plain Javascript projects."
-url: "/blogs/jsdoc"
+category: "Javascript"
+tags: ["JSDoc", "Typescript"]
 ---
 
 #### Configuration

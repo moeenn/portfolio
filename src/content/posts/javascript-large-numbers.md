@@ -1,8 +1,8 @@
 ---
-layout: ../../layouts/BlogLayout.astro
 title: "Large numbers in JavaScript"
 desc: "Handling large numbers in an interpreted language like Javascript can be tricky. Here are some tips for working with them more effectively."
-url: "/blogs/javascript-large-numbers"
+category: "Javascript"
+tags: ["Large numbers"]
 ---
 
 Handing large numbers can be problematic in dynamic / scripting languages. In JS we use the `bigint` type.

@@ -1,8 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { BlogPosts } from "../content/blogs";
 import Container from "../components/Container.astro";
 import SectionHeading from "../components/SectionHeading.astro";
+import BlogPostCard from "../components/BlogPostCard.astro";
+import { getCollection } from "astro:content";
+const blogposts = await getCollection("blog");
 ---
 
 <BaseLayout
@@ -18,39 +20,7 @@ import SectionHeading from "../components/SectionHeading.astro";
 			<SectionHeading text="Blogs" />
 
 			<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-				{
-					BlogPosts.map((p) => (
-						<a
-							href={`/blogs/${p.id}`}
-							class="w-full p-6 border border-gray-300 hover:-translate-y-2 hover:shadow-lg transition-all rounded"
-						>
-							<div class="flex flex-col h-full">
-								<div>
-									<span class="leading-none px-4 py-1 rounded-full bg-black text-white text-xs font-medium">
-										{p.category.name}
-									</span>
-								</div>
-
-								<h4 class="text-black text-xl font-medium mt-3">
-									{p.title}
-								</h4>
-								<p class="flex-1 text-gray-700 leading-relaxed py-b pt-3">
-									{p.desc}
-								</p>
-
-								<hr class="border-b border-gray-200 my-4" />
-
-								<div class="flex flex-wrap gap-2">
-									{p.tags.map((t) => (
-										<span class="bg-gray-200 text-gray-800 rounded px-3 py-1 text-xs">
-											{t.name}
-										</span>
-									))}
-								</div>
-							</div>
-						</a>
-					))
-				}
+				{blogposts.map((p) => <BlogPostCard post={p} />)}
 			</div>
 		</section>
 	</Container>
