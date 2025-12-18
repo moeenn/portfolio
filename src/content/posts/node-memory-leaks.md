@@ -1,6 +1,6 @@
 ---
 title: "Detect memory leaks in NodeJS applications"
-desc: "Bad code is not only hard to maintain, it can also be hard on the running it. This articles gives a general idea of how to detect memory leaks in a NodeJs/Express application."
+desc: "Bad code is not only hard to maintain, it can also be hard on the running it. This articles gives a general idea of how to detect memory leaks in a NodeJs / Express application."
 category: "Javascript"
 tags: ["Node", "Express"]
 ---
