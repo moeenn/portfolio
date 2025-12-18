@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import ScrolltopButton from "../components/ScrolltopButton.astro";
+import GTag from "../components/GTag.astro";
 const { title } = Astro.props;
 ---
 
@@ -12,9 +13,11 @@ const { title } = Astro.props;
     <link rel="icon" type="image/jpg" href="/favicon.webp" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline src="/public/scripts/gTagManager.js"></script>
     <title>{title}</title>
   </head>
   <body class="bg-slate-50 text-nfg selection:bg-slate-200">
+    <GTag />
     <Navbar />
     <main>
       <slot />

@@ -1,6 +1,7 @@
 ---
 import SectionHeading from "../SectionHeading.astro";
 import { tools } from "../../content";
+import Technology from "../Technology.astro";
 ---
 
 <div class="py-14" id="tools">
@@ -15,17 +16,7 @@ import { tools } from "../../content";
                     </span>
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 mt-4">
                         {category.tools.map((t) => (
-                            <div
-                                class="flex space-x-3 rounded hover:bg-slate-100 hover:scale-110 transition-all p-2"
-                                title={t.name}
-                            >
-                                <img
-                                    src={t.icon.src}
-                                    alt="tools"
-                                    class="h-10 opacity-70 hover:opacity-100 duration-300"
-                                />
-                                <p class="text-slate-900 my-auto">{t.name}</p>
-                            </div>
+                            <Technology tech={t} />
                         ))}
                     </div>
                 </div>

@@ -1,0 +1,20 @@
+---
+import { type Tech } from "../content";
+type Props = {
+    tech: Tech;
+};
+
+const t = Astro.props.tech;
+---
+
+<div
+    class="flex space-x-3 rounded hover:bg-slate-100 hover:scale-110 transition-all p-2"
+    title={t.name}
+>
+    <img
+        src={t.icon.src}
+        alt="tools"
+        class="h-10 opacity-70 hover:opacity-100 duration-300"
+    />
+    <p class="text-slate-900 my-auto">{t.name}</p>
+</div>

@@ -6,7 +6,8 @@ import Container from "../../components/Container.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import SectionBreak from "../../components/SectionBreak.astro";
 import ZoomIcon from "../../components/icons/ZoomIcon.astro";
-import Lighthouse from "../../components/Lighthouse.astro";
+import LightBox from "../../components/LightBox.astro";
+import Technology from "../../components/Technology.astro";
 
 export const getStaticPaths = (() => {
     return projectIds.map((id) => ({
@@ -70,24 +71,10 @@ const project = projects.find((p) => p.id === projectId)!;
         <div class="py-14">
             <SectionHeading text="Technologies" />
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {
-                    project.tech.map((t) => (
-                        <div
-                            class="flex space-x-3 rounded hover:bg-slate-100 hover:scale-110 transition-all p-2"
-                            title={t.name}
-                        >
-                            <img
-                                src={t.icon.src}
-                                alt="tools"
-                                class="h-10 opacity-60 hover:opacity-100 duration-300"
-                            />
-                            <p class="text-slate-900 my-auto">{t.name}</p>
-                        </div>
-                    ))
-                }
+                {project.tech.map((t) => <Technology tech={t} />)}
             </div>
         </div>
 
-        <Lighthouse />
+        <LightBox />
     </Container>
 </BaseLayout>
