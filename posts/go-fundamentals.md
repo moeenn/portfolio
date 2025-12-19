@@ -5,11 +5,7 @@ category: "Golang"
 tags: ["Fundamentals"]
 ---
 
-#### Todo
-
-- Common Go Mistakes [Link](https://youtu.be/biGr232TBwc?si=aS0oCFLzT-nP6t5K)
-
-### Hello world
+## Hello world
 
 ```go
 package main
@@ -23,7 +19,7 @@ func main() {
 }
 ```
 
-### Importing Libraries
+## Importing Libraries
 
 A single library can be imported as it has been in the hello world program above. If we need to import multiple libraries we should use the Go convention
 

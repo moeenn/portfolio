@@ -5,7 +5,7 @@ category: "Javascript"
 tags: ["JSDoc", "Typescript"]
 ---
 
-#### Configuration
+## Configuration
 
 File `package.json`
 
@@ -51,7 +51,7 @@ File `jsconfig.json`
 }
 ```
 
-#### Usage
+## Usage
 
 ```javascript
 /** @type {string} */
@@ -85,7 +85,7 @@ const capitals = new Map([
 const greeter = (name) => console.log("Hello, %s", name);
 ```
 
-#### Classes
+### Classes
 
 ```javascript
 class Point {
@@ -141,7 +141,7 @@ class Entity {
 
 **Note**: Access modifiers i.e. `@public`, `@private`, `@protected` can be used with properties and methods.
 
-#### Extends and Implements
+### Extends and Implements
 
 ```js
 /**
@@ -204,7 +204,7 @@ async function main() {
 main().catch(console.error);
 ```
 
-#### Generics
+### Generics
 
 ```js
 /**
@@ -223,7 +223,7 @@ const c = id({});
 
 **Note**: Generic classes can also be defined this way.
 
-#### Cast to specific Data type
+### Cast to specific Data type
 
 ```javascript
 /** @type {unknown} */
@@ -240,7 +240,7 @@ const data = /** @type {{ id: number, name: string, email: string}} */ (
 
 **Note**: The comment style and the placement of the parentheses during casting is important.
 
-#### Cast as const
+### Cast as const
 
 ```javascript
 const schema = /** @type {const} */ (anotherVariable);
@@ -248,7 +248,7 @@ const schema = /** @type {const} */ (anotherVariable);
 
 **Note**: The parenthesis around the value are required for this to work.
 
-#### Usage with `Ajv`
+## Usage with `Ajv`
 
 ```javascript
 import Ajv from "ajv";
