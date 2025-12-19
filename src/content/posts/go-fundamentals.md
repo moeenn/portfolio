@@ -767,8 +767,6 @@ func main() {
 }
 ```
 
----
-
 ### `make` vs `new`
 
 ```go

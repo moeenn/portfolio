@@ -5,7 +5,9 @@ category: "Golang"
 tags: ["Concurrency"]
 ---
 
-### Channels
+Go is one the best languages when it comes to concurrency. It strikes just the right balance low-level control and ease of use for the concurrency primitives it provides.
+
+## Channels
 
 ```go
 func main() {
@@ -29,7 +31,7 @@ func main() {
 }
 ```
 
-### Implementing generators using channels
+## Implementing generators using channels
 
 Considering how Python uses generators, for iterating over a large number of values without running into memory usage issues. We can implement a similar pattern in Go using Channels
 
@@ -61,7 +63,7 @@ func main() {
 
 **Note**: When we range over incoming channel values, we must ensure that the sender closes the channel when it is done sending values. The sender must always be responsible for closing the channel and if the channel is left open, it will result in a deadlock; The receiver will keep waiting for incoming values after the sender is done sending values.
 
-### Channel Sync: Select
+## Channel Sync: Select
 
 ```go
 import (
@@ -109,7 +111,7 @@ func main() {
 }
 ```
 
-### Timers & Tickers
+## Timers & Tickers
 
 **Timers** can be used to perform some action in the future.
 
@@ -187,7 +189,7 @@ func main() {
 }
 ```
 
-### Worker pools
+## Worker pools
 
 ```go
 import (
@@ -232,7 +234,7 @@ func main() {
 }
 ```
 
-#### Another example
+### Another example
 
 ```go
 package main
@@ -298,7 +300,7 @@ func main() {
 
 **Note**: The purpose of the Semaphore (i.e. `sem`) is to coordinate and only allow max number of operation to happen concurrently i.e. `maxWorkers`.
 
-### Atomic variables
+## Atomic variables
 
 ```go
 import (
@@ -363,7 +365,7 @@ func main() {
 }
 ```
 
-### Mutex
+## Mutex
 
 ```go
 import (
@@ -410,7 +412,7 @@ func main() {
 }
 ```
 
-### Multiple workers sending over a channel
+## Multiple workers sending over a channel
 
 ```go
 import (
