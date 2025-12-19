@@ -90,7 +90,7 @@ We will likely be building our projects using `typescript` and `swc`. We can add
 }
 ```
 
-```gitignore
+```
 node_modules
 build
 .DS_Store
