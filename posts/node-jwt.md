@@ -2,7 +2,7 @@
 title: "JWT in Node"
 desc: "JWTs are a great alternative to sessions and cookies. This article walks through usage of JWTs in NodeJS."
 category: "Javascript"
-tags: ["Node", "JWT", "JSDoc"]
+tags: ["Node", "JWT", "JSDoc", "Back-end"]
 ---
 
 ```bash
