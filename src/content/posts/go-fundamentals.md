@@ -14,7 +14,6 @@ tags: ["Fundamentals"]
 ```go
 package main
 
-
 import (
   "fmt"
 )

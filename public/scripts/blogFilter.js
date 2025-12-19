@@ -66,8 +66,8 @@ function shouldShowPost(category, tags, state) {
  */
 function filterPosts(allPosts, state) {
 	for (const post of allPosts) {
-		const category = post.dataset["category"];
-		const tags = JSON.parse(post.dataset["tags"]);
+		const category = post.dataset["postCategory"];
+		const tags = JSON.parse(post.dataset["postTags"]);
 		post.hidden = !shouldShowPost(category, tags, state);
 	}
 }

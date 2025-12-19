@@ -10,8 +10,8 @@ const post = Astro.props.post;
 
 <a
 	data-post
-	data-category={post.data.category}
-	data-tags={JSON.stringify(post.data.tags)}
+	data-post-category={post.data.category}
+	data-post-tags={JSON.stringify(post.data.tags)}
 	href={`/blogs/${post.id}`}
 	class="w-full p-6 border border-gray-300 hover:-translate-y-2 hover:shadow-lg transition-all rounded"
 >
