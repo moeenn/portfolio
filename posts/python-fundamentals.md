@@ -1,5 +1,5 @@
 ---
-title: "Fundamentals of python"
+title: "Fundamentals of Python"
 desc: "There is no doubt that python is currently one of the most used languages in the world. It is a well crafted language with great libraries and is used in a wide range of domains. Being able to write python is a useful skill for any developer to have."
 category: "Python"
 tags: ["Fundamentals"]
