@@ -1,10 +1,12 @@
 ---
+import fs from "node:fs";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
 import ArrowLeftIcon from "../../components/icons/ArrowLeftIcon.astro";
 import type { GetStaticPaths } from "astro";
 import { render, getCollection, type CollectionEntry } from "astro:content";
 import { JSDOM } from "jsdom";
+import { formatDate } from "../../lib/datetime";
 
 type Heading = {
 	id: string;
@@ -16,6 +18,7 @@ type Props = {
 	id: string;
 	post: CollectionEntry<"blog">;
 	headings: Heading[];
+	lastModified: Date;
 };
 const props = Astro.props;
 
@@ -35,10 +38,13 @@ export const getStaticPaths = (async () => {
 
 	const posts = await getCollection("blog");
 	return posts.map((p) => ({
-		params: { id: p.id },
+		params: {
+			id: p.id,
+		},
 		props: {
 			post: p,
 			headings: extractHeadings(p.rendered?.html),
+			lastModified: new Date(fs.statSync(p.filePath ?? "").mtime),
 		},
 	}));
 }) satisfies GetStaticPaths;
@@ -62,12 +68,18 @@ const { Content } = await render(props.post);
 				>
 			</div>
 
-			<h2 class="text-2xl space-x-2 mb-2">
+			<h2 class="text-2xl space-x-2 mb-4">
 				<span class="font-normal text-gray-500">#</span>
 				<span class="text-gray-900">{props.post.data.title}</span>
 			</h2>
 
 			<div class="flex flex-wrap gap-2 mb-6">
+				<span
+					class="border-r-2 border-stone-300 pr-4 mr-2 text-sm my-auto text-stone-700"
+				>
+					{formatDate(props.lastModified)}
+				</span>
+
 				<span
 					class="text-xs bg-gray-200 hover:bg-gray-300 rounded px-2 py-1"
 				>

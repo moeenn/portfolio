@@ -29,7 +29,7 @@ export const AnimatedToggle: FC = () => {
 
   return (
     <div>
-      <button className="text-xs bg-slate-200 hover:bg-slate-100 rounded px-3 py-2"
+      <button className="text-xs bg-stone-200 hover:bg-stone-100 rounded px-3 py-2"
         onClick={() => setOpen(o => !o)}
       >Toggle</button>
 
@@ -58,7 +58,7 @@ export const AnimatedToggle: FC = () => {
 
   return (
     <div>
-      <button className="text-xs bg-slate-200 hover:bg-slate-100 rounded px-3 py-2"
+      <button className="text-xs bg-stone-200 hover:bg-stone-100 rounded px-3 py-2"
         onClick={() => setOpen(o => !o)}
       >Toggle</button>
 

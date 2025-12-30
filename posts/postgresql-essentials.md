@@ -5,7 +5,6 @@ category: "SQL"
 tags: ["Database", "Fundamentals"]
 ---
 
-
 ## Connecting to Database
 
 ### Through `psql`
@@ -14,19 +13,17 @@ tags: ["Database", "Fundamentals"]
 $ psql -h <hostname> -p <port> -d <database> -U <username>
 ```
 
-### Connection string 
+### Connection string
 
 ```
 postgresql://devuser:devpass@localhost:5432/dev?sslmode=disable
 ```
-
 
 ## Exporting existing DB schema
 
 ```bash
 pg_dump --schema-only --no-acl $DATABASE_URL > migrations/0000-init.sql
 ```
-
 
 ## Comments
 
@@ -50,14 +47,12 @@ DROP DATABASE sample;
 $ psql -h <Host> -p <Port> -U <User> <database> --command="CREATE DATABASE <db_name> WITH OWNER <User>"
 ```
 
-
 ## Drop all content of database
 
 ```sql
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 ```
-
 
 ## Column Data types
 
@@ -85,7 +80,6 @@ CREATE SCHEMA public;
 |     `TIMESTAMP` | Date and time (no time zone)                                                                                                                                       |
 |   `TIMESTAMPTZ` | Date and time, including time zone                                                                                                                                 |
 
-
 ## Constraints
 
 |                                   Type | Description                                                         |
@@ -106,17 +100,16 @@ CREATE TABLE
   products (
     product_id BIGSERIAL,
     name TEXT NOT NULL,
-    
+
     -- column level check
     price NUMERIC NOT NULL CHECK (price >= 0),
     discounted_price NUMERIC NOT NULL,
     PRIMARY KEY (product_id),
-    
+
     -- table level check
     CONSTRAINT valid_discount CHECK (discounted_price < price)
   );
 ```
-
 
 ### Example: Unique combinations
 
@@ -125,7 +118,7 @@ CREATE TABLE
   users (
     user_id UUID DEFAULT gen_random_uuid(),
     email TEXT,
-    
+
     PRIMARY KEY (user_id),
     CONSTRAINT email_unique UNIQUE (email)
   );
@@ -141,9 +134,9 @@ CREATE TABLE
 ```
 
 **Note**: In this example we have applied a table level constraint which ensures that following
+
 - `(1, 1)` and `(1, 2)` is allowed
 - `(1, 1)` and `(1, 1)` in two separate rows is not allowed.
-
 
 ## Tables
 
@@ -163,6 +156,7 @@ CREATE TABLE
 ```
 
 ## UUID
+
 UUIDs can be used as unique identifiers for records. Here is how they work.
 
 ```sql
@@ -194,10 +188,9 @@ VALUES
   (gen_random_uuid (), 'user@site.com');
 ```
 
-
 ### Why use `UUID` over `BIGSERIAL` as primary key?
 
-- First question to ask is whether the record key should be random or sequential. 
+- First question to ask is whether the record key should be random or sequential.
 - If record key is going to be exposed to the users, they random keys are more secure. Sequential keys can lead to enumeration attacks.
 
 On the other hand, sequential keys have certain advantages as well
@@ -236,7 +229,6 @@ VALUES
 phone_numbers TEXT[],
 ```
 
-
 ### Insert Data into Table
 
 ```sql
@@ -263,7 +255,7 @@ VALUES
 WITH password_insert AS (
   INSERT INTO password (hash)
   VALUES ('abc123223213')
-  RETURNING id 
+  RETURNING id
 )
 
 INSERT INTO
@@ -307,6 +299,7 @@ create table
 ```
 
 ## Domain types
+
 Domain types can be used to extend existing types with additional checks etc.
 
 ```sql
@@ -342,17 +335,17 @@ CREATE TABLE
     PRIMARY KEY (email)
   );
 
-INSERT INTO users (email, address) 
+INSERT INTO users (email, address)
 VALUES ('admin@site.com', ROW('Main street', 'Lahore', 5400));
 ```
 
 ```sql
 -- composite type fields can also be accessed as follows
-INSERT INTO users (email, address.street, address.city, address.zip) 
+INSERT INTO users (email, address.street, address.city, address.zip)
 VALUES ('admin@site.com', 'Main street', 'Lahore', 5400);
 ```
 
-## Pagination 
+## Pagination
 
 ```sql
 SELECT
@@ -368,7 +361,6 @@ OFFSET 0;
 
 **Note**: The `LIMIT` keyword is supported by `MySQL`, `PostgreSQL` and `SQLite` but it may not be supported by other databases.
 
-
 ### Example
 
 ```sql
@@ -380,12 +372,11 @@ OFFSET 0;
 
 **Note**: The above query will not take into account the `LIMIT` and `OFFSET` options when calculating the `total_count` value.
 
-
 ## Relationships
 
 ### One-to-one
 
-**Mandatory one-to-one**: Adding relationship field to the parent entity with `UNIQUE` constraint ensures that the a child entity will always exists for the parent. Do note that this does not prevent orphan child entities. 
+**Mandatory one-to-one**: Adding relationship field to the parent entity with `UNIQUE` constraint ensures that the a child entity will always exists for the parent. Do note that this does not prevent orphan child entities.
 
 E.g. In the following SQL schema, all `users` will have `profiles` but it is not necessary that all `profiles` will have associated users.
 
@@ -405,7 +396,7 @@ CREATE TABLE
     -- notice the unique constraint (1:1)
     profile_id BIGSERIAL UNIQUE NOT NULL,
     PRIMARY KEY (user_id),
-    FOREIGN KEY (profile_id) REFERENCES profiles (profile_id)
+    CONSTRAINT fk_profile FOREIGN KEY (profile_id) REFERENCES profiles (profile_id)
   );
 
 -- insert dummy data
@@ -453,7 +444,6 @@ WHERE
   profiles.profile_id = 2;
 ```
 
-
 **Optional one-to-one**: Adding relationship field to the child entity with `UNIQUE` constraint ensures that all child entities will be associated with parent entities. However, this does not mean that all parent entities will necessarily have associated child entities.
 
 E.g. In the following SQL schema, it is ensured that all `profiles` will have associated `users`. However, it is possible that some `users` may not have associated `profile`.
@@ -470,10 +460,10 @@ CREATE TABLE
   profiles (
     profile_id BIGSERIAL NOT NULL,
     title TEXT NOT NULL,
-    -- notice the unique constraint (1:1)    
+    -- notice the unique constraint (1:1)
     user_id BIGSERIAL UNIQUE NOT NULL,
     PRIMARY KEY (profile_id),
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
   );
 
 -- insert dummy record
@@ -520,7 +510,6 @@ WHERE
   users.user_id = 1;
 ```
 
-
 ### One-to-many
 
 ```sql
@@ -539,7 +528,7 @@ CREATE TABLE
     -- notice user_id has *no unique constraint* (1:M)
     user_id BIGSERIAL NOT NULL,
     PRIMARY KEY (post_id),
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
   );
 
 -- insert dummy data
@@ -591,7 +580,6 @@ WHERE
   users.user_id = 2;
 ```
 
-
 ### Many-to-many
 
 ```sql
@@ -618,8 +606,8 @@ CREATE TABLE
     user_id BIGSERIAL NOT NULL,
     role_id BIGSERIAL NOT NULL,
     PRIMARY KEY (user_role_id),
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (role_id) REFERENCES roles (role_id)
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+    CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles (role_id)
   );
 
 -- insert test data
@@ -659,7 +647,6 @@ WHERE
   roles.role_name = 'admin';
 ```
 
-
 ### Relationships and Delete cascades
 
 When creating relationships, always question yourself which table is the `parent` and which table is the `child`. This is because we will very likely have `delete cascade` in our foreign relationships. Consider the following schema.
@@ -668,7 +655,7 @@ When creating relationships, always question yourself which table is the `parent
 create table "user" (
   id uuid not null
   , email varchar(255) not null
-  , password varchar(255) not null  
+  , password varchar(255) not null
   , created_at timestamp not null default now()
   , updated_at timestamp not null default now()
   , primary key (id)
@@ -679,25 +666,24 @@ create index user_email_idx on "user"(email);
 
 create table user_profile (
   id uuid not null
-  , name varchar(255)  
-  , address text 
+  , name varchar(255)
+  , address text
   , city varchar(255)
-  , country varchar(255)  
+  , country varchar(255)
   , user_id uuid not null
   , primary key (id)
-  , foreign key (user_id) references "user"(id) on delete cascade
+  , constraint fk_user foreign key (user_id) references "user"(id) on delete cascade
   , constraint user_id_unique unique(user_id)
 );
 
 create index user_profile_user_id_idx on user_profile(user_id);
 ```
 
-In this schema, `user` is the parent and `user_profile` is the child table. This is an **optional one-to-one** relation because a `user` may not have any associated `user_profile`. 
+In this schema, `user` is the parent and `user_profile` is the child table. This is an **optional one-to-one** relation because a `user` may not have any associated `user_profile`.
 
 Notice the `user_id` field with `delete cascade` in the `user_profile` table. This ensures that when a `user` is deleted, the associated `user_profile` is also deleted.
 
 To sum up, is `delete cascade` is specified, the entry in child table will be deleted when the entry in the parent table is deleted.
-
 
 ## JSON Aggregation
 
@@ -717,7 +703,7 @@ CREATE TABLE
     text VARCHAR(255) NOT NULL,
     post_id UUID NOT NULL,
     PRIMARY KEY (comment_id),
-    FOREIGN KEY (post_id) REFERENCES posts (post_id)
+    CONSTRAINT fk_post FOREIGN KEY (post_id) REFERENCES posts (post_id)
   );
 ```
 
@@ -741,7 +727,6 @@ GROUP BY
   posts.title;
 ```
 
-
 ### A better implementation
 
 ```sql
@@ -759,7 +744,7 @@ create table
     title text not null,
     user_id uuid not null,
     primary key (post_id),
-    foreign key (user_id) references users (user_id)
+    constraint fk_user foreign key (user_id) references users (user_id)
   );
 ```
 
@@ -780,10 +765,10 @@ group by
 
 **Note**: `coalesce` is a variadic function which returns the first non-null value it is provided. In the above example, the first argument to `coalesce` will be `NULL` when no `posts` are found against the `user`. The second argument to `coalesce` will be a non-null value, therefore it will be returned instead of `NULL`.
 
-
 ## Transactions
 
 ### ACID
+
 ACID is an acronym that refers to the set of 4 key properties that define a transaction.
 
 - **Atomicity**: Each statement in a transaction (to read, write, update or delete data) is treated as a single unit. Either the entire statement is executed, or none of it is executed. This property prevents data loss and corruption from occurring in case of system failure.
@@ -803,8 +788,8 @@ CREATE TABLE
     PRIMARY KEY (account_id),
     CONSTRAINT balance_nonnegative CHECK (balance >= 0)
   );
-  
-INSERT INTO accounts (account_id, balance) 
+
+INSERT INTO accounts (account_id, balance)
 VALUES (1, 100000), (2, 20000), (3, 40500000);
 ```
 
@@ -816,7 +801,6 @@ UPDATE accounts SET balance = balance - 100000 WHERE account_id = 1;
 UPDATE accounts SET balance = balance + 100000 WHERE account_id = 2;
 COMMIT;
 ```
-
 
 ## Performance optimisations
 
@@ -834,11 +818,10 @@ VALUES
 
 ```sql
 -- execute existing prepared statement
-EXECUTE users_insert ('User one', 'user_one@site.com'); 
+EXECUTE users_insert ('User one', 'user_one@site.com');
 ```
 
 **Note**: Prepared statements are scoped to connection, this means that only the session which prepares the statement can execute it.
-
 
 ### Indexing
 
@@ -855,7 +838,6 @@ DROP INDEX users_index;
 ```
 
 **Note**: Indexes help with `read` speeds. However, they slow down `write` speeds because with every new records inserted, indexes have to be updated as well.
-
 
 ### Partitioning
 
@@ -889,10 +871,10 @@ Caveats
 
 - The sub-partition tables in the above example will need to be created using a scheduler like CRON job etc.
 - If a query has to multiple partitions, it will be slower than if we had not used partitioning at all.
-- If a table is partitioned, it cannot have a global unique row identifier. However, row IDs can be unique within any single partition. 
-
+- If a table is partitioned, it cannot have a global unique row identifier. However, row IDs can be unique within any single partition.
 
 ### Stored Procedures
+
 Procedures are reusable blocks of statements, which don't return a value.
 
 ```sql
@@ -965,7 +947,6 @@ DROP PROCEDURE
   );
 ```
 
-
 ### Stored functions
 
 ```sql
@@ -982,9 +963,9 @@ CREATE TABLE
   users (
     user_id BIGSERIAL,
     email TEXT UNIQUE,
-    profile_id BIGSERIAL UNIQUE, -- one-to-one relation  
+    profile_id BIGSERIAL UNIQUE, -- one-to-one relation
     PRIMARY KEY (user_id),
-    FOREIGN KEY (profile_id) REFERENCES profiles (profile_id)
+    CONSTRAINT fk_profile FOREIGN KEY (profile_id) REFERENCES profiles (profile_id)
   );
 
 -- insert dummy data
@@ -1033,7 +1014,6 @@ FROM
 DROP FUNCTION get_user (id INT);
 ```
 
-
 ## Hashing passwords inside PostgreSQL
 
 PostgreSQL hashing functions rely on `pgcrypto` extension, it needs to be manually enabled on the database.
@@ -1067,7 +1047,6 @@ VALUES
     hash_password ('abc123123')
   );
 ```
-
 
 ## Views
 
@@ -1116,24 +1095,24 @@ SELECT * FROM site_orders_view;
 ```
 
 ## N+1 query problem
-N+1 queries are a performance problem in which the application makes database queries in a loop, instead of making a single query that returns or modifies all the information at once. Each database connection takes some amount of time, so querying the database in a loop can be many times slower than doing it just once. This problem often occurs when you use an object-relational mapping (ORM) tool in web frameworks like Django or Ruby on Rails.
 
+N+1 queries are a performance problem in which the application makes database queries in a loop, instead of making a single query that returns or modifies all the information at once. Each database connection takes some amount of time, so querying the database in a loop can be many times slower than doing it just once. This problem often occurs when you use an object-relational mapping (ORM) tool in web frameworks like Django or Ruby on Rails.
 
 ## Optional filter parameters
 
 ```sql
 SELECT * FROM people
-WHERE 
+WHERE
 	employed = TRUE
 	AND ($1 IS NULL OR age > $1)
 ```
 
 In the above query, `$1` is a nullable value for `age`. If we pass in a non-null value, the condition `age > $1` will apply. Is we pass in a null value, only the first portion of the condition i.e. `$1 IS NULL` will evaluate and short-circuit the condition.
 
-
 ## To-do
+
 - [ ] Type casting
-- [ ] Additional Features [Link](https://sive.rs/pg) 
+- [ ] Additional Features [Link](https://sive.rs/pg)
 - [ ] Volatile
 - [ ] Triggers / Listen / Notify
 - [ ] Partitioning [Link](https://rasiksuhail.medium.com/guide-to-postgresql-table-partitioning-c0814b0fbd9b)

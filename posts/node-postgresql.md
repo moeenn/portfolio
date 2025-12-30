@@ -2,7 +2,7 @@
 title: "PostgreSQL in Node"
 desc: "PostgreSQL is one of the most advanced RDBMS available. It has all the features any application could ever need. Here is how to use it in Node"
 category: "Javascript"
-tags: ["Database", "Typescript"]
+tags: ["Database", "Typescript", "SQL", "Node"]
 ---
 
 ## Installing dependencies
@@ -14,7 +14,7 @@ $ npm i -D @types/pg node-pg-migrate dotenv
 
 **Note**: `dotenv` is an indirect dependency of `node-pg-migrate`. It is required because we will be loading database URL from `.env` file
 
-```.env
+```
 # dont change name; this is automatically picked up by node-pg-migrate
 DATABASE_URL=postgres://devuser:devpass@localhost:5432/dev
 ```
@@ -45,14 +45,15 @@ create type user_role as enum('admin', 'user');
 
 create table
   users (
-    user_id uuid,
-    email text unique not null,
-    password text not null,
-    role user_role not null default 'user',
-    is_active boolean not null default true,
-    created_at timestamp not null default now(),
-    deleted_at timestamp null,
-    primary key (user_id)
+    id uuid
+    , email text not null
+    , password text not null
+    , role user_role not null default 'user'
+    , "isActive" boolean not null default true
+    , "createdAt" timestamp not null default now()
+    , "deletedAt" timestamp null
+    , primary key (id)
+    , constraint email_unique unique (email)
   )
 
 -- Down Migration
@@ -65,379 +66,581 @@ drop type user_role;
 npm run db:migrate
 ```
 
-## An elaborate example
+## Basic example
+
+The following basic code will get us started.
 
 ```ts
-import { Pool, type PoolClient, DatabaseError } from "pg";
-import pino from "pino";
-import { z } from "zod";
-
-const Logger = pino();
+import { Pool } from "pg"
+import assert from "node:assert/strict"
 
 class DatabaseConfig {
-	user = "devuser";
-	host = "localhost";
-	port = 5432;
-	password = "devpass";
-	database = "dev";
+    public readonly url: string
+
+    constructor(env: Record<string, string> | NodeJS.ProcessEnv) {
+        const conn = env["DATABASE_URL"]
+        assert(conn != undefined)
+        this.url = conn
+    }
 }
 
 class Database {
-	#pool: Pool;
+    #pool: Pool
 
-	constructor(config: DatabaseConfig) {
-		this.#pool = new Pool({
-			user: config.user,
-			host: config.host,
-			port: config.port,
-			password: config.password,
-			database: config.database,
-		});
-	}
+    constructor(config: DatabaseConfig) {
+        this.#pool = new Pool({
+            connectionString: config.url,
+        })
+    }
 
-	async ping(): Promise<boolean> {
-		const result = await this.#pool.query("select 1");
-		return result.rowCount == 1;
-	}
+    async ping(): Promise<boolean> {
+        const result = await this.#pool.query("select 1");
+        return result.rowCount == 1;
+    }
 
-	get conn() {
-		return this.#pool;
-	}
+    get conn() {
+        assert(this.#pool != null)
+        return this.#pool;
+    }
 
-	async tx(): Promise<Transaction> {
-		return await Transaction.begin(this);
-	}
-
-	async [Symbol.asyncDispose]() {
-		Logger.info("disconnecting db");
-		await this.#pool.end();
-	}
+    async disconnect() {
+        await this.#pool.end();
+    }
 }
 
-class Transaction {
-	tx: PoolClient | null;
+async function main(): Promise<void> {
+    const dbConfig = new DatabaseConfig(process.env)
+    const db = new Database(dbConfig)
+    assert(await db.ping())
+    console.log("-- connection established --")
 
-	private constructor() {
-		this.tx = null;
-	}
-
-	static async begin(db: Database) {
-		const newTx = new Transaction();
-		newTx.tx = await db.conn.connect();
-		await newTx.tx.query("begin");
-		return newTx;
-	}
-
-	async [Symbol.asyncDispose]() {
-		if (!this.tx) return;
-		try {
-			await this.tx.query("commit");
-		} catch (err) {
-			await this.tx.query("rollback");
-			throw err;
-		} finally {
-			this.tx.release();
-		}
-	}
+    await db.disconnect()
+    console.log("-- disconnected --")
 }
 
-class UserEntity {
-	id: string;
-	email: string;
-	password: string;
-	role: "ADMIN" | "CLIENT";
-	createdAt: Date;
-	deletedAt: Date | null | undefined;
-
-	#schema = z.object({
-		id: z.uuid(),
-		email: z.email(),
-		password: z.string().min(8),
-		role: z.enum(["ADMIN", "CLIENT"]),
-		created_at: z.coerce.date(),
-		deleted_at: z.coerce.date().nullable().optional(),
-	});
-
-	constructor(raw: unknown) {
-		const v = this.#schema.parse(raw);
-		this.id = v.id;
-		this.email = v.email;
-		this.password = v.password;
-		this.role = v.role;
-		this.createdAt = v.created_at;
-		this.deletedAt = v.deleted_at;
-	}
-
-	static fromObject(v: Omit<UserEntity, "id" | "createdAt" | "deletedAt">) {
-		return new UserEntity({
-			id: crypto.randomUUID(),
-			email: v.email,
-			password: v.password,
-			role: v.role,
-			created_at: new Date(),
-			deleted_at: undefined,
-		});
-	}
-}
-
-type ListUserArgs = {
-	limit: number;
-	offset: number;
-};
-
-type ListUsersQueryResult = UserEntity & {
-	count: number;
-};
-
-type ListUsersResult = {
-	users: UserEntity[];
-	totalCount: number;
-};
-
-class UserRepo {
-	db: Database;
-
-	constructor(db: Database) {
-		this.db = db;
-	}
-
-	static listUsersQuery = `
-        select *, count(*) over() as count from "user"
-        where deleted_at is null
-        limit $1
-        offset $2        
-    `;
-
-	async listUsers(args: ListUserArgs): Promise<ListUsersResult> {
-		const rows = await this.db.conn.query<ListUsersQueryResult>(
-			UserRepo.listUsersQuery,
-			[args.limit, args.offset],
-		);
-
-		const result: ListUsersResult = {
-			users: [],
-			totalCount: 0,
-		};
-
-		if (rows.rows.length == 0) {
-			return result;
-		}
-
-		result.totalCount = rows.rows[0].count;
-		result.users = rows.rows.map((row) => new UserEntity(row));
-		return result;
-	}
-
-	static createUserQuery = `
-        insert into "user" (id, email, password, role, created_at)
-        values ($1, $2, $3, $4, $5)
-    `;
-
-	async crateUser(user: UserEntity): Promise<void> {
-		try {
-			await this.db.conn.query(UserRepo.createUserQuery, [
-				user.id,
-				user.email,
-				user.password,
-				user.role,
-				user.createdAt.toUTCString(),
-			]);
-		} catch (err) {
-			if (err instanceof DatabaseError) {
-				switch (err.constraint) {
-					case "email_unique":
-						throw new Error("email address already in use");
-				}
-			}
-			throw err;
-		}
-	}
-}
-
-async function main() {
-	const config = new DatabaseConfig();
-	await using db = new Database(config);
-	const isConnected = await db.ping();
-	if (!isConnected) {
-		throw new Error("failed to connect to db");
-	}
-
-	const repo = new UserRepo(db);
-	const clientTwo = UserEntity.fromObject({
-		email: "client-two@site.com",
-		password: "another-password",
-		role: "CLIENT",
-	});
-	await repo.crateUser(clientTwo);
-
-	const users = await repo.listUsers({ limit: 10, offset: 0 });
-	Logger.info({ count: users.totalCount }, "total users");
-	for (const user of users.users) {
-		console.log(user);
-	}
-}
-
-main().catch(console.error);
+main().catch(console.error)
 ```
 
-## Named Arguments
+Above code is a bit too basic. Notably, it is missing the following functionalities:
+1. Named query support
+1. Better transactions
+
+Let's add these in.
+
+
+### Named queries
+
+So why do we even need named queries? Look at the following code which you will generally find with `pg`.
 
 ```ts
-type NamedArgs = Record<string, Stringable | Date>;
-type NamedResult = [string, string[]];
+async function createUser(db: Database, user: UserEntity) {
+    const query = `
+        insert into users (id, email, password, role, "isActive", "createdAt")
+        values ($1, $2, $3, $4, $5, $6)
+    `
 
+    await db.conn.query(query, [
+        user.id,
+        user.email,
+        user.password,
+        user.role,
+        user.isActive,
+        user.createdAt,
+    ])
+}
+```
+
+The above code gives me anxiety. It is very error-prone and not at all fun to work with. We can do better. With named queries, the above code will look as follows.
+
+```ts
+async function createUser(db: Database, user: UserEntity) {
+    const query = `
+        insert into users (id, email, password, role, "isActive", "createdAt")
+        values (:id, :email, :password, :role, :isActive, :createdAt)
+    `
+
+    await db.conn.query(query, user)
+}
+```
+
+There. That's much better. Now lets implement it.
+
+
+```ts
 interface Stringable {
-	toString(): string;
+    toString(): string
 }
 
-export function named(query: string, args: NamedArgs): NamedResult {
-	const params = [...query.matchAll(/:([a-zA-Z_][a-zA-Z0-9_]*)/g)].map(
-		(match) => match[0].slice(1),
-	);
+export type NamedArgs = {
+    [x: string]: Stringable | Date | null;
+}
+export type ParamType = string | null
 
-	const paramsSet = new Set(params);
-	const paramArray: string[] = [];
-	let idx = 1;
+export class NamedQueryResult {
+    public readonly preparedQuery: string
+    public readonly params: ParamType[]
 
-	for (const param of paramsSet) {
-		const paramValue = args[param];
-		if (!paramValue) {
-			throw new MissingArgumentError(param);
-		}
-
-		query = query.replaceAll(":" + param, "$" + idx);
-		if (paramValue instanceof Date) {
-			paramArray.push(paramValue.toISOString());
-		} else {
-			paramArray.push(paramValue.toString());
-		}
-
-		idx++;
-	}
-
-	return [query.trim(), paramArray];
+    constructor(preparedQuery: string, params: ParamType[]) {
+        this.preparedQuery = preparedQuery
+        this.params = params
+    }
 }
 
 export class MissingArgumentError extends Error {
-	public readonly arg: string;
+    public readonly arg: string
 
-	constructor(arg: string) {
-		super("missing sql query argument: " + arg);
-		this.arg = arg;
-	}
+    constructor(arg: string) {
+        super("missing sql query argument: " + arg)
+        this.arg = arg
+    }
+}
+
+function namedArray(values: ParamType[], offset: number): string {
+    const pieces: string[] = []
+    for (let i = 0; i < values.length; i++) {
+        pieces.push(`$${offset + i}`)
+    }
+
+    return pieces.join(", ")
+}
+
+export function named(query: string, args: NamedArgs): NamedQueryResult {
+    const params = [...query.matchAll(/:([a-zA-Z_][a-zA-Z0-9_]*)/g)].map((match) =>
+        match[0].slice(1),
+    )
+
+    const paramsSet = new Set(params)
+    const paramArray: ParamType[] = []
+    let idx = 1
+
+    for (const param of paramsSet) {
+        const paramValue = args[param]
+        if (paramValue === undefined) {
+            throw new MissingArgumentError(param)
+        }
+
+        if (Array.isArray(paramValue)) {
+            const replaceValue = namedArray(paramValue, idx)
+            query = query.replaceAll(`:${param}`, replaceValue)
+            paramArray.push(...paramValue)
+            idx += paramValue.length
+            continue
+        }
+
+        query = query.replaceAll(`:${param}`, `$${idx}`)
+        if (paramValue === null) {
+            paramArray.push(null)
+        }
+
+        if (paramValue != null) {
+            if (paramValue instanceof Date) {
+                paramArray.push(paramValue.toISOString())
+            } else {
+                paramArray.push(paramValue.toString())
+            }
+        }
+
+        idx++
+    }
+
+    return new NamedQueryResult(query.trim(), paramArray)
 }
 ```
 
-Now let's check if the above code even works as properly. We can use the NodeJS built-in test runner for that.
+We will also update the `Database` class as follows:
 
 ```ts
-import test from "node:test";
-import assert from "node:assert/strict";
-import { MissingArgumentError, named } from "./named.js";
+class Database {
+	...
+	async namedQuery(query: string, args: NamedArgs) {
+        const q = named(query, args)
+        return await this.#pool.query(q.preparedQuery, q.params)
+    }
+}
+```
 
-test("basic scenario", () => {
-	const input = `
-	    insert into "user" (id, email, password, role, created_at)
-	    values (:id, :email, :password, :role, :created_at)
-	`;
+### Define entities and repositories
 
-	const expectedQuery = `
-	    insert into "user" (id, email, password, role, created_at)
-	    values ($1, $2, $3, $4, $5)
-	`.trim();
+```ts
+import { z } from "zod"
 
-	const inputParams = {
-		id: crypto.randomUUID(),
-		email: "admin@site.com",
-		password: "1knclskcnlc",
-		role: "ADMIN",
-		created_at: new Date(),
-	};
+const UserEntitySchema = z.object({
+    id: z.uuid(),
+    email: z.email(),
+    password: z.string(),
+    role: z.enum(["admin", "user"]),
+    isActive: z.boolean(),
+    createdAt: z.date(),
+    deletedAt: z.date().nullable(),
+})
 
-	const expectedParams = [
-		inputParams.id,
-		inputParams.email,
-		inputParams.password,
-		inputParams.role,
-		inputParams.created_at.toISOString(),
-	];
+type UserEntity = z.infer<typeof UserEntitySchema>
 
-	const got = named(input, inputParams);
-	assert.deepEqual(got, [expectedQuery, expectedParams]);
-});
+class UserRepo {
+    handleConstraintViolations(err: DatabaseError) {
+        switch (err.constraint) {
+            case "email_unique":
+                throw new Error("email address already in use");
+        }
+    }
 
-test("repeated params", () => {
-	const input = `
-        insert into record (id, name, created_at, updated_at)
-        values (:id, :name, :created_at, :created_at)
-    `;
+    #createUserQuery = `
+        insert into users (id, email, password, role, "isActive", "createdAt")
+        values (:id, :email, :password, :role, :isActive, :createdAt)
+    `
 
-	const expectedQuery = `
-        insert into record (id, name, created_at, updated_at)
-        values ($1, $2, $3, $3)
-    `.trim();
+    async createUser(db: Database, user: UserEntity) {
+        try {
+            await db.namedQuery(this.#createUserQuery, user)
+        } catch (err) {
+            if (err instanceof DatabaseError) {
+                this.handleConstraintViolations(err)
+            }
+            throw err;
+        }
+    }
 
-	const inputParams = {
-		id: 300,
-		name: "admin",
-		created_at: new Date(),
-	};
+    #findByIdQuery = `
+        select * from users
+        where id = :id
+        limit 1
+    `
 
-	const expectedParams = [
-		inputParams.id.toString(),
-		inputParams.name,
-		inputParams.created_at.toISOString(),
-	];
+    async findById(db: Database, id: string): Promise<UserEntity | null> {
+        const result = await db.namedQuery(this.#findByIdQuery, { id })
+        if (result.rowCount === 0) {
+            return null
+        }
 
-	const got = named(input, inputParams);
-	assert.deepEqual(got, [expectedQuery, expectedParams]);
-});
+        return UserEntitySchema.parse(result.rows[0])
+    }
 
-test("missing argument", () => {
-	const input = `
-        select * from entity
-        limit :limit
-        offset :offset
-    `;
+    #updateUserQuery = `
+        update users
+        set email = :email,
+            password = :password,
+            role = :role,
+            "isActive" = :isActive,
+            "createdAt" = :createdAt,
+            "deletedAt" = :deletedAt
+        where id = :id        
+    `
 
-	const inputParms = {
-		limit: 20,
-	};
+    async updateUser(db: Database, user: UserEntity) {
+        try {
+            await db.namedQuery(this.#updateUserQuery, user)
+        } catch (err) {
+            if (err instanceof DatabaseError) {
+                this.handleConstraintViolations(err)
+            }
+            throw err;
+        }
+    }
 
-	let missingErr: MissingArgumentError | null = null;
-	try {
-		named(input, inputParms);
-	} catch (err) {
-		assert(err instanceof MissingArgumentError);
-		missingErr = err;
-	}
+    #deleteUserQuery = `
+        delete from users
+        where id = :id
+    `
 
-	assert(missingErr != null);
-	assert(missingErr.arg == "offset");
-});
+    async deleteUser(db: Database, id: string) {
+        await db.namedQuery(this.#deleteUserQuery, { id })
+    }
+}
+```
 
-class Entity {
-	constructor(
-		public id: number,
-		public fullName: string,
-	) {}
+### CRUD example
+
+```ts
+// create user.
+const newUser: UserEntity = {
+	id: crypto.randomUUID().toString(),
+	email: "admin@site.com",
+	password: "my-strong-password",
+	role: "admin",
+	isActive: true,
+	createdAt: new Date(),
+	deletedAt: null,
 }
 
-test("camelCase args", () => {
-	const inputQuery = `
-        insert into entity (id, full_name)
-        values (:id, :fullName)
-    `;
+await userRepo.createUser(db, newUser)
+```
 
-	const expectedQuery = `
-        insert into entity (id, full_name)
-        values ($1, $2)
-    `.trim();
+```ts
+// update user.
+const updatedUser: UserEntity = {
+	id: "d5b05464-6719-4061-bee1-b782898d6a3c",
+	email: "admin-updated@site.com",
+	password: "my-strong-password",
+	role: "admin",
+	isActive: false,
+	createdAt: new Date(),
+	deletedAt: null,
+}
 
-	const inputEntity = new Entity(300, "Something Random");
-	const expectedParams = [inputEntity.id.toString(), inputEntity.fullName];
+await userRepo.updateUser(db, updatedUser)
+```
 
-	const got = named(inputQuery, { ...inputEntity });
-	assert.deepEqual(got, [expectedQuery, expectedParams]);
-});
+```ts
+// find user.
+const foundUser = await userRepo.findById(db, "d5b05464-6719-4061-bee1-b782898d6a3c")
+```
+
+```ts
+// delete user.
+await userRepo.deleteUser(db, "d5b05464-6719-4061-bee1-b782898d6a3c")
+```
+
+### Transactions
+
+```ts
+export interface IDatabase {
+    query(query: string, values: any[]): Promise<QueryResult<any>>
+    namedQuery(query: string, args: NamedArgs): Promise<QueryResult<any>>
+}
+
+class Transaction implements IDatabase {
+    #client: PoolClient
+
+    constructor(client: PoolClient) {
+        this.#client = client
+    }
+
+    async commit() {
+        this.#client.query("commit")
+    }
+
+    async rollback() {
+        this.#client.query("rollback")
+    }
+
+    release() {
+        this.#client.release()
+    }
+
+    query(query: string, values: any[]): Promise<QueryResult<any>> {
+        return this.#client.query(query, values)
+    }
+
+    namedQuery(query: string, args: NamedArgs): Promise<QueryResult<any>> {
+        const q = named(query, args)
+        return this.#client.query(q.preparedQuery, q.params)
+    }
+}
+```
+
+We will update the `Database` class and add the following method for initiating transactions.
+
+```ts
+class Database implements IDatabase {
+	...
+	async transaction(callback: (tx: Transaction) => Promise<void>) {
+        const handle = await this.#pool.connect()
+        await handle.query("begin")
+        const tx = new Transaction(handle)
+
+        try {
+            await callback(tx)
+            await tx.commit()
+        } catch (err) {
+            await tx.rollback()
+            throw err;
+        } finally {
+            tx.release();
+        }
+    }
+}
+```
+
+Our `Database` and `Transaction` classes both implement the `IDatabase` interface. This means, now we can define our repository methods to be able to accept both `Database` and `Transaction` types.
+
+```ts
+class UserRepo {
+    ...
+    async createUser(db: IDatabase, user: UserEntity) {
+        ...
+    }
+    ...
+}
+```
+
+## Conclusion
+
+The abstractions we have created now look like this. 
+
+```ts
+import { Pool, type PoolClient, type QueryResult } from "pg"
+import assert from "node:assert/strict"
+
+interface Stringable {
+    toString(): string
+}
+
+type NamedArgs = {
+    [x: string]: Stringable | Date | null;
+}
+type ParamType = string | null
+
+export class NamedQueryResult {
+    public readonly preparedQuery: string
+    public readonly params: ParamType[]
+
+    constructor(preparedQuery: string, params: ParamType[]) {
+        this.preparedQuery = preparedQuery
+        this.params = params
+    }
+}
+
+export class MissingArgumentError extends Error {
+    public readonly arg: string
+
+    constructor(arg: string) {
+        super("missing sql query argument: " + arg)
+        this.arg = arg
+    }
+}
+
+function namedArray(values: ParamType[], offset: number): string {
+    const pieces: string[] = []
+    for (let i = 0; i < values.length; i++) {
+        pieces.push(`$${offset + i}`)
+    }
+
+    return pieces.join(", ")
+}
+
+function named(query: string, args: NamedArgs): NamedQueryResult {
+    const params = [...query.matchAll(/:([a-zA-Z_][a-zA-Z0-9_]*)/g)].map((match) =>
+        match[0].slice(1),
+    )
+
+    const paramsSet = new Set(params)
+    const paramArray: ParamType[] = []
+    let idx = 1
+
+    for (const param of paramsSet) {
+        const paramValue = args[param]
+        if (paramValue === undefined) {
+            throw new MissingArgumentError(param)
+        }
+
+        if (Array.isArray(paramValue)) {
+            const replaceValue = namedArray(paramValue, idx)
+            query = query.replaceAll(`:${param}`, replaceValue)
+            paramArray.push(...paramValue)
+            idx += paramValue.length
+            continue
+        }
+
+        query = query.replaceAll(`:${param}`, `$${idx}`)
+        if (paramValue === null) {
+            paramArray.push(null)
+        }
+
+        if (paramValue != null) {
+            if (paramValue instanceof Date) {
+                paramArray.push(paramValue.toISOString())
+            } else {
+                paramArray.push(paramValue.toString())
+            }
+        }
+
+        idx++
+    }
+
+    return new NamedQueryResult(query.trim(), paramArray)
+}
+
+
+export interface IDatabase {
+    query(query: string, values: any[]): Promise<QueryResult<any>>
+    namedQuery(query: string, args: NamedArgs): Promise<QueryResult<any>>
+}
+
+export class DatabaseConfig {
+    public readonly url: string
+
+    constructor(env: Record<string, string> | NodeJS.ProcessEnv) {
+        const conn = env["DATABASE_URL"]
+        assert(conn != undefined)
+        this.url = conn
+    }
+}
+
+export class Transaction implements IDatabase {
+    #client: PoolClient
+
+    constructor(client: PoolClient) {
+        this.#client = client
+    }
+
+    async commit() {
+        this.#client.query("commit")
+    }
+
+    async rollback() {
+        this.#client.query("rollback")
+    }
+
+    release() {
+        this.#client.release()
+    }
+
+    query(query: string, values: any[]): Promise<QueryResult<any>> {
+        return this.#client.query(query, values)
+    }
+
+    namedQuery(query: string, args: NamedArgs): Promise<QueryResult<any>> {
+        const q = named(query, args)
+        return this.#client.query(q.preparedQuery, q.params)
+    }
+}
+
+export class Database implements IDatabase {
+    #pool: Pool
+
+    constructor(config: DatabaseConfig) {
+        this.#pool = new Pool({
+            connectionString: config.url,
+        })
+    }
+
+    async ping(): Promise<boolean> {
+        const result = await this.#pool.query("select 1");
+        return result.rowCount == 1;
+    }
+
+    get conn() {
+        assert(this.#pool != null)
+        return this.#pool;
+    }
+
+    async transaction(callback: (tx: Transaction) => Promise<void>) {
+        const handle = await this.#pool.connect()
+        await handle.query("begin")
+        const tx = new Transaction(handle)
+
+        try {
+            await callback(tx)
+            await tx.commit()
+        } catch (err) {
+            await tx.rollback()
+            throw err;
+        } finally {
+            tx.release();
+        }
+    }
+
+    async query(query: string, args: any[]): Promise<QueryResult<any>> {
+        return await this.#pool.query(query, args)
+    }
+
+    async namedQuery(query: string, args: NamedArgs): Promise<QueryResult<any>> {
+        const q = named(query, args)
+        return await this.#pool.query(q.preparedQuery, q.params)
+    }
+
+    async disconnect() {
+        await this.#pool.end();
+    }
+}
 ```

@@ -1,11 +1,14 @@
 ---
+import fs from "node:fs";
 import type { CollectionEntry } from "astro:content";
+import { formatDate } from "../lib/datetime";
 
 type Props = {
 	post: CollectionEntry<"blog">;
 };
 
 const post = Astro.props.post;
+const dateModified = new Date(fs.statSync(post.filePath ?? "").mtime);
 ---
 
 <a
@@ -13,14 +16,18 @@ const post = Astro.props.post;
 	data-post-category={post.data.category}
 	data-post-tags={JSON.stringify(post.data.tags)}
 	href={`/blogs/${post.id}`}
-	class="w-full p-6 border border-gray-300 hover:-translate-y-2 hover:shadow-lg transition-all rounded"
+	class="w-full p-6 border border-gray-300 hover:-transtone-y-2 hover:shadow-lg transition-all rounded"
 >
 	<div class="flex flex-col h-full">
-		<div>
+		<div class="flex justify-between">
 			<span
 				class="leading-none px-3 py-1 rounded-full bg-black text-white text-xs font-medium"
 			>
 				{post.data.category}
+			</span>
+
+			<span class="text-xs my-auto text-stone-600">
+				{formatDate(dateModified)}
 			</span>
 		</div>
 
