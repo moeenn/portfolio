@@ -17,9 +17,6 @@ $ nest new <project-name>
 
 # add .env support
 $ npm i @nestjs/config
-
-# add typeorm and postgres.
-$ npm i @nestjs/typeorm typeorm pg
 ```
 
 ## Environment and configuration
@@ -93,15 +90,18 @@ The above code sets-up the following points:
 - Starts the application on the port defined in the `.env` file.
 
 
-### Configuring database
+## Controllers
 
-
-
-#### Defining migrations and entities
+### Request validation
 
 ```bash
-# create migration file
-$ npx typeorm migration:create ./src/database/migrations/<migration-name>
+$ npm i class-validator class-transformer
+```
 
+Ensure the following is added to the bootstap code i.e. `main.ts` file.
 
+```ts
+import { ValidationPipe } from "@nestjs/common"
+...
+app.useGlobalPipes(new ValidationPipe())
 ```
