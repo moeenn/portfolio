@@ -2,7 +2,7 @@
 title: "Golang language setup"
 desc: "Is is probably one the easiest languages to setup. However, there are some additional steps which can be taken improve the programming experience."
 category: "Golang"
-tags: ["Setup", "Configuration"]
+tags: ["Setup"]
 ---
 
 Common tools related to golang can be installed directly using `go` command.

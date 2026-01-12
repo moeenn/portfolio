@@ -2,7 +2,7 @@
 title: "Async await in Python"
 desc: "Python can utilize async/await keywords and event-loop to improve performance of IO-bound tasks. This article walks through the fundamentals."
 category: "Python"
-tags: ["Async", "Performance"]
+tags: ["Performance"]
 ---
 
 ## Installing `asyncio`

@@ -2,7 +2,7 @@
 title: "PostgreSQL in Node"
 desc: "PostgreSQL is one of the most advanced RDBMS available. It has all the features any application could ever need. Here is how to use it in Node"
 category: "Javascript"
-tags: ["Database", "Typescript", "SQL", "Node"]
+tags: ["Database", "Typescript", "Node"]
 ---
 
 ## Installing dependencies

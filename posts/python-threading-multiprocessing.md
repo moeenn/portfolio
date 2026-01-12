@@ -2,7 +2,7 @@
 title: "Threading and Multiprocessing in Python"
 desc: "When it comes to CPU-bound tasks, utilizing all threads and cores can be hugely beneficial. This article walks through the essentials."
 category: "Python"
-tags: ["Performance", "Threading", "Multiprocessing"]
+tags: ["Performance"]
 ---
 
 ## Definitions

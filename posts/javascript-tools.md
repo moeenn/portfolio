@@ -2,7 +2,7 @@
 title: "Essential tools in Javascript"
 desc: "Some tools are so useful they have before the defacto standard in the Javascript world. This article walks through their setup and usage."
 category: "Javascript"
-tags: ["Eslint", "Prettier", "Vite", "Typescript"]
+tags: ["Typescript"]
 ---
 
 ## Eslint
