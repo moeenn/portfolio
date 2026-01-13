@@ -5,10 +5,6 @@ category: "Java"
 tags: ["Fundamentals", "Tips"]
 ---
 
-# TODO:
-
-- Ensure nested objects are also validated properly.
-
 
 ### Manual validation 
 
@@ -141,8 +137,26 @@ dependencies {
 </dependencies>
 ```
 
-
 #### Usage example
+
+```java
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record Profile(
+                @NotNull Integer id,
+                @NotBlank String name,
+                @NotBlank String address) {
+
+    public static Profile create(String name, String address) {
+        return new Profile(
+            UUID.randomUUID().toString(),
+            name,
+            address,
+        );
+    }
+}
+```
 
 ```java
 import jakarta.validation.constraints.*;
@@ -155,15 +169,17 @@ public record User(
         @NotBlank @Email String email,
         @NotBlank @Length(min = 3, max = 20) String name,
         @NotNull UserRole role,
+        @NotNull @Valid Profile profile, // validate nested object.
         @NotNull @PastOrPresent LocalDate createdAt,
         @PastOrPresent LocalDate deletedAt) {
 
-    public static User create(String email, String name, UserRole role) {
+    public static User create(String email, String name, UserRole role, Profile profile) {
         return new User(
                 UUID.randomUUID().toString(),
                 email,
                 name,
                 role,
+                profile,
                 LocalDate.now(),
                 null);
     }
@@ -177,7 +193,9 @@ import jakarta.validation.Validation;
 public class Main {
     public static void main(String[] args) {
         var validator = Validation.buildDefaultValidatorFactory().getValidator();
-        var user = User.create("admin@site.com", "Admin", UserRole.ADMIN);
+
+        var profile = Profile.create("Mr. Admin", "123 Main Street, London");
+        var user = User.create("admin@site.com", "Admin", UserRole.ADMIN, profile);
 
         var errors = validator.validate(user);
         for (ConstraintViolation<User> e : errors) {
@@ -194,3 +212,4 @@ Note the following on the annotations:
 - Email string format can be checked using `Email`.
 - UUID format can be checked using `org.hibernate.validator.constraints.UUID`.
 - Current or past dates are checked using `PastOrPresent`.
+- In the `User` class, we have added `Valid` annotation to enable validation of nested objects. Nested objects are **NOT** validated by default.
