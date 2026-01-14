@@ -2,7 +2,7 @@
 title: "Data validation in Java"
 desc: "Invalid or unexpected data bring down systems all the time. A feature of any well thought-out system is that it rejects unexpected data outright and gives clear reasons for rejection. Here is how we do it int Java."
 category: "Java"
-tags: ["Fundamentals", "Tips"]
+tags: ["Fundamentals"]
 ---
 
 

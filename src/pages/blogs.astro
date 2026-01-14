@@ -104,7 +104,7 @@ const sorted = (items: Set<string>) => [...items.keys()].sort();
 									bModified.valueOf() - aModified.valueOf()
 								);
 							})
-							.map((p) => <BlogPostCard post={p} />)
+							.map((p, i) => <BlogPostCard index={i} post={p} />)
 					}
 				</div>
 			</div>

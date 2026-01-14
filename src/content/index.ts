@@ -7,6 +7,7 @@ import GCPIcon from "../assets/img/tools/gcp.svg";
 import GitIcon from "../assets/img/tools/git.svg";
 import GithubIcon from "../assets/img/tools/github.svg";
 import GolangIcon from "../assets/img/tools/golang.svg";
+import JavaIcon from "../assets/img/tools/java.svg";
 import GraphqlIcon from "../assets/img/tools/graphql.svg";
 import HtmlIcon from "../assets/img/tools/html.svg";
 import JiraIcon from "../assets/img/tools/jira.svg";
@@ -68,6 +69,11 @@ export type Project = {
 const Golang: Tech = {
 	name: "Golang",
 	icon: GolangIcon,
+};
+
+const Java: Tech = {
+	name: "Java",
+	icon: JavaIcon,
 };
 
 const Javascript: Tech = {
@@ -304,6 +310,7 @@ export const tools = [
 	{
 		title: "Focus in",
 		tools: [
+			Java,
 			Golang,
 			Javascript,
 			Typescript,

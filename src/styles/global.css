@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
+.content-auto {
+	content-visibility: auto;
+}
+
 :is(button, a) {
 	@apply cursor-pointer;
 }

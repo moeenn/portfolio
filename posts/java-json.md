@@ -2,7 +2,7 @@
 title: "JSON handling in Java"
 desc: "JSON is pretty much the universal data exchange format these days. If your application communicates over the internet, which is very likely, you will be running into JSON. Here are some examples of working with it in Java."
 category: "Java"
-tags: ["Fundamentals", "Tips"]
+tags: ["Fundamentals"]
 ---
 
 ## Installing the dependencies
@@ -89,6 +89,8 @@ A few things to note here:
 - In some scenarios, we are parsing a large object, but we are only interested in a few properties. In this case we must add the `JsonIgnoreProperties` annotation on our target class. Doing so will silence unknown property errors thrown when the `mapper` hits any properties not in our target class. Use this annotation sparingly.
 - In case any of the target class properties are missing in the JSON string, no errors are thrown! We MUST validate our object instance after it has been parsed from JSON. Using **Hibernate validator** is common for this.
 - The `JavaTimeModule` module needs to be enabled on the `mapper` instance in order to parse the `LocalDate` property on the `Photo` class.
+- The `JsonFormat` is needed to specify the format of the date strings in JSON payloads.
+
 
 ### Validating parsed objects
 
