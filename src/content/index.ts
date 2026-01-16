@@ -310,12 +310,13 @@ export const tools = [
 	{
 		title: "Focus in",
 		tools: [
-			Java,
-			Golang,
-			Javascript,
 			Typescript,
+			Javascript,
 			NodeJS,
+			Express,
+			NestJS,
 			React,
+			Golang,
 			TailwindCSS,
 			Docker,
 			PostgreSQL,
@@ -324,10 +325,9 @@ export const tools = [
 	{
 		title: "Good knowledge",
 		tools: [
+			Java,
 			Python,
-			Express,
 			NextJS,
-			NestJS,
 			VueJS,
 			GraphQL,
 			MongoDB,

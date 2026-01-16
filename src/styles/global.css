@@ -12,3 +12,9 @@
 .pill-selected {
 	@apply bg-black text-white;
 }
+
+.prose-xl a {
+	color: #0021ff;
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
