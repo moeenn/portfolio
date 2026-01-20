@@ -5,29 +5,28 @@ import Timeline from "../Timeline.astro";
 const timelineItems = [
   {
     time: "September 2024 - Present",
-    heading: "The Moonshot Factory - Backend Engineer (Golang)",
+    heading: "The Moonshot Factory - Backend Engineer",
     items: [
-      "Resolved microservice timeouts caused by long-running SQL queries by migrating several services from PostgreSQL to Neo4j, drastically improving query times from over 1 minute to just 300ms.",
-      "Addressed the challenge of inconsistent access control policies across microservices by developing an authorization framework for GraphQL APIs. This solution enabled microservices to define their own specific user access controls, significantly reducing code duplication and accelerating the addition of new features.",
-      "To enable detailed analyses of business IT asset inventory data from diverse cloud environments, I developed AWS and GCP service integrations that facilitated on-demand and event-driven crawling, providing consistently up-to-date asset insights.",
+      "Resolved microservice timeouts caused by long-running SQL queries by migrating several services from PostgreSQL to Neo4j, drastically improving query times from over 1 minute to under 300ms.",
+      "Addressed the challenge of inconsistent access control policies across microservices by building an authorization framework for GraphQL APIs. This solution equipped microservices to define their own specific user access controls, significantly reducing code duplication and accelerating the addition of new features.",
+      "Enabled detailed analyses of business IT asset inventory data from diverse cloud environments, implemented AWS and GCP service integrations that facilitated on-demand and event-based crawling, providing consistently up-to-date asset insights.",
     ],
   },
   {
     time: "November 2023 - September 2024",
-    heading: "Stack360 - Full-stack engineer (React, NodeJS)",
+    heading: "Stack360 - Full-stack engineer",
     items: [
-      "To ensure reliable communication and support for offline services within a microservices architecture, I developed and deployed an RPC communication mechanism utilizing RabbitMQ which dramatically enhanced overall system resilience.",
-      "I addressed the critical challenge of processing large QR code batches by implementing a background job processing system in NodeJS. This solution enabled the product to reliably handle the generation of thousands of QR codes daily.",
+      "To ensure reliable communication and support for offline services within a microservice architecture, coded and deployed an RPC communication mechanism utilizing RabbitMQ which dramatically enhanced overall system resilience.",
+      "Addressed the critical challenge of processing large QR code batches by implementing a background job processing system in NodeJS. This solution allowed the product to reliably handle the generation of thousands of QR codes daily.",
     ],
   },
   {
     time: "August 2020 - October 2023",
-    heading:
-      "OSO Software Outsourcing - Full-stack engineer (React, NodeJS, Golang)",
+    heading: "OSO Software Outsourcing - Full-stack engineer",
     items: [
-      "Due to increased workloads, I solo-implemented a back-end system featuring over 150 REST endpoints and 400 integration tests within three months, ensuring the project's smooth launch and stable operation.",
-      "To automate the initial candidate screening for an HR firm, I developed a web application utilizing AI technologies (OpenAI, D-ID, Whisper). This solution enabled fully autonomous candidate screening, drastically reducing manual effort.",
-      "Addressed the challenges of drafting complex legal documents by developing a platform enabling legal firms to dynamically create, digitally sign, and share legal documents. This made the entire process significantly easier and quicker.",
+      "Due to increased workloads, solo-implemented a back-end system featuring over 150 REST endpoints and 400 integration tests within three months, ensuring the project's smooth launch and stable operation.",
+      "Integrated D-ID's facial animation technology into the screening application, creating realistic AI avatars that autonomously conduct initial interviews, screening over 50 candidates weekly.",
+      "Addressed the challenges of drafting complex legal documents by authoring a platform for legal firms to dynamically create, digitally sign, and share legal documents. This made the entire process significantly easier and quicker.",
       "Held sessions with clients to outline scope of work, system requirements and workflow documents for 20+ projects, leading to effective project planning and costing-estimation.",
     ],
   },
@@ -54,7 +53,7 @@ const timelineItems = [
 ];
 ---
 
-<div class="py-14 content-auto" id="career">
-  <SectionHeading text="Career Brief" />
+<div class="py-14 content-auto" id="work-history">
+  <SectionHeading text="Work history" />
   <Timeline items={timelineItems} />
 </div>

@@ -1,0 +1,188 @@
+---
+title: "Network Requests in Java"
+desc: "In our always-online world, there are hardly any applications which are purely offline. This makes network requests an eseential requirement of most apps. Here are some ways of doing it effectively."
+category: "Java"
+tags: ["Fundamentals"]
+---
+
+## Basic GET request
+
+Java has a built-in class `HttpClient` which allows us to make network request without any external dependencies. Here is how we use.
+
+```java
+package com.sandbox;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.net.HttpURLConnection;
+import java.time.Duration;
+
+public class Main {
+    public static void main(String[] args) {
+        HttpClient client = HttpClient.newHttpClient();
+        URI url = URI.create("https://jsonplaceholder.typicode.com/todos/1");
+
+        var request = HttpRequest.newBuilder()
+                .uri(url)
+                .header("accept", "application/json")
+                .GET()
+                .timeout(Duration.ofSeconds(10))
+                .build();
+
+        try {
+            HttpResponse<String> resp = client.send(request, BodyHandlers.ofString());
+            var statusCode = resp.statusCode();
+            if (statusCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
+                throw new Exception("unexpected status code: " + statusCode);
+            }
+
+            String body = resp.body();
+            System.out.println(body);
+        } catch (Exception ex) {
+            System.err.printf("error: %s.\n", ex.getMessage());
+        }
+    }
+}
+```
+
+Do note that the above code *will make a blocking request*. This is not acceptable in production applications. We should do the following.
+
+```java
+Future<HttpResponse<String>> respFuture = client.sendAsync(request, BodyHandlers.ofString());
+// this will await future to complete.
+HttpResponse<String> resp = respFuture.get();
+```
+
+**Note on JSON response**: Once we have the response JSON body as string, we can use `Jackson` to read it into a class instance.
+
+```java
+public record TodoItem(
+        int userId,
+        int id,
+        String title,
+        boolean completed) {
+}
+```
+
+```java
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+var mapper = new ObjectMapper();
+TodoItem todoItem = mapper.readValue(bodyString, TodoItem.class);
+```
+
+### Full example
+
+```java
+package com.sandbox;
+
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.time.Duration;
+import java.util.concurrent.Future;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class Main {
+    public static void main(String[] args) {
+        HttpClient client = HttpClient.newHttpClient();
+        var mapper = new ObjectMapper();
+        URI url = URI.create("https://jsonplaceholder.typicode.com/todos/1");
+
+        var request = HttpRequest.newBuilder()
+                .uri(url)
+                .header("accept", "application/json")
+                .GET()
+                .timeout(Duration.ofSeconds(10))
+                .build();
+
+        try {
+            System.out.println("sending request...");
+            Future<HttpResponse<String>> respFuture = client.sendAsync(request, BodyHandlers.ofString());
+            HttpResponse<String> resp = respFuture.get();
+
+            var statusCode = resp.statusCode();
+            if (statusCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
+                throw new Exception("unexpected status code: " + statusCode);
+            }
+
+            String body = resp.body();
+            TodoItem todoItem = mapper.readValue(body, TodoItem.class);
+            System.out.println(todoItem);
+        } catch (Exception ex) {
+            System.err.printf("error: %s.\n", ex.getMessage());
+        }
+    }
+}
+```
+
+## Make POST requests
+
+We can make POST request pretty much the same way as above, the only real difference is that we must provide the body encoded as JSON string.
+
+```java
+var newTodoItem = new TodoItem(10, 20, "My new post", false);
+String requestBody = mapper.writeValueAsString(newTodoItem);
+
+var request = HttpRequest.newBuilder()
+        .uri(url)
+        .header("accept", "application/json")
+        .header("Content-Type", "application/json")
+        .POST(BodyPublishers.ofString(requestBody))
+        .timeout(Duration.ofSeconds(10))
+        .build();
+```
+
+**Note**: Sometimes, we may want to make a POST request without a body present. We can do so as follows.
+
+```java
+HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(serviceUrl))
+        .POST(HttpRequest.BodyPublishers.noBody())
+        .build();
+```
+
+
+### URLEncoded Post content
+
+While JSON is fairly ubiquitous, some APIs expect request bodies to be URL encoded. We can integrate them as follows.
+
+```java
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+public class TodoItemEncoder {
+    static String encode(String key, String value) {
+        return String.format("%s=%s&", key, URLEncoder.encode(value, StandardCharsets.UTF_8));
+    }
+
+    // output format: "id=10&userId=20&title=My+Post&completed=true&"
+    public static String urlEncode(TodoItem todo) {
+        var b = new StringBuilder();
+        b.append(encode("id", Integer.toString(todo.id())));
+        b.append(encode("userId", Integer.toString(todo.userId())));
+        b.append(encode("title", todo.title()));
+        b.append(encode("completed", Boolean.toString(todo.completed())));
+        return b.toString();
+    }
+}
+```
+
+```java
+String requestBody = TodoItemEncoder.urlEncode(newTodoItem);
+var request = HttpRequest.newBuilder()
+        .uri(url)
+        .header("accept", "application/x-www-form-urlencoded")
+        .header("Content-Type", "application/x-www-form-urlencoded")
+        .POST(BodyPublishers.ofString(requestBody))
+        .timeout(Duration.ofSeconds(10))
+        .build();
+```
+
+## TODO: Post request with file attached.
