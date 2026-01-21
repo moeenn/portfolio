@@ -143,7 +143,7 @@ var request = HttpRequest.newBuilder()
 
 ```java
 HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create(serviceUrl))
+        .uri(url)
         .POST(HttpRequest.BodyPublishers.noBody())
         .build();
 ```
@@ -184,5 +184,3 @@ var request = HttpRequest.newBuilder()
         .timeout(Duration.ofSeconds(10))
         .build();
 ```
-
-## TODO: Post request with file attached.
