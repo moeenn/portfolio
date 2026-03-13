@@ -184,3 +184,32 @@ var request = HttpRequest.newBuilder()
         .timeout(Duration.ofSeconds(10))
         .build();
 ```
+
+
+## Downloading files
+
+```java
+import java.io.FileOutputStream;
+import java.net.URI;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+
+public class Main {
+    static void run() throws Exception {
+        URI url = URI.create("https://w.wallhaven.cc/full/47/wallhaven-471rmo.jpg");
+        ReadableByteChannel channel = Channels.newChannel(url.toURL().openStream());
+        try (FileOutputStream fileStream = new FileOutputStream("image.jpg")) {
+            fileStream.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            Main.run();
+        } catch (Exception ex) {
+            System.err.printf("error: %s.\n", ex.getMessage());
+            return;
+        }
+    }
+}
+```

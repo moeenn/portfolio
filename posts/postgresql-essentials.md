@@ -98,13 +98,12 @@ CREATE SCHEMA public;
 ```sql
 CREATE TABLE
   products (
-    product_id BIGSERIAL,
+    product_id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
 
     -- column level check
     price NUMERIC NOT NULL CHECK (price >= 0),
     discounted_price NUMERIC NOT NULL,
-    PRIMARY KEY (product_id),
 
     -- table level check
     CONSTRAINT valid_discount CHECK (discounted_price < price)
@@ -116,10 +115,8 @@ CREATE TABLE
 ```sql
 CREATE TABLE
   users (
-    user_id UUID DEFAULT gen_random_uuid(),
+    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT,
-
-    PRIMARY KEY (user_id),
     CONSTRAINT email_unique UNIQUE (email)
   );
 ```
@@ -146,12 +143,11 @@ In SQL it is a convention that table names should be snake-case plurals.
 -- create a new table within a database
 CREATE TABLE
   users (
-    user_id BIGSERIAL,
+    user_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    location POINT NOT NULL,
-    PRIMARY KEY (user_id)
+    location POINT NOT NULL
   );
 ```
 
@@ -163,9 +159,8 @@ UUIDs can be used as unique identifiers for records. Here is how they work.
 -- UUID as primary key, without default value
 CREATE TABLE
   users (
-    user_id UUID NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    PRIMARY KEY (user_id)
+    user_id UUID PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL
   );
 ```
 
@@ -173,9 +168,8 @@ CREATE TABLE
 -- UUID as primary key, with auto-generating UUIDs at insertion
 CREATE TABLE
   users (
-    user_id UUID DEFAULT gen_random_uuid(),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    PRIMARY KEY (user_id)
+    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) UNIQUE NOT NULL
   );
 ```
 
@@ -207,10 +201,10 @@ In summary, use `UUID` where security / entropy matters, otherwise default to us
 -- table with array field
 CREATE TABLE
   users (
-    user_id BIGSERIAL,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    user_id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
     phone_numbers VARCHAR(255) ARRAY,
-    PRIMARY KEY (user_id)
+    CONSTRAINT user_email_unique UNIQUE (email)
   );
 
 -- inserting data into array field
@@ -271,11 +265,10 @@ CREATE TYPE
 
 CREATE TABLE
   users (
-    user_id BIGSERIAL,
+    user_id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     role user_role NOT NULL,
-    password VARCHAR(255),
-    PRIMARY KEY (user_id)
+    password VARCHAR(255)
   );
 
 INSERT INTO
@@ -284,15 +277,14 @@ VALUES
   ('admin@site.com', user_role 'ADMIN');
 ```
 
-### Alternative approach
+### Alternative approach (Recommended)
 
 ```sql
 create table
-  "user" (
-    id uuid not null default gen_random_uuid (),
+  users (
+    id uuid primary key,
     email varchar not null,
     role varchar(10),
-    primary key (id),
     constraint role_enum check (role in ('ADMIN', 'USER', 'EMPLOYEE')),
     constraint email_unique unique (email)
   )
@@ -348,12 +340,9 @@ VALUES ('admin@site.com', 'Main street', 'Lahore', 5400);
 ## Pagination
 
 ```sql
-SELECT
-  *
-FROM
-  users
-LIMIT
-  2
+SELECT *
+FROM users
+LIMIT 2
 OFFSET 0;
 ```
 
@@ -364,7 +353,7 @@ OFFSET 0;
 ### Example
 
 ```sql
-SELECT *, COUNT(*) OVER() AS total_count FROM users u
+SELECT u.*, COUNT(*) OVER() AS total_count FROM users u
 WHERE u.deleted_at IS NULL
 LIMIT 10
 OFFSET 0;
@@ -384,19 +373,17 @@ E.g. In the following SQL schema, all `users` will have `profiles` but it is not
 -- table schema
 CREATE TABLE
   profiles (
-    profile_id BIGSERIAL,
-    name VARCHAR(255),
-    PRIMARY KEY (profile_id)
+    profile_id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255)
   );
 
 CREATE TABLE
   users (
-    user_id BIGSERIAL,
+    user_id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     -- notice the unique constraint (1:1)
     profile_id BIGSERIAL UNIQUE NOT NULL,
-    PRIMARY KEY (user_id),
-    CONSTRAINT fk_profile FOREIGN KEY (profile_id) REFERENCES profiles (profile_id)
+    CONSTRAINT fk_user_profile FOREIGN KEY (profile_id) REFERENCES profiles (profile_id)
   );
 
 -- insert dummy data
@@ -516,18 +503,16 @@ WHERE
 -- table schema
 CREATE TABLE
   users (
-    user_id BIGSERIAL,
-    email VARCHAR(100),
-    PRIMARY KEY (user_id)
+    user_id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(100)
   );
 
 CREATE TABLE
   posts (
-    post_id BIGSERIAL,
+    post_id BIGSERIAL PRIMARY KEY,
     title VARCHAR(100) UNIQUE,
     -- notice user_id has *no unique constraint* (1:M)
     user_id BIGSERIAL NOT NULL,
-    PRIMARY KEY (post_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
   );
 
@@ -607,7 +592,7 @@ CREATE TABLE
     role_id BIGSERIAL NOT NULL,
     PRIMARY KEY (user_role_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id),
-    CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES roles (role_id)
+    CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES roles (role_id)
   );
 
 -- insert test data

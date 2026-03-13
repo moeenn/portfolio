@@ -5,29 +5,34 @@ import Timeline from "../Timeline.astro";
 const timelineItems = [
   {
     time: "September 2024 - Present",
-    heading: "The Moonshot Factory - Backend Engineer",
+    heading: "The Moonshot Factory - Full-stack Developer",
     items: [
-      "Resolved microservice timeouts caused by long-running SQL queries by migrating several services from PostgreSQL to Neo4j, drastically improving query times from over 1 minute to under 300ms.",
-      "Addressed the challenge of inconsistent access control policies across microservices by building an authorization framework for GraphQL APIs. This solution equipped microservices to define their own specific user access controls, significantly reducing code duplication and accelerating the addition of new features.",
-      "Enabled detailed analyses of business IT asset inventory data from diverse cloud environments, implemented AWS and GCP service integrations that facilitated on-demand and event-based crawling, providing consistently up-to-date asset insights.",
+      "Engineered a data ingestion layer integrating Hostaway, Hospitable, and Airbnb APIs using exponential backoff to navigate rate limits, achieving 99.9% sync success.",
+      "Normalized disparate PMS data into a unified model for real-time dashboards tracking earnings, occupancy, and market trends.",
+      "Reduced complex multi-table query latency from >60 s to <300 ms by migrating core services from PostgreSQL to Neo4j graph database.",
+      "Built a GraphQL authorization framework enabling microservices to declare resource-level access rules, eliminating duplicated logic, simplifying audits, and accelerating feature development.",
+      "Implemented AWS and GCP service integrations for on-demand and event-based crawling of IT asset data. Enabled continuous, up-to-date inventory insights across diverse cloud environments.",
     ],
   },
   {
     time: "November 2023 - September 2024",
-    heading: "Stack360 - Full-stack engineer",
+    heading: "Stack360 - Full-stack Developer",
     items: [
-      "To ensure reliable communication and support for offline services within a microservice architecture, coded and deployed an RPC communication mechanism utilizing RabbitMQ which dramatically enhanced overall system resilience.",
-      "Addressed the critical challenge of processing large QR code batches by implementing a background job processing system in NodeJS. This solution allowed the product to reliably handle the generation of thousands of QR codes daily.",
+      "Built an RPC layer over RabbitMQ for offline microservice calls, implementing request routing, timeouts and retries to improve resilience.",
+      "Designed a resilient background job processor with worker pools and idempotency, generating thousands of QR codes daily without blocking frontend requests.",
+      "Built an AI-powered CLI tool for internal usage that normalizes 10+ image formats to JPG and reduces file sizes by up to 80% via smart compression.",
+      "Integrated OpenCV ESPCN deep learning models for 3x intelligent upscaling, outperforming traditional interpolation methods.",
     ],
   },
   {
-    time: "August 2020 - October 2023",
-    heading: "OSO Software Outsourcing - Full-stack engineer",
+    time: "March 2020 - October 2023",
+    heading: "OSO Software Outsourcing - Full-stack Developer",
     items: [
-      "Due to increased workloads, solo-implemented a back-end system featuring over 150 REST endpoints and 400 integration tests within three months, ensuring the project's smooth launch and stable operation.",
+      "Owned end-to-end delivery for 10+ client projects scoping, implementing backend APIs, and shipping production releases.",
+      "Built a backend with 150+ REST endpoints and 400 integration tests in a 3-month period to secure reliable deployments and faster iteration.",
       "Integrated D-ID's facial animation technology into the screening application, creating realistic AI avatars that autonomously conduct initial interviews, screening over 50 candidates weekly.",
-      "Addressed the challenges of drafting complex legal documents by authoring a platform for legal firms to dynamically create, digitally sign, and share legal documents. This made the entire process significantly easier and quicker.",
-      "Held sessions with clients to outline scope of work, system requirements and workflow documents for 20+ projects, leading to effective project planning and costing-estimation.",
+      "Built a platform enabling legal firms to dynamically create, sign, and share complex documents, reducing drafting time by over 60%.",
+      "Held sessions with clients to outline scope of work, system requirements and workflow documents for 25+ projects, leading to effective project planning and costing-estimation.",
     ],
   },
   {
@@ -49,6 +54,11 @@ const timelineItems = [
     time: "September 2013 - March 2016",
     heading: "Professionals Academy Of Commerce — CA (Intermediate)",
     desc: "Acquisition of degress for Chartered Accountancy.",
+  },
+  {
+    time: "August 2011 - May 2013",
+    heading: "National Grammar School — A-Levels",
+    desc: "Acquisition of A-Levels Degree",
   },
 ];
 ---
