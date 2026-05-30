@@ -310,13 +310,13 @@ export const tools = [
 	{
 		title: "Focus in",
 		tools: [
+			Golang,
 			Typescript,
 			Javascript,
 			NodeJS,
 			Express,
 			NestJS,
 			React,
-			Golang,
 			TailwindCSS,
 			Docker,
 			PostgreSQL,
