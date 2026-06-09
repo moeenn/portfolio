@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
+@theme {
+	--spacing-132: calc(var(--spacing) * 132);
+}
+
 .content-auto {
 	content-visibility: auto;
 }
