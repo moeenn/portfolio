@@ -10,7 +10,7 @@ tags: ["Back-end", "Database"]
 - Very simple setup, which is very similar to built-in `database/sql` package, with a lot of quality-of-life improvements.
 - Supports named queries, lack of which can be a source of bugs for queries with large number of parameters.
 - Suports scaning database rows directly into structs, reducing boiler-plate code.
-
+- Supports multiple databases including Sqlite, meaning minimal learning overhead.
 
 ## Basic Setup and Imports 
 
@@ -18,12 +18,12 @@ tags: ["Back-end", "Database"]
 package main
 
 import (
-  "context"
+	"context"
 	"errors"
 	"fmt"
 	"log/slog"
 	"os"
-  
+
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
