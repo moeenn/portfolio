@@ -12,7 +12,7 @@ tags: ["Back-end", "Database"]
 - Suports scaning database rows directly into structs, reducing boiler-plate code.
 - Supports multiple databases including Sqlite, meaning minimal learning overhead.
 
-## Basic Setup and Imports 
+## Basic Setup and Imports
 
 ```go
 package main
@@ -60,11 +60,11 @@ func main() {
 }
 ```
 
-## Adding Records 
+## Adding Records
 
 ```go
 func ID() uuid.UUID {
-    // uuiv6 has better than uuidv4 for lookup performance.
+    // uuiv6 is better than uuidv4 for db lookup performance.
 	return uuid.Must(uuid.NewV6())
 }
 
@@ -90,7 +90,7 @@ func addUsers(db *sqlx.DB, users []UserEntity) error {
 }
 ```
 
-**Notes** 
+**Notes**
 
 - If insert statement does not use named variables, we can use `db.Exec` instead.
 - In the above function, defining the query outside of the function may be preferred from maintainability perspective.
@@ -188,7 +188,7 @@ func findUserById(db *sqlx.DB, id string) (*UserEntity, error) {
 	`
 
 	var user UserEntity
-  
+
     // IMPORTANT: Get does NOT support writing into slices / arrays.
 	if err := db.Get(&user, query, id); err != nil {
 		slog.Error("failed to find user by id", "error", err.Error())
@@ -199,7 +199,61 @@ func findUserById(db *sqlx.DB, id string) (*UserEntity, error) {
 }
 ```
 
-## Deleting records 
+### Using arrays as query parameters
+
+```go
+import (
+	"github.com/lib/pq"
+)
+
+
+func findUsersByIds(db *sqlx.DB, ids pq.StringArray) ([]User, error) {
+	const query string = `
+		select * from users
+		where id = any($1)
+	`
+
+	var users []User
+	if err := db.Select(&users, query, ids); err != nil {
+		slog.Error("failed to find users by ids", "error", err.Error())
+		return nil, errors.New("failed to find users")
+	}
+
+	return users, nil
+}
+```
+
+**Note**: Notice that the argument to the function is of type `pq.StringArray` instead of `[]string`. `pq` package also provides array types of other common types as well.
+
+### Using arrays with named parameter queries
+
+```go
+type findUsersByIdsArgs struct {
+	Ids pq.StringArray `db:"ids"`
+}
+
+func findUsersByIds(db *sqlx.DB, args findUsersByIdsArgs) ([]User, error) {
+	const query string = `
+		select * from users
+		where id = any(:ids)
+	`
+
+	prepared, err := db.PrepareNamed(query)
+	if err != nil {
+		return nil, fmt.Errorf("failed to prepare named query: %w", err)
+	}
+
+	var users []User
+	if err := prepared.Select(&users, args); err != nil {
+		slog.Error("failed to find users by ids", "error", err.Error())
+		return nil, errors.New("failed to find users")
+	}
+
+	return users, nil
+}
+```
+
+## Deleting records
 
 ```go
 func deleteUser(db *sqlx.DB, id string) error {
@@ -222,4 +276,5 @@ func deleteUser(db *sqlx.DB, id string) error {
 - Named queries are preferred when inserting, updating records. This is because entities can be very large with many fields. Placeholder parameters would be error-prone in this case.
 - When querying multiple records, `db.Select` is preferred. If we have named parameters in our query, then a combination of `db.PrepareNamed` and `prepared.Select` should be used.
 - When querying a single record, `db.Get` is preferred.
-- For all update operations, either `db.Exec` or `db.NamedExec` are used. 
+- For all update operations, either `db.Exec` or `db.NamedExec` are used.
+- When arrays are used as query arguments, ensure that the argument of a variant of `pq.Array`. If the query used named parameters, a combination of `db.PrepareNamed` and `prepared.Select` should be used.
