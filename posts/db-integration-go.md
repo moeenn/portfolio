@@ -271,6 +271,78 @@ func deleteUser(db *sqlx.DB, id string) error {
 }
 ```
 
+## JSON Columns
+
+Imagine we have the following table schema in PostgreSQL.
+
+```sql
+create table reviews (
+  id uuid primary key
+  , rating real not null
+  , comment text null
+  , details jsonb not null
+);
+```
+
+**Note**: `JSONB` is binary representation of JSON. It is more efficient than `JSON` type, which is also available in PostgreSQL.
+
+### Using JSON type
+
+```go
+type ReviewDetails struct {
+	Category string  `json:"category"`
+	Rating   float32 `json:"rating"`
+}
+
+type Review struct {
+	Id          string          `db:"id"`
+	Rating      float32         `db:"rating"`
+	Comment     *string         `db:"comment"`
+	Details     []ReviewDetails `db:"-"`
+	DetailsJson json.RawMessage `db:"details"`
+}
+
+func (r *Review) EncodeDetails() error {
+	enc, err := json.Marshal(r.Details)
+	if err != nil {
+		return fmt.Errorf("failed to encode review details: %w", err)
+	}
+	r.DetailsJson = enc
+	return nil
+}
+
+func createReview(db *sqlx.DB, review Review) error {
+	const query string = `
+		insert into reviews (id, rating, comment, details)
+		values (:id, :rating, :comment, :details)
+	`
+
+	if err := review.EncodeDetails(); err != nil {
+		return err
+	}
+
+	_, err := db.NamedExec(query, review)
+	if err != nil {
+		return fmt.Errorf("failed to save review: %w", err)
+	}
+
+	return nil
+}
+
+func listReviews(db *sqlx.DB) ([]Review, error) {
+	const query string = `select * from reviews`
+
+	var reviews []Review
+	if err := db.Select(&reviews, query); err != nil {
+		return nil, fmt.Errorf("failed to read reviews: %w", err)
+	}
+
+	return reviews, nil
+}
+```
+
+**Note**: PostgreSQL supports querying into JSON objects. However, `JSON` / `JSONB` column type should only be used for unstructured data. 
+
 ## Summary
 
 - Named queries are preferred when inserting, updating records. This is because entities can be very large with many fields. Placeholder parameters would be error-prone in this case.
