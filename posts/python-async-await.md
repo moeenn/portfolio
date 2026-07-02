@@ -74,7 +74,8 @@ async def main() -> None:
 ```python
 # sync function e.g. could be sending out requests
 def slow_function_sync(id: int) -> str:
-    time.sleep(0.5)
+    # NOTE: time.sleep block the thread, asyncio.sleep does not.
+    asyncio.sleep(0.5)
     return f"[Done] {id}"
 
 
@@ -88,4 +89,72 @@ async def main() -> None:
         # await as async
         result = await slow_function_async(i)
         print(result)
+```
+
+## Finding blocking operations
+
+Blocking operations can kill the performance of asyncio coroutines. We can enable debug mode during development to detect blocking operations inside async functions. This will log warnings with names of functions where blocking operations are present.
+
+```python
+asyncio.run(main(), debug=True)
+```
+
+
+## Practical Example
+
+```python
+import asyncio
+from typing import Optional
+from pydantic import BaseModel
+import httpx
+import logging
+
+
+class UserAddress(BaseModel):
+    street: str
+    city: str
+
+
+class User(BaseModel):
+    id: int
+    name: str
+    username: str
+    email: str
+    address: UserAddress
+
+
+class UserRepo:
+    __base_url = "https://jsonplaceholder.typicode.com/users"
+
+    async def list_users(self) -> list[User]:
+        async with httpx.AsyncClient() as client:
+            res = await client.get(self.__base_url)
+            raw = res.json()
+            return [User(**entry) for entry in raw]
+
+    async def find_by_id(self, id: int) -> Optional[User]:
+        async with httpx.AsyncClient() as client:
+            res = await client.get(f"{self.__base_url}/{id}")
+            if res.status_code == 404:
+                return None
+            raw = res.json()
+            return User(**raw)
+
+
+async def main() -> None:
+    # this also enabled httpx request logging.
+    logging.basicConfig(level=logging.INFO)
+    repo = UserRepo()
+    
+    # fetch first 10 in parallel.
+    results = await asyncio.gather(*[repo.find_by_id(i) for i in range(1, 11)])
+    for user in results:
+        print(user)
+
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except Exception as ex:
+        logging.error(ex)
 ```
