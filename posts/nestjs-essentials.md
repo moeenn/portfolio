@@ -5,7 +5,6 @@ category: "Javascript"
 tags: ["Back-end"]
 ---
 
-
 ## Installation
 
 ```bash
@@ -24,71 +23,69 @@ $ npm i @nestjs/config
 We can configure our application to load the `.env` file by adding the following to our `app.module.ts` file.
 
 ```ts
-import { Module } from "@nestjs/common"
-import { ConfigModule } from "@nestjs/config"
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
-  controllers: [],
-  providers: [],
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-  ],
+	controllers: [],
+	providers: [],
+	imports: [ConfigModule.forRoot({ isGlobal: true })],
 })
 export class AppModule {}
 ```
 
 **Note**: Environment variables are going to be used in many other services. Ensure that it is the first item in the `imports` array.
 
-
 ### Defining configuration classes
 
 ```ts
 // file: config/server.config.ts
-import assert from "node:assert/strict"
-import { Injectable } from "@nestjs/common"
-import { ConfigService } from "@nestjs/config"
+import assert from "node:assert/strict";
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class ServerConfig {
-  port: number
+	port: number;
 
-  constructor(private readonly configService: ConfigService) {
-    const port = this.configService.get<number>("SERVER_PORT")
-    assert(port != undefined)
-    this.port = port
-  }
+	constructor(private readonly configService: ConfigService) {
+		const port = this.configService.get<number>("SERVER_PORT");
+		assert(port != undefined);
+		this.port = port;
+	}
 }
 ```
 
 ### Configuring server instance
 
 ```ts
-import { NestFactory } from "@nestjs/core"
-import { AppModule } from "./app.module"
-import { ConfigService } from "@nestjs/config"
-import { ConsoleLogger, NestApplicationOptions } from "@nestjs/common"
-import { ServerConfig } from "./config/server.config"
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import { ConfigService } from "@nestjs/config";
+import { ConsoleLogger, NestApplicationOptions } from "@nestjs/common";
+import { ServerConfig } from "./config/server.config";
 
 const options: NestApplicationOptions = {
-  logger: new ConsoleLogger({
-    colors: false,
-    json: true,
-  }),
-}
+	logger: new ConsoleLogger({
+		colors: false,
+		json: true,
+	}),
+};
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, options)
-  const configService = app.get(ConfigService)
-  const serverConfig = new ServerConfig(configService)
-  await app.listen(serverConfig.port)
+	const app = await NestFactory.create(AppModule, options);
+	const configService = app.get(ConfigService);
+	const serverConfig = new ServerConfig(configService);
+	await app.listen(serverConfig.port);
 }
 
-bootstrap()
+bootstrap();
 ```
+
 The above code sets-up the following points:
+
 - Disables console colors and users json output format.
 - Starts the application on the port defined in the `.env` file.
-
 
 ## Controllers
 
@@ -103,5 +100,5 @@ Ensure the following is added to the bootstap code i.e. `main.ts` file.
 ```ts
 import { ValidationPipe } from "@nestjs/common"
 ...
-app.useGlobalPipes(new ValidationPipe())
+app.useGlobalPipes(new ValidationPipe({ transform: true }))
 ```

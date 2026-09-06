@@ -1,35 +1,41 @@
 ---
 type TimelineItem = {
-  time: string
-  heading: string
-  desc?: string
-  items?: string[]
-}
+  time: string;
+  heading: string;
+  desc?: string;
+  items?: string[];
+};
 
 type Props = {
-  items: TimelineItem[]
-}
+  items: TimelineItem[];
+};
 
-const props = Astro.props
+const props = Astro.props;
 ---
 
 <div class="ml-2">
   <ol class="relative border-l border-dashed border-gray-800">
-    {props.items.map(item => (
-      <li class="mb-10 ml-6">
-        <div class="absolute w-2 h-2 bg-gray-800 rounded-full mt-2 -left-1"></div>
-        <time class="mb-1 text-xs font-normal leading-none text-gray-600">{item.time}</time>
-        <h3 class="text-lg font-semibold pb-1">{item.heading}</h3>
-        {item.desc &&
-          <p class="mb-4 text-sm font-normal text-gray-800">{item.desc}</p>
-        }
+    {
+      props.items.map((item) => (
+        <li class="mb-10 ml-6">
+          <div class="absolute w-2 h-2 bg-gray-800 rounded-full mt-2 -left-1" />
+          <time class="mb-1 text-xs font-normal leading-none text-gray-600">
+            {item.time}
+          </time>
+          <h3 class="text-lg font-semibold pb-1">{item.heading}</h3>
+          {item.desc && (
+            <p class="mb-4 text-sm font-normal text-gray-800">{item.desc}</p>
+          )}
 
-        {item.items &&
-          <ul class="list-disc pl-5">
-            {item.items.map(i => <li class="text-sm leading-relaxed">{i}</li>)}
-          </ul>
-        }
-      </li>
-    ))}
+          {item.items && (
+            <ul class="list-disc pl-5 text-base leading-relaxed">
+              {item.items.map((i) => (
+                <li class="text-sm leading-relaxed">{i}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
   </ol>
 </div>

@@ -163,3 +163,13 @@ function combine() {
 declare -a roles=('admin' 'customer' 'another')
 combine "${roles[@]}"
 ```
+
+## Useful One-liners
+
+### Convert Images
+
+The following converts all webp images in current directory, and saves them as jpeg in `out` folder. 
+
+```bash
+for f in *.webp; do ffmpeg -i "$f" "./out/${f%.webp}.jpg"; done
+```

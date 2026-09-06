@@ -46,7 +46,6 @@ $ docker container rm $(docker ps -a -q) -f
 # containers can be started with specific env variables
 $ docker container run -p 8080:5432 --env POSTGRES_PASSWORD=mypassword --name postgres postgres
 
-
 # an env file can also be passed, containing multiple env variables
 $ docker run --env-file ./env ubuntu bash
 ```
@@ -91,30 +90,11 @@ $ docker run --rm -it --tty -v $(pwd):/app -w /app node:20-alpine npm install
 - `-w` fag sets the current working directory (inside container) for the command
 
 
-### Docker and PHP
-
-```bash
-# running PHP inside docker container
-$ docker run --rm -p 8000:8000 -v $(pwd):/app -w /app php:7.4 php -S 0.0.0.0:8000
-```
-
-- We have mapped port `8000` from container to port `8000` of the host OS
-- Server will serve files inside the `pwd` on `localhost:8000` of the host OS
-
-```bash
-# running composer inside docker container 
-$ docker run --rm -it --tty -v $(pwd):/app -w /app composer:latest composer --ignore-platform-reqs install
-```
-
-- Composer image will use the latest version of PHP when running composer. This is not a problem because we are only managing packages using composer 
-- `ignore-platform-requirements` means that we ignore the PHP version specified in the `composer.json` file.
-
-
 ### Docker and Python
 
 ```bash
 # pull docker image
-$ docker pull python:3.11-alpine
+$ docker pull python:3.14-alpine
 
 # start the temporary image
 $ docker run --rm -it -v $(pwd):/app -w /app --tty python:<version> sh
