@@ -1,8 +1,8 @@
 ---
-title: "Databse Integration in Go"
+title: "Database Integration in Go"
 desc: "Every Golang service needs some form of database integration. This post walks through integrating PostgreSQL in a Golang application using SQLx."
 category: "Golang"
-tags: ["Back-end", "Database"]
+tags: ["Back-end", "Database", "SQL"]
 ---
 
 ## Advantages of SQLx
@@ -29,8 +29,13 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// IMPORTANT: always read from env, NEVER hardcode.
-const DB_URI string = "postgresql://user:pass@localhost:5432/db?sslmode=disable"
+const (
+    // IMPORTANT: always read from env, NEVER hardcode.
+    DB_URI                = "postgresql://user:pass@localhost:5432/db?sslmode=disable"
+	DB_MAX_CONNECTIONS    = 10 // (numCores * 2) + 2 redundancy.
+	DB_CONN_MAX_LIFETIME  = time.Minute * 30
+	DB_CONN_MAX_IDLE_TIME = time.Minute * 5
+)
 
 func run(ctx context.Context) error {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
@@ -42,6 +47,11 @@ func run(ctx context.Context) error {
 	}
 	//nolint:errcheck
 	defer db.Close()
+
+	db.SetMaxOpenConns(DB_MAX_CONNECTIONS)
+	db.SetMaxIdleConns(DB_MAX_CONNECTIONS)
+	db.SetConnMaxLifetime(DB_CONN_MAX_LIFETIME)
+	db.SetConnMaxIdleTime(DB_CONN_MAX_IDLE_TIME)
 
 	if err := db.PingContext(ctx); err != nil {
 		return fmt.Errorf("failed to ping database: %w", err)
@@ -56,6 +66,58 @@ func main() {
 	if err := run(ctx); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %s\n", err.Error())
 		os.Exit(1)
+	}
+}
+```
+
+### Adding connection retry logic
+
+```go
+type DatabaseConfig struct {
+	Uri                   string
+	MaxConnections        int
+	ConnectionMaxLifetime time.Duration
+	ConnectionMaxIdleTime time.Duration
+}
+
+func NewDatabaseConnection(ctx context.Context, config DatabaseConfig) (*sqlx.DB, error) {
+	db, err := sqlx.Open("postgres", config.Uri)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database connection: %w", err)
+	}
+
+	db.SetMaxOpenConns(DB_MAX_CONNECTIONS)
+	db.SetMaxIdleConns(DB_MAX_CONNECTIONS)
+	db.SetConnMaxLifetime(DB_CONN_MAX_LIFETIME)
+	db.SetConnMaxIdleTime(DB_CONN_MAX_IDLE_TIME)
+
+	// check liveness with retry.
+	const MAX_RETRIES = 3
+	const INITIAL_WAIT = time.Second * 5
+
+	retryCount := 0
+	waitDuration := INITIAL_WAIT
+
+	for {
+		err = db.PingContext(ctx)
+		if err != nil {
+			if retryCount == MAX_RETRIES {
+				return nil, fmt.Errorf("failed to ping database: %w", err)
+			}
+
+			retryCount++
+			slog.Warn("failed to ping database",
+				"retryCount", retryCount,
+				"maxRetries", MAX_RETRIES,
+				"retryAfterSecond", waitDuration.Seconds(),
+			)
+			time.Sleep(waitDuration)
+			waitDuration *= 2
+			continue
+		}
+
+		slog.Info("database connection established")
+		return db, nil
 	}
 }
 ```
