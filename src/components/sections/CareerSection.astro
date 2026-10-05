@@ -4,44 +4,52 @@ import Timeline from "../Timeline.astro";
 
 const timelineItems = [
   {
-    time: "September 2024 - Present",
+    time: "Aug 2025 - Present",
+    heading: "YourATeam - Lead Engineer",
+    items: [
+      "Integrated AI Inference to analyze data and trends to generate business insights and reports, eliminating manual effor.",
+      "Engineered data ingestion pipeline pulling data from services like Airbnb, Booking.com and VRBO, achieving +99% sync success.",
+      "Built highly-interactive and flexible reporting dashboards related to market performance of short-term rental properties, 30+ distinct reports aiding strategic decisions.",
+      "Optimized mobile user experience by using lightweight techniques like HTMX and Alpine.js, to reduce page sizes by 93% (+1MB to under 70KB) and improve time-to-interactivity.",
+    ],
+  },
+  {
+    time: "Sep 2024 - Jul 2025",
     heading: "The Moonshot Factory - Full-stack Developer",
     items: [
-      "Engineered a data ingestion layer integrating Hostaway, Hospitable, and Airbnb APIs using exponential backoff to navigate rate limits, achieving 99.9% sync success.",
-      "Normalized disparate PMS data into a unified model for real-time dashboards tracking earnings, occupancy, and market trends.",
-      "Reduced complex multi-table query latency from >60 s to <300 ms by migrating core services from PostgreSQL to Neo4j graph database.",
-      "Built a GraphQL authorization framework enabling microservices to declare resource-level access rules, eliminating duplicated logic, simplifying audits, and accelerating feature development.",
-      "Implemented AWS and GCP service integrations for on-demand and event-based crawling of IT asset data. Enabled continuous, up-to-date inventory insights across diverse cloud environments.",
+      "Optimized complex multi-table relational queries by migrating core microservices to Neo4j, reducing query latency by 99.5% (60s to <300ms).",
+      "Built a GraphQL authorization framework enabling microservices to declare resource-level access rules, eliminating duplicate logic, and accelerating feature development.",
+      "Implemented AWS and GCP service integrations for on-demand and event-based crawling of IT asset data. Enabled continuous, up-to-date inventory insights across cloud environments.",
     ],
   },
   {
-    time: "November 2023 - September 2024",
+    time: "Nov 2023 - Sep 2024",
     heading: "Stack360 - Full-stack Developer",
     items: [
-      "Built an RPC layer over RabbitMQ for offline microservice calls, implementing request routing, timeouts and retries to improve resilience.",
-      "Designed a resilient background job processor with worker pools and idempotency, generating thousands of QR codes daily without blocking frontend requests.",
-      "Built an AI-powered CLI tool for internal usage that normalizes 10+ image formats to JPG and reduces file sizes by up to 80% via smart compression.",
-      "Integrated OpenCV ESPCN deep learning models for 3x intelligent upscaling, outperforming traditional interpolation methods.",
+      "Built communication layer for microservices, incorporating techniques like deadlines, retries and dead-letter queues, guaranteeing reliable and resilient message-passing between services.",
+      "Designed a highly-available & idempotency service, generating 1000+ QR codes per hour.",
+      "Built AI-powered CLI tool for marketing department, normalizing 10+ image formats to JPG and reduces file sizes by up to 80%.",
+      "Integrated deep learning models (OpenCV ESPCN) for intelligent image upscaling (upto 3x), outperforming traditional interpolation methods.",
     ],
   },
   {
-    time: "March 2020 - October 2023",
+    time: "Mar 2020 - Oct 2023",
     heading: "OSO Software Outsourcing - Full-stack Developer",
     items: [
       "Owned end-to-end delivery for 10+ client projects scoping, implementing backend APIs, and shipping production releases.",
       "Built a backend with 150+ REST endpoints and 400 integration tests in a 3-month period to secure reliable deployments and faster iteration.",
-      "Integrated D-ID's facial animation technology into the screening application, creating realistic AI avatars that autonomously conduct initial interviews, screening over 50 candidates weekly.",
-      "Built a platform enabling legal firms to dynamically create, sign, and share complex documents, reducing drafting time by over 60%.",
+      "Architected an end-to-end AI candidate screening pipeline using OpenAI, Whisper, and D-ID facial animation. Automated initial interviews for 50+ candidates weekly, significantly reducing HR overhead while maintaining high engagement.",
+      "Built a platform enabling legal firms to dynamically create, sign, and share complex documents, cutting drafting time in half.",
       "Held sessions with clients to outline scope of work, system requirements and workflow documents for 25+ projects, leading to effective project planning and costing-estimation.",
     ],
   },
   {
-    time: "April 2019 - July 2020",
+    time: "Apr 2019 - Jul 2020",
     heading: "Institute of Management Sciences (PAK-AIMS) — BSCS",
     desc: "Acquisition of Bachelors degress in computer sciences.",
   },
   {
-    time: "July 2016 - March 2019",
+    time: "Jul 2016 - Mar 2019",
     heading: "KPMG Taseer Hadi & Co. Chartered Accountants - Articleship",
     items: [
       "Conducted analysis of business IT processes to identify inefficiencies, bottlenecks, and areas for improvement.",
@@ -51,12 +59,12 @@ const timelineItems = [
     ],
   },
   {
-    time: "September 2013 - March 2016",
+    time: "Sep 2013 - Mar 2016",
     heading: "Professionals Academy Of Commerce — CA (Intermediate)",
     desc: "Acquisition of degress for Chartered Accountancy.",
   },
   {
-    time: "August 2011 - May 2013",
+    time: "Aug 2011 - May 2013",
     heading: "National Grammar School — A-Levels",
     desc: "Acquisition of A-Levels Degree",
   },

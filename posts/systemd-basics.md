@@ -1,5 +1,5 @@
 ---
-title: "Basics of SystemD"
+title: "Basics of Systemd"
 desc: "SystemD is the default service manager on most linux distos. It is capable of restarting services in case they crash. This makes it idea to running web server related processes on a VPS (among other things)."
 category: "Linux"
 tags: ["Fundamentals"]
@@ -25,6 +25,8 @@ After=network.target
 [Service]
 ExecStart=%h/path/to/binary/or/script
 WorkingDirectory=%h/path/to/dir/containing/binary/or/script
+StandardOutput=append:%h/logs/app.log
+StandardError=append:%h/logs/app.log
 Type=simple
 Restart=always
 
@@ -40,7 +42,13 @@ Following should be noted about the config:
 - When defining system-level services, all paths defined within the service must be complete absolute paths.
 - `%h` can be used within user-level services, it signified the path to user's home directory.
 - Environment variables can also be defined within service configs, as shown in the above example.
+- The above config will write service output to log file at `~/logs/app.log`. Make sure the dir exists before-hand.
 
+**Tip Regarding log files**: Systemd will append to the log file. If we want to see the logs as they come in, use the following command.
+
+```bash
+$ tail -f <path/to/file.log>
+```
 
 **Note**: Any time the service file for any service changes, services configs need to reloaded.
 
