@@ -48,6 +48,34 @@ async def main() -> None:
     print(results)
 ```
 
+```python
+results = []
+async with asyncio.TaskGroup() as tg:
+    for i in range(10):
+        result = tg.create_task(long_task(i))
+        result.append(result)
+        
+# taskroup has exited, all tasks are done.
+for result in results:
+    print(result.result())
+```
+
+### Capping maximum parallel coroutines
+
+```python
+async def long_task(sem: asyncio.Semaphore, id: int) -> None:
+    async with sem:
+        logger.info(f"starting task: {id}")
+        await asyncio.sleep(2)
+
+
+sem = asyncio.Semaphore(4) # max-workers.
+async with asyncio.TaskGroup() as tg:
+    for i in range(10):
+        tg.create_task(long_task(sem, i))
+```
+
+
 ## Async generators
 
 ```python
